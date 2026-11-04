@@ -1,0 +1,216 @@
+{
+  "name": "pme-radar — origination hebdomadaire",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "Chaque lundi 7h",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 7 * * 1"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "2",
+      "name": "pme-radar run",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        240,
+        0
+      ],
+      "parameters": {
+        "command": "cd {{$env.PME_RADAR_DIR}} && . .venv/bin/activate && pme-radar run --data-dir data --llm mock"
+      }
+    },
+    {
+      "id": "3",
+      "name": "Lire qualified.csv",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        480,
+        0
+      ],
+      "parameters": {
+        "operation": "read",
+        "fileSelector": "={{$env.PME_RADAR_DIR}}/data/out/qualified.csv"
+      }
+    },
+    {
+      "id": "4",
+      "name": "Parser CSV",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        720,
+        0
+      ],
+      "parameters": {
+        "operation": "csv"
+      }
+    },
+    {
+      "id": "5",
+      "name": "Nouvelles cibles (jamais vues)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        960,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Ne garde que les SIREN absents de la mémoire du workflow (static data).\nconst seen = $getWorkflowStaticData('global');\nseen.sirens = seen.sirens || {};\nconst fresh = [];\nfor (const item of $input.all()) {\n  const s = item.json.siren;\n  if (!seen.sirens[s]) { seen.sirens[s] = new Date().toISOString(); fresh.push(item); }\n}\nreturn fresh;"
+      }
+    },
+    {
+      "id": "6",
+      "name": "Ajouter dans Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1200,
+        -100
+      ],
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "REMPLACER_PAR_ID_DU_CLASSEUR"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Qualified"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": [
+            "siren"
+          ],
+          "value": {}
+        }
+      }
+    },
+    {
+      "id": "7",
+      "name": "Construire le digest",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        120
+      ],
+      "parameters": {
+        "jsCode": "const rows = $('Nouvelles cibles (jamais vues)').all().map(i => i.json);\nrows.sort((a,b) => b.score - a.score);\nconst lines = rows.slice(0,10).map(r => `• ${r.name} (${r.city}) — ${r.score}/100 — ${r.score_summary}`);\nreturn [{json:{count: rows.length, body: rows.length ? lines.join('\\n') : 'Aucune nouvelle cible qualifiée cette semaine.'}}];"
+      }
+    },
+    {
+      "id": "8",
+      "name": "Digest email au fondateur",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1440,
+        120
+      ],
+      "parameters": {
+        "fromEmail": "={{$env.DIGEST_FROM}}",
+        "toEmail": "={{$env.DIGEST_TO}}",
+        "subject": "=[pme-radar] {{$json.count}} nouvelle(s) cible(s) qualifiée(s)",
+        "emailFormat": "text",
+        "text": "={{$json.body}}\n\nBrouillons d'emails à relire dans data/out/drafts.csv (rien n'a été envoyé aux dirigeants)."
+      }
+    }
+  ],
+  "connections": {
+    "Chaque lundi 7h": {
+      "main": [
+        [
+          {
+            "node": "pme-radar run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pme-radar run": {
+      "main": [
+        [
+          {
+            "node": "Lire qualified.csv",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lire qualified.csv": {
+      "main": [
+        [
+          {
+            "node": "Parser CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parser CSV": {
+      "main": [
+        [
+          {
+            "node": "Nouvelles cibles (jamais vues)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nouvelles cibles (jamais vues)": {
+      "main": [
+        [
+          {
+            "node": "Ajouter dans Google Sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Construire le digest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Construire le digest": {
+      "main": [
+        [
+          {
+            "node": "Digest email au fondateur",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "tags": []
+}
