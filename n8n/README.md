@@ -32,3 +32,8 @@ Cron lundi 7h → pme-radar run → lire qualified.csv → parser → garder les
   n'a pu être produite.
 - Ce workflow n'a pas pu être exécuté dans l'environnement de construction (pas d'instance n8n) :
   structure validée en JSON uniquement. À tester avant mise en production.
+- **Rapport de deal flow** : chaque `pme-radar run` écrit aussi `data/out/rapport_deal_flow.html`
+  (dossiers de pré-DD). Pour l'envoyer au fondateur, ajouter au workflow un nœud « Read Binary File »
+  sur ce fichier, relié en pièce jointe au nœud d'email. Document confidentiel (données de dirigeants) :
+  diffusion interne uniquement.
+

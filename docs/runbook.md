@@ -24,7 +24,8 @@ Doit finir par un tableau d'entonnoir (45 identifiées / 23 qualifiées sur les 
 
 ## 20-30 min : cycle hebdomadaire
 ```bash
-pme-radar run                       # ajoute --llm anthropic si clé dans .env
+pme-radar run                       # ajoute --llm anthropic si clé dans .env ; produit aussi le rapport
+pme-radar report --top-n 10         # rapport de deal flow seul : data/out/rapport_deal_flow.html
 streamlit run dashboard/app.py
 # Après relecture et envoi MANUELS des emails :
 pme-radar track <SIREN> contacted
@@ -68,3 +69,11 @@ relire la mention de conformité ajoutée en fin de brouillon (`config/campaign.
 | `draft` : « Aucune analyse produite » | Identifiants Anthropic, quota ou nom de modèle (`ANTHROPIC_MODEL`) |
 | Résultats trop nombreux/peu | Ajuster NAF/effectif dans `thesis.yaml` |
 | Sheets non mis à jour | `GOOGLE_APPLICATION_CREDENTIALS` + `GOOGLE_SHEET_ID`, classeur partagé avec le compte de service |
+
+## Vidéo de présentation et voix off
+`./scripts/promo/build_video.sh` reconstruit la vidéo (quelques minutes). Avec `ELEVENLABS_API_KEY`
+(et de préférence `ELEVENLABS_VOICE_ID` = une voix française) dans `.env`, la narration est
+synthétisée, mise en cache dans `data/cache/voice`, mixée sous la musique, et les sous-titres sont
+écrits dans `docs/video/pme-radar-promo.srt`. Sans clé : musique seule. Texte de la narration :
+`scripts/promo/motion/narration.py`.
+

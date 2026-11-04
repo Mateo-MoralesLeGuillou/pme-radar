@@ -67,6 +67,19 @@ note, on prépare un message pour les meilleures, et on mesure ce qui se passe e
   conclusion n'est tirée.
 - **Limite** : l'échantillon d'un search fund est petit ; les taux sont indicatifs.
 
+### `risks.py`, `deal.py` et `report.py` : le rapport de deal flow
+- **Fait** : pour chaque cible, un dossier de pré-due diligence. Il contient des signaux factuels
+  (règles sur les données : endettement, rentabilité, baisse du CA, dépendance au dirigeant…), une
+  valeur et un montage LBO indicatifs (dette senior, crédit vendeur, fonds propres), les données
+  et documents à obtenir, les questions de DD par thème et une recommandation argumentée :
+  approcher, creuser, documenter.
+- **Pourquoi** : le score dit « qui regarder » ; le dossier dit « vaut-elle un appel, et que
+  demander ». Le score a aussi une fourchette : une cible notée 55 sur 60 % du barème peut valoir
+  80 ; le modèle la signale « à documenter » au lieu de l'oublier.
+- **Limite** : valeur et montage sont des ordres de grandeur (ni dette nette, ni BFR, ni EBE
+  normalisé) ; la couverture de la dette ne dépend que des hypothèses, elle n'entre donc pas dans
+  la recommandation.
+
 ### `export.py` et `dashboard/`
 - **Fait** : CSV toujours ; Google Sheets si configuré (un onglet par étape + Funnel) ; tableau de
   bord en trois onglets : vue d'ensemble (KPI, entonnoir, qualifiées par département, distribution
@@ -101,5 +114,8 @@ note, on prépare un message pour les meilleures, et on mesure ce qui se passe e
    pendant la construction), le provider Anthropic, Google Sheets, n8n. Tout le reste est testé.
 9. **Comment mesurez-vous le succès ?** L'entonnoir : taux de qualification, réponse, RDV, avec
    alertes. Un bon signal n'est pas le volume d'emails mais le taux de RDV par email délivré.
-10. **Prochaine amélioration à plus fort effet ?** Signaux de cession (annonces, ventes d'actifs,
+10. **Comment passer du score à la décision ?** Le rapport de deal flow : signaux factuels, montage
+    indicatif, documents à obtenir et questions de DD ; la recommandation suit des règles
+    explicites (ADR-020), pas le jugement de l'IA.
+11. **Prochaine amélioration à plus fort effet ?** Signaux de cession (annonces, ventes d'actifs,
     changement de dirigeant), puis scoring appris sur les RDV, puis intégration CRM.

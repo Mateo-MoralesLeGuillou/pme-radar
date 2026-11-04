@@ -19,6 +19,9 @@ flowchart LR
     SC -->|scored.jsonl| D[draft<br/>top N qualifiées]
     LLM{{LLMProvider<br/>Mock ou Anthropic}} --> D
     D -->|brouillons À RELIRE| O[outreach<br/>suivi campagne CSV]
+    SC --> RP[report<br/>dossiers de pré-DD<br/>valeur, montage, signaux,<br/>questions, recommandation]
+    D --> RP
+    RP --> HTML[(Rapport HTML / PDF)]
     O --> X[export]
     SC --> X
     X --> CSV[(CSV)]
@@ -40,6 +43,7 @@ flowchart LR
 | `score` | enriched, scoring.yaml | `data/processed/scored.jsonl` |
 | `draft` | scored, LLM | `analyzed.jsonl`, `out/drafts.csv`, `out/campaign.csv` |
 | `export` | analyzed, campaign | `out/{identified,qualified,contacted,meeting,funnel}.csv` (+ Sheets) |
+| `report` | analyzed, campaign, thesis, scoring | `out/rapport_deal_flow.html` (imprimable en PDF) |
 
 ## Principes
 1. Chaque étape lit/écrit un fichier : reprise possible après n'importe quelle étape.

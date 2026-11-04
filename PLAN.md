@@ -71,3 +71,12 @@ Détail : [`docs/audit.md`](docs/audit.md). 18 constats corrigés, 7 recommandat
 - [ ] NAF 2025 avant le 01/01/2027 (recommandation n° 1)
 - [ ] BODACC : filtrer les procédures anciennes ou clôturées (recommandation n° 2)
 
+## Itération « deal flow » (2026-11-04)
+- [x] Modèle : score plancher / plafond, fiabilité, « à documenter », pénalité d'endettement (ADR-018, 019)
+- [x] Signaux factuels avec questions de DD ; transmis à la couche IA (prompt v2)
+- [x] Montage LBO indicatif et recommandation par règles (ADR-020)
+- [x] Rapport de deal flow HTML/PDF (`pme-radar report`), exemple synthétique versionné
+- [x] Dashboard et export enrichis (plafond, fiabilité, recommandation, valeur)
+- [x] Vidéo : scène de pré-DD ; voix off ElevenLabs prête (ADR-021)
+- [ ] Voix off : générer avec une clé ElevenLabs et une voix française, puis réécouter
+

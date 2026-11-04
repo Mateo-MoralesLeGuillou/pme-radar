@@ -32,3 +32,11 @@ Un dirigeant qui reçoit un email parle potentiellement de l'œuvre de sa vie et
 - l'email ne précise pas que l'entreprise est « en difficulté » ou « à vendre » : on parle de
   continuité et de transmission, jamais d'opportunisme ;
 - relecture humaine obligatoire avant tout envoi.
+
+## Rapport de deal flow
+Le rapport (`pme-radar report`) nomme les dirigeants, leur âge et leurs mandats : c'est un document
+de travail confidentiel, écrit dans `data/out/` (non versionné) et marqué comme tel en couverture.
+Seul l'exemple construit sur l'échantillon synthétique est dans le dépôt
+(`examples/rapport_deal_flow_sample.*`). La voix off de la vidéo n'envoie à ElevenLabs que le texte
+de narration : aucune donnée personnelle.
+

@@ -16,6 +16,7 @@ Score sur **100 points**, entièrement piloté par `config/scoring.yaml`. Chaque
 | **Thèse (15)** | Secteur | 15 | NAF « cœur » : 15 ; « adjacent » : 8 |
 | **Pénalités** | Dirigeant personne morale (vrai groupe) | −10 | Société dirigeante qui n'est pas une holding personnelle (ADR-009) |
 | | Comptes absents/confidentiels | −5 | Légère, jamais d'exclusion |
+| | Endettement élevé | −5 | Dettes > 150 % des capitaux propres (ADR-019) |
 | **Exclusion** | Procédure collective BODACC | — | Statut `excluded`, score 0 |
 
 ## Pourquoi ces choix
@@ -43,3 +44,16 @@ Score sur **100 points**, entièrement piloté par `config/scoring.yaml`. Chaque
 - Aucune donnée sur la dépendance client ni la récurrence réelle ; l'endettement INPI est exporté mais non noté : c'est le rôle
   des « signaux d'alerte » qualitatifs puis de la due diligence.
 - Les dirigeants sont des mandataires sociaux, pas nécessairement les propriétaires du capital.
+
+## Fourchette et fiabilité (ADR-018)
+- **Score (plancher)** : le score officiel, seules les données disponibles rapportent des points.
+- **Plafond** : le score obtenu si chaque donnée manquante s'avérait favorable.
+- **Fiabilité** : la part du barème évaluée sur des données réelles (100 % = rien ne manque).
+- **À documenter** : sous le seuil, mais plafond au-dessus. Un appel ou une liasse fiscale peut
+  qualifier la cible : elle apparaît dans le rapport de deal flow au lieu de disparaître.
+
+## Du score à la décision (ADR-020)
+Le rapport de deal flow ajoute au score des **signaux factuels** (règles sur les données), un
+**montage LBO indicatif** et une **recommandation** argumentée : à approcher, à creuser, à
+documenter, non prioritaire ou écartée. Seuils dans `risk_thresholds` (scoring.yaml) et hypothèses
+de financement dans `financing` (thesis.yaml).

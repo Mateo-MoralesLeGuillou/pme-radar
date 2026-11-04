@@ -131,3 +131,50 @@ Format : contexte → décision → conséquence.
 - Les chemins par défaut (`config/…`, `tests/fixtures`) sont cherchés dans le dossier courant puis
   à la racine du dépôt : la CLI fonctionne lancée depuis n'importe quel dossier.
 
+
+## ADR-018 — Score plancher, plafond et fiabilité
+- **Contexte** : une donnée manquante vaut 0 point (ADR-004). C'est prudent, mais deux cibles à
+  60/100 ne se valent pas si l'une est évaluée sur 100 % du barème et l'autre sur 60 %.
+- **Décision** : le score officiel reste le **plancher** (seules les données disponibles rapportent
+  des points). On y ajoute le **plafond** (score si chaque donnée manquante s'avérait favorable, la
+  pénalité « comptes non disponibles » levée) et la **fiabilité** (part du barème évaluée sur des
+  données réelles). Une cible sous le seuil dont le plafond l'atteint est marquée **à documenter** :
+  un appel ou une liasse fiscale peut la qualifier.
+- **Conséquence** : la qualification et l'entonnoir sont inchangés ; le rapport et le dashboard
+  font apparaître les cibles à documenter au lieu de les laisser se perdre sous le seuil.
+
+## ADR-019 — Pénalité d'endettement
+- Au-delà de 150 % des capitaux propres (ratios BCE/INPI, `risk_thresholds.high_debt_ratio`), −5
+  points (`penalties.high_debt`). La dette existante est refinancée à l'acquisition : elle réduit le
+  prix des titres et la capacité d'endettement du repreneur. Les scores des sociétés très endettées
+  baissent donc de 5 points par rapport aux runs précédents (à recalibrer sur le run réel si besoin).
+
+## ADR-020 — Rapport de deal flow : signaux factuels, montage indicatif, recommandation
+- **Signaux factuels** (`risks.py`) : règles déterministes sur les données (procédure, endettement,
+  rentabilité faible, CA en baisse, déficit, comptes anciens, dépendance au dirigeant, holding,
+  CA par salarié atypique…), chacune avec sa question de due diligence. Ils sont distincts des
+  signaux de l'IA, présentés comme des **hypothèses à vérifier**, et transmis au LLM (prompt v2).
+- **Montage indicatif** (`deal.py`) : valeur = EBE x 4 à 6 ; dette senior 2,5x l'EBE plafonnée à
+  60 % du prix, crédit vendeur 10 %, le reste en fonds propres ; service annuel de la dette et
+  couverture. Hypothèses dans `config/thesis.yaml` (`financing`). Ordre de grandeur, pas une
+  évaluation : ni dette nette, ni BFR, ni EBE normalisé.
+- **Recommandation** (règles, dans cet ordre) : écartée (procédure) ; à creuser (qualifiée mais
+  signal fort, ou ticket de fonds propres au-delà de `max_equity_ticket`) ; à documenter (fiabilité
+  sous 70 %, ou sous le seuil avec un plafond au-dessus) ; à approcher (qualifiée) ; sinon non
+  prioritaire.
+- **Ce qui n'entre pas dans la règle** : la couverture du service de la dette. Avec des hypothèses
+  proportionnelles à l'EBE, elle est identique pour toutes les cibles (constat fait en testant) :
+  elle ne mesure que les hypothèses. Elle est affichée, pas utilisée pour trier.
+- **Rapport** (`report.py`) : HTML autonome imprimable en PDF ; les N meilleures cibles à approcher
+  plus les cibles à creuser et à documenter. Il contient des données personnelles de dirigeants :
+  il reste dans `data/`, seul l'exemple synthétique est versionné.
+
+## ADR-021 — Voix off ElevenLabs optionnelle
+- La vidéo se construit sans clé (musique synthétisée). Avec `ELEVENLABS_API_KEY`, la narration
+  (`scripts/promo/motion/narration.py`) est synthétisée segment par segment, mise en cache
+  (`data/cache/voice`, rien n'est repayé à la reconstruction), calée sur la timeline et mixée avec
+  une baisse automatique de la musique sous la voix ; les sous-titres SRT sont produits au passage.
+- La narration ne cite que des agrégats réels du run et des faits sur l'outil : aucun chiffre de
+  marché, aucune donnée personnelle n'est envoyée à ElevenLabs.
+- Non exécuté pendant la construction (clé absente et domaine inaccessible) : la chaîne est testée
+  avec une API simulée et une fausse voix (décodage, accéléré, calage, mixage réels).
