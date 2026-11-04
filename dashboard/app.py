@@ -133,17 +133,25 @@ right.caption(f"{excluded} entreprise(s) exclue(s) automatiquement (procédure c
 # --- Distribution des scores ----------------------------------------------
 st.subheader("Distribution des scores")
 scored = targets[targets["stage"] != "excluded"]
+STAGE_LABELS = {"qualified": "Qualifiée", "identified": "Identifiée"}
 hist = px.histogram(
-    scored,
+    scored.assign(statut=scored["stage"].map(STAGE_LABELS)),
     x="score",
     nbins=20,
-    color="stage",
-    color_discrete_map={"qualified": "#25c2f5", "identified": "#4b4f7a"},
+    color="statut",
+    color_discrete_map={"Qualifiée": "#25c2f5", "Identifiée": "#4b4f7a"},
+    labels={"score": "Score /100", "statut": "Statut"},
 )
 hist.update_layout(
     template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"
 )
-hist.update_layout(margin=dict(l=0, r=0, t=10, b=0), height=280, bargap=0.05)
+hist.update_layout(
+    margin=dict(l=0, r=0, t=30, b=0),
+    height=300,
+    bargap=0.05,
+    yaxis_title="Entreprises",
+    legend=dict(orientation="h", yanchor="bottom", y=1.02, x=0, title_text=""),
+)
 st.plotly_chart(hist, width="stretch")
 
 # --- Top 20 ---------------------------------------------------------------
