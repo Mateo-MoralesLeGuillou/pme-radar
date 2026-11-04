@@ -44,6 +44,6 @@ Voir « Avancement » ci-dessous.
 - [x] Phase 3 — Scoring explicable (`score`)
 - [x] Phase 4 — Couche IA (LLMProvider, Mock, Anthropic, `draft`)
 - [x] Phase 5 — Outreach, suivi, délivrabilité
-- [ ] Phase 6 — Export, dashboard, `run`
-- [ ] Phase 7 — Workflow n8n
-- [ ] Phase 8 — Tests, CI, docs, README, memo, walkthrough
+- [x] Phase 6 — Export, dashboard, `run`
+- [x] Phase 7 — Workflow n8n
+- [x] Phase 8 — Tests, CI, docs, README, memo, walkthrough
