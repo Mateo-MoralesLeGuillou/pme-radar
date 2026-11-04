@@ -16,6 +16,7 @@ from . import __version__, funnel, outreach
 from . import enrich as enrich_mod
 from . import export as export_mod
 from . import onepager as onepager_mod
+from . import pdf as pdf_mod
 from . import report as report_mod
 from .config import ConfigError, DataPaths, load_scoring, load_thesis, load_yaml
 from .deliverability import render_report, run_checks
@@ -305,8 +306,13 @@ def report(
     output: str = typer.Option(
         "", help="Fichier de sortie (défaut : data/out/rapport_deal_flow.html)."
     ),
+    pdf: bool = typer.Option(
+        False,
+        "--pdf",
+        help="Produire aussi le PDF A4 (navigateur Chrome, Chromium ou Edge requis).",
+    ),
 ) -> None:
-    """Rapport de deal flow : synthèse du pipeline + dossier de pré-due diligence par cible."""
+    """Rapport de pré-due diligence : synthèse exécutive + dossier par cible (HTML, PDF en option)."""
     paths = DataPaths(data_dir)
     src = paths.analyzed if paths.analyzed.exists() else paths.scored
     companies = _read(src, "score")
@@ -326,9 +332,13 @@ def report(
     labels = Counter(d.rec.label for d in chosen)
     detail = ", ".join(f"{n} {lbl.lower()}" for lbl, n in labels.most_common())
     typer.echo(f"Rapport de deal flow : {len(chosen)} dossier(s) ({detail}) → {out}")
-    typer.echo(
-        "Ouvrir dans un navigateur ; « Imprimer > Enregistrer en PDF » pour une version papier."
-    )
+    if pdf:
+        try:
+            typer.echo(f"PDF A4 → {pdf_mod.html_to_pdf(html_text, out.with_suffix('.pdf'))}")
+        except pdf_mod.PdfUnavailable as exc:
+            typer.secho(f"PDF non produit : {exc}", fg=typer.colors.YELLOW)
+    else:
+        typer.echo("Ouvrir dans un navigateur, ou relancer avec --pdf pour une version PDF A4.")
 
 
 @app.command()

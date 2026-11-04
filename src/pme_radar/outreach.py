@@ -114,4 +114,5 @@ def update_status(
         df.loc[mask, _DATE_FIELD[status]] = day
     if note:
         df.loc[mask, "note"] = note
+    path.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(path, index=False)

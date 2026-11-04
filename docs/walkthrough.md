@@ -67,27 +67,31 @@ note, on prépare un message pour les meilleures, et on mesure ce qui se passe e
   conclusion n'est tirée.
 - **Limite** : l'échantillon d'un search fund est petit ; les taux sont indicatifs.
 
-### `risks.py`, `deal.py` et `report.py` : le rapport de deal flow
-- **Fait** : pour chaque cible, un dossier de pré-due diligence. Il contient des signaux factuels
-  (règles sur les données : endettement, rentabilité, baisse du CA, dépendance au dirigeant…), une
-  valeur et un montage LBO indicatifs (dette senior, crédit vendeur, fonds propres), les données
-  et documents à obtenir, les questions de DD par thème et une recommandation argumentée :
-  approcher, creuser, documenter.
+### `risks.py`, `deal.py` et `report.py` : le rapport de pré-due diligence
+- **Fait** : un mémo au format private equity. Une synthèse exécutive (chiffres clés, entonnoir, plan
+  d'action), une vue d'ensemble (tableau comparatif, football field des valorisations), puis un dossier
+  par cible : thèse d'investissement et points de vigilance, financiers, analyse du score, valorisation
+  et sensibilité, emplois et ressources du montage LBO (frais compris), signaux factuels, plan de due
+  diligence référencé (T.1, C.2…), demandes d'informations priorisées, prochaines étapes. Sortie
+  HTML et PDF A4 (`--pdf`, par un navigateur installé).
 - **Pourquoi** : le score dit « qui regarder » ; le dossier dit « vaut-elle un appel, et que
-  demander ». Le score a aussi une fourchette : une cible notée 55 sur 60 % du barème peut valoir
-  80 ; le modèle la signale « à documenter » au lieu de l'oublier.
+  demander », dans la forme qu'attend un investisseur. Le score a aussi une fourchette : une cible
+  notée 55 sur 60 % du barème peut valoir 80 ; le modèle la signale « à documenter ».
 - **Limite** : valeur et montage sont des ordres de grandeur (ni dette nette, ni BFR, ni EBE
   normalisé) ; la couverture de la dette ne dépend que des hypothèses, elle n'entre donc pas dans
   la recommandation.
 
 ### `export.py` et `dashboard/`
-- **Fait** : CSV toujours ; Google Sheets si configuré (un onglet par étape + Funnel) ; tableau de
-  bord en trois onglets : vue d'ensemble (KPI, entonnoir, qualifiées par département, distribution
-  des scores avec le seuil), cibles (fiche avec jauge, points par critère, mini-thèse, signaux
-  d'alerte et brouillon « à relire »), campagne (délivrabilité, statuts, suivi des contacts).
-- **Pourquoi** : le fondateur travaille sous Sheets ; le dashboard donne la vue d'ensemble et permet
-  de défendre une cible en comité en montrant d'où vient chaque point.
-- **Limite** : l'export Sheets n'a pas été testé sur un vrai classeur (testé avec un faux).
+- **Fait** : CSV toujours ; Google Sheets si configuré. Le dashboard est construit comme un terminal
+  financier : une **recherche globale** (nom, ville, SIREN, dirigeant) ouvre la **fiche entreprise**
+  (recommandation, score, chiffres clés, puis onglets profil, finances, score, valorisation, due
+  diligence, contact, documents). S'y ajoutent l'accueil (actions du jour), les cibles (filtres,
+  export Excel, rapport d'une sélection), les prises de contact (relances, pipeline par statut), les
+  rapports et une aide « je cherche… → où ».
+- **Pourquoi** : on ne doit pas avoir à comprendre l'outil pour trouver une information ; chaque
+  fiche se partage par un lien (`?siren=`) et se défend en comité en montrant d'où vient chaque point.
+- **Limite** : l'export Sheets n'a pas été testé sur un vrai classeur (testé avec un faux) ; le
+  dashboard est local (pas de comptes ni de droits d'accès).
 
 ### `n8n/`
 - **Fait** : relance l'ensemble chaque lundi, ajoute les nouvelles cibles au Sheet, envoie un digest.

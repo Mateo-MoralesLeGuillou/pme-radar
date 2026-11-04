@@ -11,6 +11,7 @@ import base64
 import html
 import math
 import os
+from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import date, datetime
 from pathlib import Path
@@ -26,6 +27,7 @@ from pme_radar.fmt import eur, pct
 from pme_radar.funnel import REPLIED_STATUSES, SENT_STATUSES
 from pme_radar.models import Company
 from pme_radar.outreach import load_campaign
+from pme_radar.pdf import find_browser, html_to_pdf_bytes
 from pme_radar.report import Dossier, evaluate
 from pme_radar.store import read_companies
 
@@ -417,6 +419,26 @@ def status_badge(status: str) -> str:
 
 def empty_state(text: str, icon: str = "🔎") -> None:
     st.html(f'<div class="pr-empty"><span>{icon}</span><p>{text}</p></div>')
+
+
+def report_downloads(make_html: Callable[[], str], stem: str, what: str, disabled: bool = False,
+                     help_: str | None = None) -> None:  # fmt: skip
+    """Rapport en PDF A4 (si un navigateur sait imprimer sur cette machine) et en HTML."""
+    browser = find_browser()
+    with st.container(horizontal=True, gap="small"):
+        if browser:
+            st.download_button(f"{what} (PDF)", lambda: html_to_pdf_bytes(make_html(), browser),
+                               file_name=f"{stem}.pdf", mime="application/pdf", type="primary",
+                               icon=":material/picture_as_pdf:", on_click="ignore", disabled=disabled,
+                               help=help_)  # fmt: skip
+        st.download_button(f"{what} (HTML)", make_html, file_name=f"{stem}.html", mime="text/html",
+                           type="secondary" if browser else "primary", icon=":material/code:",
+                           on_click="ignore", disabled=disabled,
+                           help="S'ouvre dans le navigateur ; « Imprimer > Enregistrer en PDF » au besoin.")  # fmt: skip
+    if not browser:
+        st.caption(
+            "PDF direct indisponible (Chrome, Chromium ou Edge introuvable) : HTML imprimable en PDF."
+        )
 
 
 def styled(fig: go.Figure, height: int) -> go.Figure:

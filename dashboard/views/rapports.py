@@ -29,16 +29,12 @@ with left, st.container(border=True):
                                top_n=top_n, footer=footer)  # fmt: skip
         return html
 
-    st.download_button("Télécharger le rapport (HTML, imprimable en PDF)", _full, file_name="rapport_pre_dd.html",
-                       mime="text/html", icon=":material/download:", type="primary", on_click="ignore")  # fmt: skip
+    ui.report_downloads(_full, "rapport_pre_dd", "Télécharger le rapport")
     sample_pdf = ui.ROOT / "examples" / "rapport_deal_flow_sample.pdf"
     if not data.live and sample_pdf.exists():
         st.download_button("Exemple PDF (échantillon synthétique)", sample_pdf.read_bytes(),
                            file_name="rapport_pre_dd_exemple.pdf", mime="application/pdf",
                            icon=":material/picture_as_pdf:", on_click="ignore")  # fmt: skip
-    st.caption(
-        "Ouvrir le fichier HTML dans le navigateur puis « Imprimer > Enregistrer en PDF » (A4)."
-    )
 with right, st.container(border=True):
     st.markdown("#### :material/apartment: Dossier d'une entreprise")
     st.caption("Le même dossier, pour une seule entreprise : à joindre à une note ou à un comité.")
@@ -51,8 +47,7 @@ with right, st.container(border=True):
                                    sirens=[siren], footer=footer)  # fmt: skip
             return html
 
-        st.download_button("Télécharger le dossier", _one, file_name=f"dossier_{siren}.html", mime="text/html",
-                           icon=":material/download:", type="primary", on_click="ignore")  # fmt: skip
+        ui.report_downloads(_one, f"dossier_{siren}", "Télécharger le dossier")
         ui.company_link(siren, "Voir la fiche dans le dashboard")
 
 with st.container(border=True):

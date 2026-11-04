@@ -3,7 +3,8 @@
 Navigation en haut de page, recherche globale (nom, ville, SIREN, dirigeant) qui ouvre la fiche de
 l'entreprise, lien direct vers une fiche : `/entreprise?siren=…`. Données : dernier run local
 (`data/`) ou échantillon synthétique (`examples/`). Variables d'environnement facultatives :
-PME_RADAR_DATA=sample (forcer la démo), PME_RADAR_DATA_DIR=<dossier> (autre dossier de run).
+PME_RADAR_DATA=sample (forcer la démo), PME_RADAR_DATA_DIR=<dossier> (autre dossier de run),
+PME_RADAR_BROWSER=<chemin> (navigateur utilisé pour les PDF).
 """
 
 from __future__ import annotations
@@ -12,9 +13,12 @@ import sys
 from pathlib import Path
 
 import streamlit as st
+from dotenv import load_dotenv
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import ui  # noqa: E402
+
+load_dotenv(ui.ROOT / ".env")  # variables facultatives (dossier du run, navigateur pour le PDF)
 
 st.set_page_config(
     page_title="pme-radar · origination",

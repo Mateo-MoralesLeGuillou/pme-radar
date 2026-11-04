@@ -25,8 +25,8 @@ Doit finir par un tableau d'entonnoir (45 identifiées / 23 qualifiées sur les 
 ## 20-30 min : cycle hebdomadaire
 ```bash
 pme-radar run                       # ajoute --llm anthropic si clé dans .env ; produit aussi le rapport
-pme-radar report --top-n 10         # rapport de deal flow seul : data/out/rapport_deal_flow.html
-streamlit run dashboard/app.py
+pme-radar report --top-n 10 --pdf   # rapport de pré-DD seul : data/out/rapport_deal_flow.html (+ .pdf)
+streamlit run dashboard/app.py      # Accueil › À faire maintenant ; recherche en haut de page
 # Après relecture et envoi MANUELS des emails :
 pme-radar track <SIREN> contacted
 pme-radar track <SIREN> replied     # puis meeting / declined / bounced

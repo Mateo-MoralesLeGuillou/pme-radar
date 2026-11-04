@@ -114,11 +114,9 @@ def _report() -> str:
 
 
 export = df[df["siren"].isin(picked["siren"])].drop(columns=["_order"], errors="ignore")
-e1, e2, e3 = st.columns(3)
-e1.download_button(f"Rapport de pré-DD ({scope})", _report, file_name="rapport_selection.html",
-                   mime="text/html", icon=":material/picture_as_pdf:", type="primary", width="stretch",
-                   on_click="ignore", disabled=len(picked) > 60,
-                   help="Un dossier de pré-due diligence par entreprise (60 au plus).")  # fmt: skip
+ui.report_downloads(_report, "rapport_selection", f"Rapport de pré-DD ({scope})", disabled=len(picked) > 60,
+                    help_="Un dossier de pré-due diligence par entreprise (60 au plus).")  # fmt: skip
+e2, e3 = st.columns(2)
 e2.download_button(f"Excel ({scope})", export.to_csv(index=False, sep=";", decimal=",").encode("utf-8-sig"),
                    file_name="cibles_pme-radar.csv", mime="text/csv", icon=":material/grid_on:",
                    width="stretch", on_click="ignore",

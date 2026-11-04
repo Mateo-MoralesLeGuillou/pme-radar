@@ -485,12 +485,11 @@ with tabs[6]:
         return render_onepager(c, cfg)
 
     st.markdown("##### Télécharger")
-    st.download_button("Dossier de pré-due diligence (HTML, imprimable en PDF)", _dossier,
-                       file_name=f"dossier_{siren}.html", mime="text/html", icon=":material/picture_as_pdf:",
-                       type="primary", on_click="ignore")  # fmt: skip
+    ui.report_downloads(_dossier, f"dossier_{siren}", "Dossier de pré-due diligence")
     st.download_button("Fiche synthétique (Markdown)", _onepager, file_name=f"fiche_{siren}.md",
                        mime="text/markdown", icon=":material/article:", on_click="ignore")  # fmt: skip
     st.download_button("Données de la fiche (CSV)", row.to_frame().T.to_csv(index=False).encode("utf-8"),
                        file_name=f"{siren}.csv", mime="text/csv", icon=":material/table:", on_click="ignore")  # fmt: skip
-    st.caption("Le dossier s'ouvre dans le navigateur : « Imprimer > Enregistrer en PDF » pour une version "
-               f"papier. Lien direct vers cette fiche : `?siren={siren}`.")  # fmt: skip
+    st.caption(
+        f"Lien direct vers cette fiche : `?siren={siren}` (à ajouter à l'adresse du dashboard)."
+    )

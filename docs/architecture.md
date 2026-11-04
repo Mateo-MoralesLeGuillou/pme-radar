@@ -26,7 +26,8 @@ flowchart LR
     SC --> X
     X --> CSV[(CSV)]
     X -.->|optionnel| GS[(Google Sheets)]
-    CSV --> DB[Dashboard Streamlit]
+    D --> DB[Dashboard Streamlit<br/>recherche, fiche entreprise,<br/>cibles, contacts, rapports]
+    O --> DB
     O --> DL[deliverability<br/>SPF/DKIM/DMARC/MX + KPI]
     N8N[n8n hebdo] -->|exécute run| S
     X --> N8N

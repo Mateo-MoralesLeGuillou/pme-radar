@@ -4,8 +4,8 @@
 |---|---|
 | `build_video.sh` | Construit `docs/video/pme-radar-promo.mp4`, l'aperçu `docs/img/demo.gif` et l'affiche |
 | `motion/` | Moteur d'animation de la vidéo (HTML + JavaScript), rendu image par image |
-| `capture_dashboard.js` | Captures du dashboard (README et vidéo) sur l'échantillon synthétique |
-| `capture_report.js`, `report_pdf.js` | Pages du rapport de deal flow pour la vidéo ; export PDF d'un rapport |
+| `capture_dashboard.js` | Captures du dashboard sur l'échantillon synthétique : README (`docs/img/dashboard-*.png`) et vidéo, avec la position des éléments animés (`layout.json`) |
+| `capture_report.js`, `report_pdf.js` | Pages du rapport de pré-due diligence pour la vidéo ; export PDF A4 d'un rapport |
 | `banner.html`, `render_brand.js` | Bannière du README et logo PNG |
 
 ## Régénérer la vidéo

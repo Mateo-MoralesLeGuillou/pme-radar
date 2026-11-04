@@ -178,3 +178,38 @@ Format : contexte → décision → conséquence.
   marché, aucune donnée personnelle n'est envoyée à ElevenLabs.
 - Non exécuté pendant la construction (clé absente et domaine inaccessible) : la chaîne est testée
   avec une API simulée et une fausse voix (décodage, accéléré, calage, mixage réels).
+
+## ADR-022 — Rapport au format PE/M&A et dashboard orienté recherche
+- **Rapport** : structure d'un mémo de pré-due diligence (page de garde, synthèse exécutive avec plan
+  d'action, vue d'ensemble avec football field et répartition des qualifiées, un dossier par cible,
+  méthodologie et avertissement). Montants en k€ au format comptable (négatifs entre parenthèses),
+  tableaux à en-têtes répétés d'une page à l'autre, pieds de page « Strictement confidentiel » et
+  pagination. La mise en page tient dans la largeur A4 : un tableau trop large faisait réduire
+  toutes les pages à l'impression (page de garde à 79 %), constat fait sur le PDF.
+- **Montage** : les emplois incluent des frais de transaction (4 % du prix, `transaction_fees`) ; les
+  fonds propres = prix + frais − dette senior − crédit vendeur. Effet : une cible proche du ticket
+  maximal (6 M€) passe « à creuser ». Sensibilité : multiples de la thèse ± 0,5x, EBE ± 10 et 20 %.
+- **Plan de DD et demandes d'informations** : questions référencées par chantier (T.1, C.2…), en
+  priorité haute quand un signal factuel de la cible les déclenche ; documents à demander dédoublonnés,
+  les plus urgents d'abord. Points forts : règles factuelles (âge, taille, marge, croissance,
+  ancienneté, cœur de thèse, endettement), jamais l'IA seule.
+- **Dashboard** : la question de l'utilisateur est « où est l'information ? ». D'où une recherche
+  globale (nom, ville, SIREN, dirigeant) en haut de chaque page, une fiche entreprise qui rassemble
+  tout (onglets), une navigation en haut de page et une page Aide « je cherche… → où ». Pages en
+  fichiers (`dashboard/views/`) pour être testables (`AppTest.switch_page`).
+- **Lien direct** `?siren=` synchronisé à la main avec la sélection : l'option de persistance des
+  widgets écrasait la valeur venue de l'URL (constat dans le navigateur), et le harnais de test ne
+  simule pas la liaison automatique aux paramètres d'URL.
+- **Données** : modèles complets (`analyzed.jsonl`) plutôt que le CSV exporté, pour afficher
+  historique financier, dirigeants, signaux et montage. Dernier run local par défaut, échantillon
+  synthétique sinon (`examples/sample_companies.jsonl`, `PME_RADAR_DATA=sample` pour le forcer).
+- **Suivi depuis la fiche** (avec vos données) : même fonction que `pme-radar track` ; un contact pris
+  hors brouillon est ajouté au suivi (campagne « manuel »). Toujours aucun envoi d'email.
+- **Noms synthétiques uniques** : deux homonymes de l'échantillon se confondaient dans le rapport ; le
+  générateur prend le nom suivant de la liste sans nouveau tirage, les autres données sont inchangées.
+- **PDF direct** (`pdf.py`, `report --pdf`, boutons du dashboard) : impression par un Chrome, Chromium
+  ou Edge déjà installé, sans dépendance Python ; la feuille de style fixe le format A4, les marges et
+  les pieds de page. Sans navigateur, le HTML reste la sortie de référence. Deux pièges constatés :
+  un `--user-data-dir` explicite bloque Chrome sans tête (le profil temporaire par défaut suffit), et
+  des processus auxiliaires gardent ouverts les tubes de sortie (sorties redirigées vers des fichiers).
+

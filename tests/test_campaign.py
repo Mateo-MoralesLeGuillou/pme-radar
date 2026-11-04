@@ -162,6 +162,13 @@ def test_campaign_tracking(tmp_path, scoring_cfg, thesis):
     )
 
 
+def test_status_recorded_without_existing_tracking_file(tmp_path):
+    """Premier contact noté depuis le dashboard avant tout export : le suivi est créé."""
+    path = tmp_path / "out" / "campaign.csv"
+    outreach.update_status(path, "123", "contacted", date(2026, 11, 6), campaign_id="manuel")
+    assert outreach.load_campaign(path).loc[0, "status"] == "contacted"
+
+
 def test_drafts_marked_for_human_review():
     c = analyze_company(normalize(raw_company(), AS_OF), MockLLM())
     df = outreach.drafts_frame([c, normalize(raw_company(siren="2"), AS_OF)])

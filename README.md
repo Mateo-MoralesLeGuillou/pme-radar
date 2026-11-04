@@ -12,7 +12,7 @@
   <img src="docs/img/demo.gif" alt="Animation : les 343 sociétés du run réel traversent le pipeline, 29 sont exclues, 35 qualifiées" width="860">
   <br>
   <b><a href="docs/video/pme-radar-promo.mp4">🎬 Vidéo de présentation (91 s, avec son)</a></b>
-  · <b><a href="examples/rapport_deal_flow_sample.pdf">📄 Exemple de rapport de deal flow (PDF)</a></b>
+  · <b><a href="examples/rapport_deal_flow_sample.pdf">📄 Exemple de rapport de pré-due diligence (PDF)</a></b>
   · générée par <code>scripts/promo/build_video.sh</code>
 </p>
 
@@ -22,7 +22,8 @@
 
 - **Source** les PME d'une thèse (NAF, zone, taille) via l'API Recherche d'entreprises, avec cache et respect des limites de débit.
 - **Qualifie** par un score /100 déterministe, détaillé critère par critère, avec sa fourchette (plafond si les données manquantes sont favorables) et sa fiabilité ; exclut les procédures collectives (BODACC).
-- **Évalue** chaque cible dans un **rapport de deal flow** de pré-due diligence : valeur et montage LBO indicatifs, signaux factuels, données et documents à obtenir, questions de DD par thème, recommandation argumentée (approcher, creuser, documenter).
+- **Évalue** chaque cible dans un **rapport de pré-due diligence** au format private equity : synthèse exécutive, football field des valorisations, puis par cible thèse d'investissement, points de vigilance, financiers, sensibilité de la valeur, emplois et ressources du montage LBO, plan de DD référencé, demandes d'informations priorisées et recommandation argumentée (approcher, creuser, documenter).
+- **Se consulte** dans un dashboard pensé comme un terminal financier : une barre de recherche (nom, ville, SIREN, dirigeant) ouvre la fiche complète de n'importe quelle entreprise.
 - **Prépare** mini-thèse, signaux d'alerte et brouillon d'email par IA générative, **sans jamais toucher au score ni envoyer d'email**.
 - **Pilote** l'entonnoir (identifiées → qualifiées → contactées → RDV), la délivrabilité (SPF/DKIM/DMARC) et l'export Sheets/n8n.
 
@@ -33,12 +34,16 @@
 
 <table>
   <tr>
-    <td width="50%"><img src="docs/img/dashboard-entonnoir.png" alt="Vue d'ensemble"><br><sub><b>Vue d'ensemble</b> · KPI, entonnoir, qualifiées par département</sub></td>
-    <td width="50%"><img src="docs/img/dashboard-detail-cible.png" alt="Fiche cible"><br><sub><b>Fiche cible</b> · jauge, points par critère, fiabilité, valeur indicative, recommandation, brouillon à relire</sub></td>
+    <td width="50%"><img src="docs/img/dashboard-accueil.png" alt="Accueil du dashboard"><br><sub><b>Accueil</b> · la situation en une phrase, chiffres clés, actions du jour (à approcher, réponses et relances, à documenter)</sub></td>
+    <td width="50%"><img src="docs/img/dashboard-recherche.png" alt="Recherche globale"><br><sub><b>Recherche</b> · quelques lettres d'un nom, d'une ville, d'un SIREN ou d'un dirigeant, et la fiche s'ouvre</sub></td>
   </tr>
   <tr>
-    <td width="50%"><img src="docs/img/dashboard-scores.png" alt="Distribution des scores"><br><sub><b>Distribution des scores</b> · seuil de qualification, profil type</sub></td>
-    <td width="50%"><img src="docs/img/dashboard-campagne.png" alt="Campagne"><br><sub><b>Campagne</b> · délivrabilité, statuts, suivi des contacts</sub></td>
+    <td width="50%"><img src="docs/img/dashboard-fiche.png" alt="Fiche entreprise"><br><sub><b>Fiche entreprise</b> · recommandation, score, chiffres clés, pourquoi / points forts / vigilance, puis onglets</sub></td>
+    <td width="50%"><img src="docs/img/dashboard-valorisation.png" alt="Valorisation"><br><sub><b>Valorisation</b> · fourchette, sensibilité EBE × multiple, emplois et ressources, couverture</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/img/dashboard-contacts.png" alt="Prises de contact"><br><sub><b>Prises de contact</b> · taux et alertes, relances dues, pipeline par statut</sub></td>
+    <td width="50%"><a href="examples/rapport_deal_flow_sample.pdf"><img src="docs/img/rapport-apercu.png" alt="Rapport de pré-due diligence"></a><br><sub><b>Rapport de pré-due diligence</b> · page de garde, synthèse exécutive, dossier par cible (PDF)</sub></td>
   </tr>
 </table>
 
@@ -102,7 +107,19 @@ pme-radar run --offline
 streamlit run dashboard/app.py
 ```
 
-Le dashboard fonctionne sur `examples/sample_targets.csv` (synthétique).
+Le dashboard s'ouvre sur votre dernier run (`data/`) ou, à défaut, sur l'échantillon synthétique
+(`examples/sample_companies.jsonl`) ; un bouton de l'en-tête bascule entre les deux.
+
+## Le dashboard : trouver une information sans chercher
+| Je cherche… | Où |
+|---|---|
+| Une entreprise précise | Barre de recherche en haut de chaque page (nom, ville, SIREN, dirigeant) ; lien direct `…/entreprise?siren=<SIREN>` |
+| Quoi faire aujourd'hui | **Accueil** › À faire maintenant : cibles prêtes, réponses à traiter, relances dues, cibles à documenter |
+| Pourquoi ce score, combien elle vaut, quoi demander | **Fiche entreprise** › onglets Score, Valorisation, Due diligence |
+| Le brouillon d'email | **Fiche entreprise** › Contact : à copier et relire ; avec vos données, le statut se met à jour ici |
+| Comparer, filtrer, exporter | **Cibles** : sélections rapides, filtres, tri, bouton « Ouvrir », Excel, rapport d'une sélection |
+| Un document à partager | **Rapports** : rapport complet ou dossier d'une entreprise, en PDF ou HTML ; chaque fiche a aussi son onglet Documents |
+| Un terme (EBE, plafond, couverture…) | **Aide** : glossaire cherchable et questions fréquentes |
 
 ## Méthodologie de scoring
 100 points : **Transmission 40** (âge du dirigeant, dirigeant-exploitant, pas de successeur) · **Taille 25**
@@ -118,7 +135,7 @@ Une donnée manquante n'est jamais un zéro : 0 point + mention « n.d. ». Dét
 | `config/thesis.yaml` | NAF (cœur/adjacent), tranches d'effectif, départements, état |
 | `config/scoring.yaml` | Barèmes, seuil de qualification, nombre de cibles passées à l'IA |
 | `config/campaign.yaml` | Seuils d'alerte rebonds / réponses / RDV, mention de conformité ajoutée à chaque brouillon |
-| `.env` (copie de `.env.example`) | **Optionnel** : `ANTHROPIC_API_KEY` (ou profil `ant auth login`), `ANTHROPIC_MODEL`, `GOOGLE_APPLICATION_CREDENTIALS`, `GOOGLE_SHEET_ID`, `PME_RADAR_CACHE_TTL_DAYS` |
+| `.env` (copie de `.env.example`) | **Optionnel** : `ANTHROPIC_API_KEY` (ou profil `ant auth login`), `ANTHROPIC_MODEL`, `GOOGLE_APPLICATION_CREDENTIALS`, `GOOGLE_SHEET_ID`, `PME_RADAR_CACHE_TTL_DAYS`, `PME_RADAR_DATA_DIR` et `PME_RADAR_BROWSER` (dashboard, PDF) |
 
 Les deux YAML sont **validés à chaque commande** (total de 100 points, codes NAF, paliers) :
 `pme-radar check-config` le fait seul. Le cache des API expire après 6 jours, pour qu'un run
@@ -131,7 +148,7 @@ hebdomadaire voie les nouvelles entreprises et procédures ; `--refresh` force u
 | `onepager [--siren … \| --top-n …]` | Fiche cible + fourchette de valorisation ([exemple](examples/onepager_sample.md)) |
 | `track <SIREN> <statut> [--date AAAA-MM-JJ]` | Suivi manuel : contacted, replied, meeting, declined, bounced |
 | `deliverability --domain … [--selector …]` | Audit SPF / DKIM / DMARC / MX + KPI de campagne |
-| `report [--top-n N] [--siren …]` | Rapport de deal flow : synthèse + dossier de pré-DD par cible, HTML imprimable en PDF ([exemple PDF](examples/rapport_deal_flow_sample.pdf), [HTML](examples/rapport_deal_flow_sample.html)) |
+| `report [--top-n N] [--siren …] [--pdf]` | Rapport de pré-due diligence (mémo PE) : synthèse exécutive + dossier par cible, en HTML et, avec `--pdf`, en PDF A4 (Chrome, Chromium ou Edge installé) ([exemple PDF](examples/rapport_deal_flow_sample.pdf), [HTML](examples/rapport_deal_flow_sample.html)) |
 | `check-config`, `--version` | Validation de la configuration, version |
 
 `draft` réutilise les analyses dont les faits n'ont pas changé (aucun nouvel appel LLM) et

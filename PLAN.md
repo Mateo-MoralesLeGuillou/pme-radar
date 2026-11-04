@@ -80,3 +80,12 @@ Détail : [`docs/audit.md`](docs/audit.md). 18 constats corrigés, 7 recommandat
 - [x] Vidéo : scène de pré-DD ; voix off ElevenLabs prête (ADR-021)
 - [ ] Voix off : générer avec une clé ElevenLabs et une voix française, puis réécouter
 
+## Itération « PE/M&A et lisibilité » (2026-11-04)
+- [x] Rapport au format mémo de pré-due diligence : synthèse exécutive, football field, thèse,
+      sensibilité, emplois et ressources (frais de transaction), plan de DD référencé (ADR-022)
+- [x] Mise en page A4 sans réduction, pieds de page confidentiels, noms synthétiques uniques
+- [x] Dashboard : recherche globale, fiche entreprise à onglets, lien direct `?siren=`, accueil
+      « à faire maintenant », cibles (exports, rapport d'une sélection), contacts, rapports, aide
+- [x] Suivi des contacts modifiable depuis la fiche (avec vos données), captures et vidéo à jour
+- [ ] Faire relire le rapport par un professionnel du M&A sur une vraie cible
+
