@@ -1,6 +1,6 @@
 # pme-radar 📡
 
-[![CI](https://github.com/OWNER/pme-radar/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/pme-radar/actions/workflows/ci.yml)
+[![CI](https://github.com/Mateo-MoralesLeGuillou/pme-radar/actions/workflows/ci.yml/badge.svg)](https://github.com/Mateo-MoralesLeGuillou/pme-radar/actions/workflows/ci.yml)
 
 > **Moteur d'origination open source pour search fund français** : il transforme l'open data en une
 > liste courte de PME transmissibles, notées de façon explicable, avec brouillon d'approche et
