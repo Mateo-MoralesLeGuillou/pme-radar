@@ -1,0 +1,5 @@
+# Seuils d'alerte de campagne (délivrabilité et conversion). Taux = part des emails envoyés.
+bounce_rate:   { warning: 0.02, critical: 0.05 }   # au-delà : stopper l'envoi, nettoyer la liste
+reply_rate:    { warning_below: 0.05 }             # en-deçà : revoir le ciblage / le message
+meeting_rate:  { warning_below: 0.01 }
+min_sample: 20            # en-dessous, les taux ne sont pas jugés (échantillon trop faible)

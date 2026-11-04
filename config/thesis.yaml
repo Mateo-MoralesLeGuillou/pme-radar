@@ -1,0 +1,30 @@
+# Thèse d'investissement par défaut : « Services B2B techniques récurrents en Île-de-France »
+name: "Services B2B techniques récurrents en Île-de-France"
+
+# Codes NAF rév. 2 (en vigueur jusqu'au 31/12/2026). tier = core (cœur de thèse) | adjacent.
+# ⚠ Vérifiés de mémoire contre la nomenclature (réseau bloqué lors de la construction) :
+#   à revalider sur https://www.insee.fr/fr/information/2120875 avant un run réel (voir ADR-002).
+naf_codes:
+  - { code: "33.12Z", label: "Réparation de machines et équipements mécaniques", tier: core }
+  - { code: "33.14Z", label: "Réparation d'équipements électriques", tier: core }
+  - { code: "33.20A", label: "Installation de structures métalliques, chaudronnées et de tuyauterie", tier: core }
+  - { code: "33.20B", label: "Installation de machines et équipements mécaniques", tier: core }
+  - { code: "33.20D", label: "Installation d'équipements électriques, électroniques et optiques", tier: core }
+  - { code: "43.21A", label: "Travaux d'installation électrique dans tous locaux", tier: core }
+  - { code: "43.22B", label: "Travaux d'installation d'équipements thermiques et de climatisation", tier: core }
+  - { code: "80.20Z", label: "Activités liées aux systèmes de sécurité", tier: core }
+  - { code: "81.10Z", label: "Activités combinées de soutien lié aux bâtiments", tier: core }
+  - { code: "33.13Z", label: "Réparation d'équipements électroniques et optiques", tier: adjacent }
+  - { code: "43.22A", label: "Travaux d'installation d'eau et de gaz en tous locaux", tier: adjacent }
+  - { code: "43.29B", label: "Autres travaux d'installation n.c.a.", tier: adjacent }
+  - { code: "71.20B", label: "Analyses, essais et inspections techniques", tier: adjacent }
+
+# Tranches d'effectif salarié INSEE : 11=10-19, 12=20-49, 21=50-99, 22=100-199, 31=200-249
+headcount_bands: ["11", "12", "21", "22", "31"]
+
+# Île-de-France : Paris + petite et grande couronne
+departments: ["75", "77", "78", "91", "92", "93", "94", "95"]
+
+# Entreprises actives uniquement (A = active, C = cessée)
+administrative_status: "A"
+categories: ["PME"]

@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+.coverage
+.env
+# RGPD : aucune donnée réelle dans le dépôt
+data/
+*.parquet
+credentials*.json
+service_account*.json

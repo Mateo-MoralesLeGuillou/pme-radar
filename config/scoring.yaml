@@ -1,0 +1,47 @@
+# Score « search fund fit » — total 100 points. Tout est modifiable sans toucher au code.
+# Les barèmes sont des listes de paliers : le premier palier dont `min` est atteint (et `max` non
+# dépassé) donne ses points. Donnée manquante = 0 point sur le critère (jamais de zéro inventé).
+
+qualified_threshold: 70      # score >= seuil -> statut "qualified"
+top_n_drafts: 10             # nombre de cibles passées à la couche IA
+
+criteria:
+  # --- Transmission (40) ---
+  director_age:
+    max_points: 25
+    bands: [{ min: 65, points: 25 }, { min: 60, points: 22 }, { min: 58, points: 18 },
+            { min: 55, points: 10 }, { min: 50, points: 4 }]
+  owner_operator:            # dirigeant personne physique, pas une holding
+    max_points: 10
+  no_obvious_successor:      # un seul dirigeant personne physique identifié
+    max_points: 5
+  # --- Taille (25) --- CA en M€
+  revenue:
+    max_points: 15
+    bands: [{ min: 5, max: 20, points: 15 }, { min: 3, max: 30, points: 11 },
+            { min: 1.5, max: 40, points: 5 }]
+  headcount:                 # points par tranche INSEE
+    max_points: 10
+    by_band: { "11": 5, "12": 10, "21": 10, "22": 7, "31": 4 }
+  # --- Qualité (20) ---
+  net_margin:
+    max_points: 8
+    bands: [{ min: 0.08, points: 8 }, { min: 0.05, points: 6 }, { min: 0.03, points: 4 },
+            { min: 0.0, points: 2 }]
+  revenue_cagr:              # régularité / croissance du CA
+    max_points: 6
+    bands: [{ min: 0.05, points: 6 }, { min: 0.0, points: 4 }, { min: -0.05, points: 2 }]
+  company_age:
+    max_points: 6
+    bands: [{ min: 20, points: 6 }, { min: 10, points: 4 }, { min: 5, points: 2 }]
+  # --- Thèse (15) --- tier lu dans thesis.yaml
+  thesis_fit:
+    max_points: 15
+    by_tier: { core: 15, adjacent: 8 }
+
+penalties:
+  corporate_director: -10    # dirigeant personne morale : probable filiale / holding de groupe
+  missing_financials: -5     # comptes absents ou confidentiels (pénalité légère, pas d'exclusion)
+
+exclusions:
+  collective_procedure: true # procédure collective BODACC => statut "excluded"
