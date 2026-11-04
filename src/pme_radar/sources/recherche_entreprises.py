@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable, Iterator
 from pathlib import Path
 from typing import Any
 
@@ -26,7 +27,7 @@ def build_params(naf: str, thesis: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def iter_search(fetcher: JsonFetcher, params: dict[str, Any]):
+def iter_search(fetcher: JsonFetcher, params: dict[str, Any]) -> Iterator[dict[str, Any]]:
     """Parcourt toutes les pages d'une recherche."""
     page = 1
     while page <= MAX_PAGES:
@@ -37,12 +38,23 @@ def iter_search(fetcher: JsonFetcher, params: dict[str, Any]):
         page += 1
 
 
-def fetch_companies(fetcher: JsonFetcher, thesis: dict[str, Any]) -> list[dict[str, Any]]:
-    """Retourne les résultats bruts dédupliqués par SIREN, pour tous les NAF de la thèse."""
+def fetch_companies(
+    fetcher: JsonFetcher,
+    thesis: dict[str, Any],
+    on_progress: Callable[[str, int], None] | None = None,
+) -> list[dict[str, Any]]:
+    """Retourne les résultats bruts dédupliqués par SIREN, pour tous les NAF de la thèse.
+
+    `on_progress(naf, n)` est appelé après chaque code NAF (n = résultats de ce code).
+    """
     seen: dict[str, dict[str, Any]] = {}
     for naf in thesis["naf_codes"]:
+        n = 0
         for item in iter_search(fetcher, build_params(naf["code"], thesis)):
             seen.setdefault(item["siren"], item)
+            n += 1
+        if on_progress:
+            on_progress(naf["code"], n)
     return list(seen.values())
 
 

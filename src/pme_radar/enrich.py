@@ -13,6 +13,7 @@ from .models import Company, Director, FinancialYear
 from .sources import inpi_ratios as inpi
 
 MAX_RATIO_AGE = 4  # ans, par rapport à la date de calcul
+AGE_BOUNDS = (18, 100)  # âge plausible d'un dirigeant ; au-delà : erreur de saisie => None
 HOLDING_NAF = "64.20Z"  # activités des sociétés holding
 HoldingLookup = Callable[[str], dict[str, Any] | None]
 
@@ -50,6 +51,12 @@ def parse_director(raw: dict[str, Any]) -> Director:
     )
 
 
+def closing_year(row: dict[str, Any]) -> int | None:
+    """Année de clôture d'une ligne de ratios ; None si absente ou illisible."""
+    value = str(row.get("date_cloture_exercice") or "")[:4]
+    return int(value) if value.isdigit() else None
+
+
 def parse_financials(raw: dict[str, Any] | None) -> list[FinancialYear]:
     out = []
     for year, vals in sorted((raw or {}).items()):
@@ -68,7 +75,9 @@ def merge_ratios(fin: list[FinancialYear], rows: list[dict[str, Any]]) -> list[F
     """Complète les exercices de l'API avec l'historique INPI (l'API prime sur une année commune)."""
     by_year = {f.year: f for f in fin}
     for r in rows:
-        year = int(str(r["date_cloture_exercice"])[:4])
+        year = closing_year(r)
+        if year is None:
+            continue
         have = by_year.get(year)
         if have and have.revenue is not None:
             continue
@@ -115,18 +124,25 @@ def director_age(d: Director | None, as_of: date) -> int | None:
     age = as_of.year - d.birth_year
     if d.birth_month is not None and as_of.month < d.birth_month:
         age -= 1
-    return age
+    return age if AGE_BOUNDS[0] <= age <= AGE_BOUNDS[1] else None
+
+
+def company_age(creation: date | None, as_of: date) -> int | None:
+    """Ancienneté en années révolues ; None si date absente ou postérieure à `as_of`."""
+    if creation is None or creation > as_of:
+        return None
+    return as_of.year - creation.year - ((as_of.month, as_of.day) < (creation.month, creation.day))
 
 
 def revenue_cagr(fin: list[FinancialYear]) -> float | None:
-    pts = [f for f in fin if f.revenue and f.revenue > 0]
+    pts = [(f.year, f.revenue) for f in fin if f.revenue is not None and f.revenue > 0]
     if len(pts) < 2:
         return None
-    first, last = pts[0], pts[-1]
-    n = last.year - first.year
+    (y0, first), (y1, last) = pts[0], pts[-1]
+    n = y1 - y0
     if n <= 0:
         return None
-    return (last.revenue / first.revenue) ** (1 / n) - 1
+    return float((last / first) ** (1 / n) - 1)
 
 
 def normalize(
@@ -141,9 +157,12 @@ def normalize(
     directors = [parse_director(d) for d in raw.get("dirigeants") or []]
     fin = parse_financials(raw.get("finances"))
     # bilans de plus de MAX_RATIO_AGE ans écartés : un EBE de 2016 ne dit rien de la société actuelle
-    ratios = [
-        r for r in ratios or [] if int(r["date_cloture_exercice"][:4]) >= as_of.year - MAX_RATIO_AGE
-    ]
+    # tri explicite du plus récent au plus ancien : ne dépend pas de l'ordre renvoyé par l'API
+    ratios = sorted(
+        (r for r in ratios or [] if (closing_year(r) or 0) >= as_of.year - MAX_RATIO_AGE),
+        key=lambda r: str(r["date_cloture_exercice"]),
+        reverse=True,
+    )
     if ratios:
         fin = merge_ratios(fin, ratios)
     ebe_row = next((r for r in ratios if inpi.usable(r) and r.get("ebe") is not None), None)
@@ -181,7 +200,7 @@ def normalize(
         directors=directors,
         financials=fin,
         director_age=director_age(owner or principal, as_of),
-        company_age_years=(as_of.year - creation.year) if creation else None,
+        company_age_years=company_age(creation, as_of),
         is_owner_operator=(
             None if principal is None else (principal.is_natural_person or owner is not None)
         ),
@@ -195,7 +214,7 @@ def normalize(
         revenue_cagr=revenue_cagr(with_rev),
         ebe=ebe_row["ebe"] if ebe_row else None,
         ebe_margin=ebe_row["ebe"] / ebe_row["chiffre_d_affaires"] if ebe_row else None,
-        ebe_year=int(ebe_row["date_cloture_exercice"][:4]) if ebe_row else None,
+        ebe_year=closing_year(ebe_row) if ebe_row else None,
         debt_ratio=debt_row["taux_d_endettement"] if debt_row else None,
         accounts_available=last is not None,  # CA publié (sinon pénalité)
     )

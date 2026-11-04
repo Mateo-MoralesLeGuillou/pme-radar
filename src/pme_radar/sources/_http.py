@@ -1,6 +1,8 @@
 """Client HTTP partagé : limitation de débit, retries exponentiels, cache disque.
 
-Le cache garantit qu'une même requête n'est jamais rappelée (reproductibilité + politesse API).
+Le cache évite de rappeler une même requête pendant sa durée de validité (reproductibilité +
+politesse API). Il expire (défaut 6 jours, `PME_RADAR_CACHE_TTL_DAYS`) pour qu'un run hebdomadaire
+voie les nouvelles entreprises et les nouvelles procédures BODACC (ADR-014).
 """
 
 from __future__ import annotations
@@ -16,6 +18,14 @@ from typing import Any, Protocol
 
 import httpx
 from tenacity import retry, retry_if_exception, stop_after_attempt, wait_exponential
+
+DEFAULT_TTL_DAYS = 6.0  # < 7 : le run hebdomadaire repart toujours de données fraîches
+
+
+def ttl_from_env() -> float | None:
+    """Durée de validité du cache en secondes ; `0` ou négatif = cache sans expiration."""
+    days = float(os.getenv("PME_RADAR_CACHE_TTL_DAYS", DEFAULT_TTL_DAYS))
+    return days * 86400 if days > 0 else None
 
 
 class JsonFetcher(Protocol):
@@ -39,18 +49,28 @@ class CachedClient:
         min_interval: float = 0.5,
         timeout: float = 30.0,
         client: httpx.Client | None = None,
+        ttl_seconds: float | None = DEFAULT_TTL_DAYS * 86400,
+        refresh: bool = False,
     ) -> None:
         self.cache_dir = Path(cache_dir)
+        self.ttl_seconds = ttl_seconds  # None = jamais expiré
+        self.refresh = refresh  # True = ignorer le cache existant (mais le réécrire)
         self.min_interval = min_interval
         self._last_call = 0.0
         self._lock = threading.Lock()
         ua = os.getenv("PME_RADAR_USER_AGENT", "pme-radar/0.1 (projet open source)")
         self._client = client or httpx.Client(timeout=timeout, headers={"User-Agent": ua})
         self.calls = 0  # appels réseau réels (hors cache)
+        self.cache_hits = 0
 
     def _cache_path(self, url: str, params: dict[str, Any] | None) -> Path:
         key = json.dumps([url, sorted((params or {}).items())], default=str)
         return self.cache_dir / (hashlib.sha256(key.encode()).hexdigest() + ".json")
+
+    def _fresh(self, path: Path) -> bool:
+        if self.ttl_seconds is None:
+            return True
+        return (time.time() - path.stat().st_mtime) < self.ttl_seconds
 
     def _throttle(self) -> None:
         with self._lock:
@@ -78,11 +98,18 @@ class CachedClient:
 
     def get_json(self, url: str, params: dict[str, Any] | None = None) -> dict[str, Any]:
         path = self._cache_path(url, params)
-        if path.exists():
-            return json.loads(path.read_text(encoding="utf-8"))
+        if path.exists() and not self.refresh and self._fresh(path):
+            try:
+                cached = json.loads(path.read_text(encoding="utf-8"))
+                self.cache_hits += 1
+                return cached
+            except json.JSONDecodeError:  # fichier corrompu : on le refait
+                pass
         data = self._fetch(url, params)
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+        tmp = path.with_suffix(".tmp")
+        tmp.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+        tmp.replace(path)  # écriture atomique : un run interrompu ne laisse pas de JSON tronqué
         return data
 
 
@@ -94,7 +121,9 @@ class FixtureFetcher:
     """
 
     def __init__(self, fixtures_dir: str | Path = "tests/fixtures") -> None:
-        self.dir = Path(fixtures_dir)
+        from ..config import resolve
+
+        self.dir = resolve(fixtures_dir)
 
     def _load(self, name: str) -> Any:
         return json.loads((self.dir / name).read_text(encoding="utf-8"))
