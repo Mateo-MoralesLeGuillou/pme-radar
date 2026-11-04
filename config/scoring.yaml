@@ -2,7 +2,7 @@
 # Les barèmes sont des listes de paliers : le premier palier dont `min` est atteint (et `max` non
 # dépassé) donne ses points. Donnée manquante = 0 point sur le critère (jamais de zéro inventé).
 
-qualified_threshold: 70      # score >= seuil -> statut "qualified"
+qualified_threshold: 65      # score >= seuil -> statut "qualified" (calibré sur run réel, ADR-011)
 top_n_drafts: 10             # nombre de cibles passées à la couche IA
 
 criteria:

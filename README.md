@@ -16,6 +16,23 @@
 > (API, Anthropic, Google Sheets, n8n) sont écrits mais **non exécutés** : voir
 > [Limites](#limites-connues) et `docs/decisions.md` (ADR-001).
 
+## Run réel (département 92, 2026-11-04) — chiffres agrégés
+
+Run réel limité aux Hauts-de-Seine, 13 codes NAF, tranches d'effectif 10-249. Aucune donnée nominative
+n'est versionnée (`data/` ignoré).
+
+| Étape | Nombre |
+|---|---:|
+| Sociétés sourcées (API Recherche d'entreprises) | 343 |
+| Exclues (procédure collective BODACC) | 29 |
+| Notées | 314 |
+| Qualifiées (score ≥ 65) | 37 (11,8 %) |
+
+Distribution des scores (hors exclues) : médiane 38/100 ; 0-29 : 92 · 30-49 : 125 · 50-69 : 69 ·
+70-100 : 28. CA publié pour 40 % des sociétés seulement ; 29 holdings personnelles de dirigeants
+résolues par la requête SIREN (ADR-009). Ce run réel est distinct de l'échantillon synthétique
+ci-dessous.
+
 ## Résultat d'un run type (échantillon synthétique, `--offline`)
 
 | Étape | Nombre | Conversion vs étape précédente |

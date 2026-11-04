@@ -54,7 +54,9 @@ def parse_financials(raw: dict[str, Any] | None) -> list[FinancialYear]:
         vals = vals or {}
         out.append(
             FinancialYear(
-                year=int(year), revenue=vals.get("ca"), net_income=vals.get("resultat_net")
+                year=int(year),
+                revenue=vals.get("ca") or None,  # l'API renvoie ca=0 quand le CA n'est pas publié
+                net_income=vals.get("resultat_net"),
             )
         )
     return out
@@ -134,6 +136,7 @@ def normalize(
 
     with_rev = [f for f in fin if f.revenue is not None]
     last = with_rev[-1] if with_rev else None
+    last_any = fin[-1] if fin else None
     margin = None
     if last and last.revenue and last.net_income is not None:
         margin = last.net_income / last.revenue
@@ -162,10 +165,10 @@ def normalize(
         holding_name=holding_name,
         holding_owner=owner,
         revenue_last=last.revenue if last else None,
-        net_income_last=last.net_income if last else None,
+        net_income_last=last_any.net_income if last_any else None,
         net_margin=margin,
         revenue_cagr=revenue_cagr(with_rev),
-        accounts_available=last is not None,
+        accounts_available=last is not None,  # CA publié (sinon pénalité)
     )
 
 

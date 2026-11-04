@@ -35,7 +35,7 @@ class CachedClient:
     def __init__(
         self,
         cache_dir: str | Path = "data/cache",
-        min_interval: float = 0.25,
+        min_interval: float = 0.5,
         timeout: float = 30.0,
         client: httpx.Client | None = None,
     ) -> None:
@@ -68,7 +68,7 @@ class CachedClient:
         self._throttle()
         self.calls += 1
         resp = self._client.get(url, params=params)
-        if resp.status_code == 429 or resp.status_code >= 500:
+        if resp.status_code in (429, 302) or resp.status_code >= 500:  # 302 = page « sorry » (quota)
             raise RetryableStatus(f"HTTP {resp.status_code} sur {url}")
         resp.raise_for_status()
         return resp.json()

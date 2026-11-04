@@ -2,7 +2,14 @@ from datetime import date
 
 import pytest
 
-from pme_radar.enrich import director_age, enrich, normalize, parse_director, revenue_cagr
+from pme_radar.enrich import (
+    director_age,
+    enrich,
+    normalize,
+    parse_director,
+    parse_financials,
+    revenue_cagr,
+)
 from pme_radar.models import FinancialYear
 
 from .conftest import AS_OF, raw_company
@@ -216,3 +223,8 @@ def test_score_penalises_group_not_personal_holding(scoring_cfg, thesis):
     oo = next(r for r in perso.criteria if r.key == "owner_operator")
     assert oo.points == 10 and "holding personnelle" in oo.detail
     assert perso.total - groupe.total > 40  # âge 68 ans + exploitant + pas de pénalité
+
+
+def test_ca_zero_est_traite_comme_non_publie():
+    fin = parse_financials({"2024": {"ca": 0, "resultat_net": 5000}})
+    assert fin[0].revenue is None and fin[0].net_income == 5000

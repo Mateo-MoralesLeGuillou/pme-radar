@@ -66,8 +66,10 @@ Format : contexte → décision → conséquence.
 - Mois connu : âge exact. Année seule : `année_réf − année_naissance` (± 1 an). Absent : `None`.
 
 ## ADR-011 — Seuil de qualification à 70
-- Calibré sur l'échantillon synthétique (≈ 50 % de qualifiées avec 70, 62 % avec 60 : encore large, l'échantillon est volontairement favorable).
-  À recalibrer sur un vrai run : viser les 10-20 % supérieurs de la population sourcée.
+- Première version : 70, calibrée sur l'échantillon synthétique (volontairement favorable).
+- **Recalibré à 65 après le run réel (dép. 92, 314 sociétés non exclues)** : 70 ne qualifiait que 8,9 %
+  de la population, 65 en qualifie 11,8 % (60 : 16,9 %). Cible : les 10-20 % supérieurs.
+  À revoir quand l'EBE (ADR-005) fera monter les scores des sociétés sans CA publié.
 
 ## ADR-012 — Une requête par code NAF
 - Contourne le plafond de résultats par requête de l'API et permet un cache fin. Déduplication par

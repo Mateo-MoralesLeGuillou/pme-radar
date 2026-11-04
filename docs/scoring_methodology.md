@@ -27,7 +27,10 @@ Score sur **100 points**, entièrement piloté par `config/scoring.yaml`. Chaque
 - **Qualité** : marge et régularité plutôt que la croissance, car on achète de la stabilité.
 - **Données absentes** : 0 point sur le critère concerné (on n'invente pas) + pénalité légère.
   Une cible à fort potentiel mais sans comptes reste visible, avec son « n.d. ».
-- **Seuil** : `qualified_threshold: 70` (ADR-011).
+- **Seuil** : `qualified_threshold: 65` (ADR-011). Sur le run réel du département 92 (314 sociétés non
+  exclues, médiane 38/100), 70 qualifiait 8,9 %, 65 qualifie 11,8 %, 60 en qualifierait 16,9 % : 65 place
+  le seuil dans la cible « 10-20 % supérieurs ». Le seuil a été abaissé et non les barèmes, pour ne pas
+  masquer le fait que 60 % des sociétés n'ont pas de CA publié (donc 0 pt sur 15 + 5 pts de pénalité).
 
 ## Limites assumées
 - Pondérations posées par jugement, **non apprises** : la feuille de route prévoit de les

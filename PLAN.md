@@ -5,11 +5,13 @@ préparer le contact → piloter l'entonnoir. Portfolio pour un poste d'analyste
 
 ## Notes d'API (Phase 0)
 
-> ⚠ **Le réseau de l'environnement de construction bloquait `recherche-entreprises.api.gouv.fr` et
-> `bodacc-datadila.opendatasoft.com`** (proxy 403 / hôte non résolu). La documentation n'a donc **pas pu
-> être lue en direct**. Les paramètres ci-dessous proviennent de ma connaissance de ces API et sont
-> **à vérifier au premier run réel** (`pme-radar source` sans `--offline`). Le code est isolé dans
-> `sources/` pour que la correction éventuelle tienne en quelques lignes (voir ADR-001).
+> ✅ **Vérifié en réel le 2026-11-04** (run limité au département 92) : tous les paramètres et champs
+> ci-dessous sont confirmés tels quels. Corrections issues du run : (1) l'API de recherche répond par
+> une **redirection 302 vers `sorry.data.gouv.fr`** quand le quota est dépassé → traitée comme un
+> statut réessayable, intervalle entre appels porté à 0,5 s ; (2) `finances` renvoie **`ca: 0` quand le
+> CA n'est pas publié** (≈ 50 % des sociétés avec comptes) → 0 est lu comme « non publié » (None) ;
+> (3) `finances` ne contient **qu'un seul exercice** → le CAGR du CA n'est pas calculable depuis cette
+> seule source. L'API expose aussi `activite_principale_naf25` (NAF 2025, applicable au 01/01/2027).
 
 ### Recherche d'entreprises — `GET https://recherche-entreprises.api.gouv.fr/search` (sans clé)
 | Besoin | Paramètre / champ utilisé |
@@ -21,7 +23,7 @@ préparer le contact → piloter l'entonnoir. Portfolio pour un poste d'analyste
 | Zone | `departement` (liste) / `region` |
 | État | `etat_administratif` (`A` active) |
 | CA (optionnel) | `ca_min`, `ca_max` |
-| Débit | ≈ 7 requêtes/s annoncées → client limité à ~4 req/s par prudence, retry sur 429/5xx |
+| Débit | ≈ 7 requêtes/s annoncées ; le quota réel se déclenche plus tôt → client à 2 req/s, retry sur 429/302/5xx |
 | Identité | `siren`, `nom_complet`, `nature_juridique`, `date_creation`, `categorie_entreprise` |
 | Siège | `siege.{siret, code_postal, libelle_commune, departement, activite_principale}` |
 | Dirigeants | `dirigeants[].{type_dirigeant, nom, prenoms, qualite, date_de_naissance (AAAA-MM), annee_de_naissance, denomination, siren}` |
