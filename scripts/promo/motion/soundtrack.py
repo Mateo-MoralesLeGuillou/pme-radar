@@ -5,7 +5,7 @@ Calée sur les repères produits par motion.js (cues.json) :
 - pulsation douce (grosse caisse, charleston), basse et arpège pendant le corps de la vidéo ;
 - effets synchronisés : échos radar, transitions, compteurs, cloche du score, tampon, clics, frappe.
 
-Usage : python scripts/promo/motion/soundtrack.py <cues.json> <sortie.wav>
+Usage : python scripts/promo/motion/soundtrack.py <cues.json> <sortie.wav> [voix.wav]
 """
 
 from __future__ import annotations
@@ -167,7 +167,38 @@ def key_tap() -> np.ndarray:
 
 
 # ---------------------------------------------------------------- composition
-def render(meta: dict) -> np.ndarray:
+def read_voice(path: str) -> np.ndarray:
+    """Piste voix (WAV mono 16 bits, 48 kHz) produite par voiceover.py."""
+    with wave.open(path) as w:
+        if w.getframerate() != SR:
+            raise SystemExit(f"{path} : {w.getframerate()} Hz, {SR} Hz attendus")
+        x = np.frombuffer(w.readframes(w.getnframes()), dtype="<i2").astype(float) / 32768
+        return x.reshape(-1, w.getnchannels()).mean(axis=1)
+
+
+def duck_and_mix(
+    mix: np.ndarray, voice: np.ndarray, depth_db: float = 12.0, voice_rms_db: float = -16.0
+) -> np.ndarray:
+    """Mixage voix off : la voix est calée sur un niveau moyen (RMS pendant la parole, une voix
+    ayant 15 à 18 dB d'écart crête/moyenne), la musique est abaissée de `depth_db` sous la voix
+    (enveloppe lissée) et réduite de 4 dB ailleurs. `mix` : stéréo (2, n) ; `voice` : mono."""
+    n = mix.shape[1]
+    v = np.zeros(n)
+    v[: min(n, len(voice))] = voice[:n]
+    win = int(0.05 * SR)
+    env = np.convolve(np.abs(v), np.ones(win) / win, mode="same")
+    active = env > 0.02 * max(1e-9, float(env.max()))
+    if active.any():
+        rms = float(np.sqrt((v[active] ** 2).mean()))
+        v *= 10 ** (voice_rms_db / 20) / max(rms, 1e-9)
+    held = np.convolve(active.astype(float), np.ones(int(0.25 * SR)), mode="same") > 0
+    smooth = int(0.15 * SR)
+    amount = np.convolve(held.astype(float), np.ones(smooth) / smooth, mode="same")
+    gain = 10 ** (-4 / 20) * (1 - (1 - 10 ** (-depth_db / 20)) * amount)
+    return mix * gain + v
+
+
+def render(meta: dict, voice: np.ndarray | None = None) -> np.ndarray:
     dur = float(meta["duration"])
     sec = meta["sections"]
     groove, hats_s, arp_s, outro = sec["groove"], sec["hats"], sec["arp"], sec["outro"][0]
@@ -256,12 +287,15 @@ def render(meta: dict) -> np.ndarray:
     # niveau calé sur le 99,9e centile (pas sur une crête isolée), puis saturation douce
     mix = mix * (0.72 / max(1e-9, np.percentile(np.abs(mix), 99.9)))
     mix = np.tanh(mix * 1.25) / np.tanh(1.25)
+    if voice is not None:
+        mix = duck_and_mix(mix / max(1e-9, np.abs(mix).max()), voice)
+        mix = np.tanh(mix * 1.1) / np.tanh(1.1)
     return mix / max(1e-9, np.abs(mix).max()) * 10 ** (-1 / 20)  # crête à -1 dBFS
 
 
-def main(cues_path: str, out_path: str) -> None:
+def main(cues_path: str, out_path: str, voice_path: str | None = None) -> None:
     meta = json.load(open(cues_path, encoding="utf-8"))
-    mix = render(meta)
+    mix = render(meta, read_voice(voice_path) if voice_path else None)
     rms = 20 * np.log10(np.sqrt((mix**2).mean()))
     pcm = (np.clip(mix.T, -1, 1) * 32767).astype("<i2")
     with wave.open(out_path, "wb") as w:
@@ -276,4 +310,4 @@ def main(cues_path: str, out_path: str) -> None:
 
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1], sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else None)

@@ -12,10 +12,14 @@
     cyan: [37, 194, 245], soft: [196, 208, 255], red: [255, 107, 129], amber: [255, 181, 71],
     grey: [98, 104, 150], white: [242, 244, 255],
   };
-  const DURATION = 77.0;
+  // La scène de pré-due diligence (dd) est insérée après la fiche de score : les scènes suivantes
+  // gardent leurs animations, on leur passe simplement un temps local décalé de SHIFT.
+  const SHIFT = 14.0;
+  const DURATION = 77.0 + SHIFT;
   const T = {
-    s1: [0, 7.6], s2: [6.9, 16.6], s3: [15.0, 31.3], s4: [30.2, 42.7],
-    s5: [41.9, 54.1], s6: [53.3, 64.5], s7: [63.7, 70.9], s8: [70.2, 77.0],
+    s1: [0, 7.6], s2: [6.9, 16.6], s3: [15.0, 31.3], s4: [30.2, 42.7], dd: [41.9, 56.1],
+    s5: [41.9 + SHIFT, 54.1 + SHIFT], s6: [53.3 + SHIFT, 64.5 + SHIFT],
+    s7: [63.7 + SHIFT, 70.9 + SHIFT], s8: [70.2 + SHIFT, DURATION],
   };
 
   // ---------------------------------------------------------------- outils
@@ -232,9 +236,9 @@
     const fade = document.getElementById("fade");
     const SCENES = [];
     const CUES = [];
-    const scene = (span, update) => {
+    const scene = (span, update, shift = 0) => {
       const root = $("div", "scene", layer);
-      const sc = { start: span[0], end: span[1], root, update };
+      const sc = { start: span[0], end: span[1], root, update, shift };
       SCENES.push(sc);
       return sc;
     };
@@ -356,7 +360,7 @@
 
     // --- marque persistante (coin supérieur gauche)
     const brand = $("div", "brand", layer, `<img src="${A.logo}" alt=""><b>pme<i>-</i>radar</b>`);
-    const brandUpdate = (t) => { brand.style.opacity = win(t, 7.0, 70.6, 0.7, 0.6).toFixed(3); };
+    const brandUpdate = (t) => { brand.style.opacity = win(t, 7.0, 70.6 + SHIFT, 0.7, 0.6).toFixed(3); };
 
     // ================================================================ S1 · radar
     const s1 = scene(T.s1, (t) => {
@@ -543,6 +547,9 @@
       const ok = P(t, scoreDone + 0.15, 0.5, E.outBack);
       okTag.style.opacity = clamp(ok).toFixed(3);
       okTag.style.transform = `scale(${lerp(0.6, 1, ok).toFixed(3)})`;
+      const okc = P(t, scoreDone + 0.4, 0.5, E.outBack);
+      confTag.style.opacity = clamp(okc).toFixed(3);
+      confTag.style.transform = `scale(${lerp(0.6, 1, okc).toFixed(3)})`;
     });
     const s4h1 = words(s4.root, "Un score sur 100,", "display", 120, 300, { fontSize: "66px" });
     const s4h2 = words(s4.root, "critère par critère.", "display cyan", 120, 384, { fontSize: "66px" });
@@ -573,8 +580,123 @@
       return { el, fill: el.querySelector(".fill"), pts: el.querySelector(".pts") };
     });
     const okTag = place($("div", "abs tag ok", card, `Qualifiée · seuil de ${F.threshold}/100`), 40, 728, { transformOrigin: "0 50%", fontSize: "16px" });
+    const confTag = place($("div", "abs tag", card, `Fiabilité des données · ${Math.round(F.target.confidence * 100)} %`), 330, 728, {
+      transformOrigin: "0 50%", fontSize: "16px", color: "#c8cbec", border: "1px solid rgba(154,160,200,.45)", background: "rgba(154,160,200,.08)",
+    });
     const scoreDone = 31.9 + (det.length - 1) * 0.5 + 0.7;
     CUES.push({ t: scoreDone, type: "ding" });
+
+    // ================================================================ DD · rapport de pré-due diligence
+    const D = F.dd;
+    const eurFR = (v) => (Math.abs(v) >= 1e6 ? `${(v / 1e6).toFixed(2).replace(".", ",")} M€` : `${Math.round(v / 1e3)} k€`);
+    const multFR = (v) => `${v.toFixed(2).replace(".", ",")}x`;
+    const PANEL = { x: 900, y: 150, w: 940, h: 780 };
+    const VMAX = D.ev_high * 1.3;
+    const RECO_T = 52.3;
+    const PAGE_POS = [[1010, 175, -7], [1230, 205, -1], [1450, 240, 6]];
+    const sdd = scene(T.dd, (t) => {
+      const lout = 1 - P(t, 55.1, 0.8, E.in3);
+      reveal(ddH1.spans, t, 42.3, 0.06);
+      reveal(ddH2.spans, t, 42.6, 0.06);
+      reveal(ddSub.spans, t, 43.3, 0.025);
+      [ddH1, ddH2, ddSub].forEach((w) => (w.box.style.opacity = lout.toFixed(3)));
+      ddChecks.forEach((ck, i) => {
+        const p = P(t, 44.6 + i * 0.4, 0.6, E.out5);
+        ck.style.opacity = (p * lout).toFixed(3);
+        ck.style.transform = `translateX(${((1 - p) * -30).toFixed(1)}px)`;
+        drawIcon(ck, P(t, 44.7 + i * 0.4, 0.7, E.io3));
+      });
+      // pages du rapport : arrivée en éventail, puis envol quand le panneau apparaît
+      const away = P(t, 46.0, 0.9, E.in3);
+      pages.forEach((pg, i) => {
+        const p = P(t, 42.4 + i * 0.3, 1.1, E.out5), rz = PAGE_POS[i][2];
+        pg.style.opacity = (P(t, 42.4 + i * 0.3, 0.4) * (1 - away)).toFixed(3);
+        pg.style.transform = `perspective(1600px) translate(${(lerp(520, 0, p) + away * 280).toFixed(1)}px,${(lerp(60, 0, p) - away * 40).toFixed(1)}px) rotateY(${lerp(-38, 0, p).toFixed(2)}deg) rotate(${(rz * p).toFixed(2)}deg) scale(${lerp(1, 0.75, away).toFixed(3)})`;
+      });
+      // panneau de synthèse du dossier
+      const ent = P(t, 46.3, 1.0, E.out5), ex = P(t, 55.2, 0.85, E.in3);
+      panel.style.opacity = (P(t, 46.3, 0.5) * (1 - ex)).toFixed(3);
+      panel.style.transform = `translateY(${(Math.sin(t * 0.9) * 4).toFixed(2)}px) scale(${(lerp(0.9, 1, ent) * lerp(1, 0.94, ex)).toFixed(4)})`;
+      // valeur d'entreprise : la fourchette s'ouvre depuis son milieu
+      const vr = P(t, 47.1, 0.9, E.io3), mid = (D.ev_low + D.ev_high) / 2;
+      const lo = lerp(mid, D.ev_low, vr), hi = lerp(mid, D.ev_high, vr);
+      evFill.style.left = `${((100 * lo) / VMAX).toFixed(2)}%`;
+      evFill.style.width = `${((100 * (hi - lo)) / VMAX).toFixed(2)}%`;
+      evLo.textContent = eurFR(lo);
+      evHi.textContent = eurFR(hi);
+      evLo.style.left = `${((100 * lo) / VMAX).toFixed(2)}%`;
+      evHi.style.left = `${((100 * hi) / VMAX).toFixed(2)}%`;
+      [evLo, evHi, evCap].forEach((e) => (e.style.opacity = P(t, 47.2, 0.5).toFixed(3)));
+      // montage : dette senior, crédit vendeur, fonds propres
+      const parts = [D.senior_debt, D.vendor_loan, D.equity], total = parts.reduce((a, b) => a + b, 0);
+      segs.forEach((sg, i) => {
+        sg.style.width = `${(((100 * parts[i]) / total) * P(t, 48.2 + i * 0.45, 0.6, E.out3)).toFixed(2)}%`;
+      });
+      segLabels.forEach((lb, i) => (lb.style.opacity = P(t, 48.4 + i * 0.45, 0.4).toFixed(3)));
+      cov.style.opacity = P(t, 49.8, 0.5).toFixed(3);
+      drawIcon(cov, P(t, 49.85, 0.6, E.io3));
+      ddSignals.forEach((ch, i) => {
+        const p = P(t, 50.3 + i * 0.25, 0.5, E.outBack);
+        ch.style.opacity = clamp(p).toFixed(3);
+        ch.style.transform = `scale(${lerp(0.7, 1, p).toFixed(3)})`;
+      });
+      qHead.style.opacity = P(t, 50.9, 0.4).toFixed(3);
+      qCount.textContent = fr(D.questions_total * P(t, 51.0, 0.9, E.out3));
+      qLines.forEach((q, i) => {
+        const p = P(t, 51.3 + i * 0.35, 0.5, E.out5);
+        q.style.opacity = p.toFixed(3);
+        q.style.transform = `translateX(${((1 - p) * 30).toFixed(1)}px)`;
+      });
+      const sp = P(t, RECO_T, 0.45, E.outBack);
+      reco.style.opacity = (clamp(P(t, RECO_T, 0.15)) * (1 - ex)).toFixed(3);
+      reco.style.transform = `rotate(-6deg) scale(${lerp(2.2, 1, sp).toFixed(3)})`;
+    });
+    const ddH1 = words(sdd.root, "Le rapport de deal flow,", "display", 120, 210, { fontSize: "64px" });
+    const ddH2 = words(sdd.root, "prêt pour la due diligence.", "display cyan", 120, 292, { fontSize: "64px" });
+    const ddSub = words(sdd.root, "Pour chaque cible : valeur, montage, risques et questions à poser au cédant.", "muted", 122, 405, {
+      fontSize: "27px", width: "700px", lineHeight: "1.4",
+    });
+    const ddChecks = ["Valorisation et montage LBO indicatifs", "Signaux factuels et hypothèses de l'IA",
+      "Données manquantes, documents à demander", "Questions de DD classées par thème"].map((txt, i) =>
+      place($("div", "check", sdd.root, `${icon("check")}<span>${esc(txt)}</span>`), 124, 548 + i * 58));
+    const pages = D.pages.map((file, i) => {
+      const img = place($("img", "page", sdd.root), PAGE_POS[i][0], PAGE_POS[i][1], { transformOrigin: "50% 50%" });
+      img.src = `${A.shots}/${file}`;
+      return img;
+    });
+    const panel = place($("div", "card", sdd.root), PANEL.x, PANEL.y, { width: `${PANEL.w}px`, height: `${PANEL.h}px`, transformOrigin: "50% 50%" });
+    const mlo = String(D.multiple_low).replace(".", ","), mhi = String(D.multiple_high).replace(".", ",");
+    const LEVEL_CLASS = { "élevé": "high", moyen: "mid", info: "info" };
+    panel.innerHTML = `
+      <div class="abs card-head" style="left:40px;top:32px;width:860px"><h3>${esc(F.target.name)}</h3>
+        <p>Dossier de pré-due diligence · cible synthétique</p></div>
+      <div class="abs ddl" style="left:40px;top:132px">Valeur d'entreprise indicative</div>
+      <div class="abs evtrack" style="left:40px;top:170px;width:860px"><div class="evfill"></div>
+        <div class="evlab lo"></div><div class="evlab hi"></div></div>
+      <div class="abs muted evcap" style="left:40px;top:232px;font-size:17px">${mlo}x à ${mhi}x l'EBE de ${eurFR(D.ebe)} (exercice ${D.ebe_year})</div>
+      <div class="abs ddl" style="left:40px;top:284px">Montage indicatif · milieu de fourchette</div>
+      <div class="abs stackbar" style="left:40px;top:320px;width:860px"><i class="sg1"></i><i class="sg2"></i><i class="sg3"></i></div>
+      <div class="abs seglabels" style="left:40px;top:378px;width:860px">
+        <span><i class="sq sg1"></i>Dette senior ${eurFR(D.senior_debt)}</span>
+        <span><i class="sq sg2"></i>Crédit vendeur ${eurFR(D.vendor_loan)}</span>
+        <span><i class="sq sg3"></i>Fonds propres ${eurFR(D.equity)} · ${Math.round(D.equity_share * 100)} %</span></div>
+      <div class="abs check cov" style="left:40px;top:424px;font-size:20px">${icon("check")}<span>Couverture du service de la dette : ${multFR(D.coverage)} · ${D.coverage >= D.min_coverage ? "confortable" : "tendue"}</span></div>
+      <div class="abs ddl" style="left:40px;top:486px">Signaux factuels</div>
+      <div class="abs ddsig" style="left:40px;top:518px;width:860px">${D.signals.slice(0, 3).map((x) =>
+        `<span class="ddchip lv-${LEVEL_CLASS[x.level] || "info"}">${esc(x.level)} · ${esc(x.title)}</span>`).join("")}</div>
+      <div class="abs ddl qhead" style="left:40px;top:592px">Questions de due diligence · <b class="qn">0</b> questions, ${D.themes} thèmes</div>
+      ${D.questions.slice(0, 3).map((q, i) =>
+        `<div class="abs qline" style="left:40px;top:${628 + i * 42}px;width:860px"><b class="${D.triggered[i] ? "trig" : ""}">●</b>${esc(q)}</div>`).join("")}`;
+    const evFill = panel.querySelector(".evfill"), evLo = panel.querySelector(".evlab.lo"), evHi = panel.querySelector(".evlab.hi");
+    const evCap = panel.querySelector(".evcap"), cov = panel.querySelector(".cov"), qHead = panel.querySelector(".qhead");
+    const qCount = panel.querySelector(".qn");
+    const segs = [...panel.querySelectorAll(".stackbar i")], segLabels = [...panel.querySelectorAll(".seglabels span")];
+    const ddSignals = [...panel.querySelectorAll(".ddchip")], qLines = [...panel.querySelectorAll(".qline")];
+    const reco = place($("div", "stamp go", sdd.root, `Recommandation : ${esc(D.recommendation)}`), PANEL.x + 520, PANEL.y + 34, {
+      transformOrigin: "50% 50%", fontSize: "19px", padding: "11px 18px",
+    });
+    CUES.push({ t: 42.6, type: "click" }, { t: 42.9, type: "click" }, { t: 43.2, type: "click" },
+      { t: 47.4, type: "tick" }, { t: 49.4, type: "tick" }, { t: RECO_T + 0.1, type: "stamp" });
 
     // ================================================================ S5 · l'IA rédige
     const WIN = { x: 940, y: 140, w: 880, h: 800 };
@@ -610,7 +732,7 @@
       const sp = P(t, STAMP, 0.45, E.outBack);
       stamp.style.opacity = (clamp(P(t, STAMP, 0.15)) * (1 - ex)).toFixed(3);
       stamp.style.transform = `rotate(-7deg) scale(${lerp(2.3, 1, sp).toFixed(3)})`;
-    });
+    }, SHIFT);
     const s5h1 = words(s5.root, "L'IA rédige.", "display", 120, 210, { fontSize: "74px" });
     const s5h2 = words(s5.root, "L'humain décide.", "display cyan", 120, 300, { fontSize: "74px" });
     const s5sub = words(s5.root, "Mini-thèse, signaux d'alerte et brouillon d'approche pour chaque cible qualifiée.", "muted", 122, 420, {
@@ -631,7 +753,7 @@
       <div class="body"><span class="txt"></span><span class="caret"></span></div>`;
     const subjEl = mail.querySelector(".subj"), bodyText = mail.querySelector(".txt"), caret = mail.querySelector(".caret");
     const stamp = place($("div", "stamp", s5.root, "À RELIRE · AUCUN ENVOI AUTOMATIQUE"), WIN.x + 380, WIN.y + 690, { transformOrigin: "50% 50%" });
-    CUES.push({ t: TYPE0, type: "type_start" }, { t: TYPE1, type: "type_end" }, { t: STAMP + 0.12, type: "stamp" });
+    CUES.push({ t: TYPE0 + SHIFT, type: "type_start" }, { t: TYPE1 + SHIFT, type: "type_end" }, { t: STAMP + 0.12 + SHIFT, type: "stamp" });
 
     // ================================================================ S6 · dashboard
     const VW = 1320, VH = VW / 1.6, FR = { x: 300, y: 175 }, BAR = 44, s = VW / 1440;
@@ -668,7 +790,7 @@
       co2.style.opacity = win(t, 58.3, 59.4, 0.3, 0.3).toFixed(3);
       co3.style.opacity = (P(t, 61.0, 0.5) * hout).toFixed(3);
       co3.style.transform = `translateY(${((1 - P(t, 61.0, 0.6, E.out5)) * 20).toFixed(1)}px)`;
-    });
+    }, SHIFT);
     const s6h = words(s6.root, "Tout le pipeline, en un coup d'œil.", "display center", 0, 44, { fontSize: "54px" });
     const s6sub = words(s6.root, "Filtrer, comparer, suivre chaque contact.", "center muted", 0, 118, { fontSize: "25px" });
     const browser = place($("div", "browser", s6.root), FR.x, FR.y, { width: `${VW}px` });
@@ -683,7 +805,7 @@
     const co1 = place($("div", "callout", s6.root, "Score minimum, département, NAF…"), 0, 0, { opacity: 0 });
     const co2 = place($("div", "callout", s6.root, "KPI recalculés à chaque filtre"), hx1 - 430, hy1 + 18, { opacity: 0 });
     const co3 = place($("div", "callout", s6.root, "Fiche cible : jauge, critères, brouillon à relire"), FR.x + VW / 2, FR.y + BAR + VH - 36, { opacity: 0, marginLeft: "-290px", width: "580px", textAlign: "center" });
-    CUES.push({ t: 57.0, type: "click" }, { t: 58.1, type: "click" }, { t: 59.28, type: "click" });
+    CUES.push({ t: 57.0 + SHIFT, type: "click" }, { t: 58.1 + SHIFT, type: "click" }, { t: 59.28 + SHIFT, type: "click" });
 
     // ================================================================ S7 · confiance
     const TILES = [
@@ -708,7 +830,7 @@
         st.el.style.transform = `translateY(${((1 - p) * 24).toFixed(1)}px)`;
       });
       stats[0].el.querySelector("b").textContent = fr(F.tests * P(t, 66.6, 1.4, E.out3));
-    });
+    }, SHIFT);
     const s7h = words(s7.root, "Conçu pour la confiance.", "display center", 0, 150, { fontSize: "64px" });
     const tiles = TILES.map(([ic, title, txt], i) =>
       place($("div", "tile", s7.root, `${icon(ic)}<h4>${esc(title)}</h4><p>${esc(txt)}</p>`), 135 + i * 420, 330));
@@ -720,7 +842,7 @@
       ["CI", "verte · Python 3.11 à 3.13"],
       ["MIT", "code ouvert"],
     ].map(([b, txt]) => ({ el: $("div", "stat", statRow, `<b>${b}</b>${esc(txt)}`) }));
-    CUES.push({ t: 68.0, type: "tick" });
+    CUES.push({ t: 68.0 + SHIFT, type: "tick" });
 
     // ================================================================ S8 · conclusion
     const s8 = scene(T.s8, (t) => {
@@ -736,7 +858,7 @@
       cta.style.opacity = clamp(cp).toFixed(3);
       cta.style.transform = `translateX(-50%) scale(${lerp(0.8, 1, cp).toFixed(3)})`;
       s8note.style.opacity = P(t, 73.4, 0.8).toFixed(3);
-    });
+    }, SHIFT);
     const t8 = place($("div", "abs center display letters", s8.root), 0, 665, { fontSize: "120px" });
     const s8title = "pme-radar".split("").map((ch) => $("span", ch === "-" ? "cyan" : "", t8, ch));
     const s8tag = words(s8.root, "Un radar d'origination pour search funds.", "center", 0, 815, { fontSize: "38px", color: "#c9cdf0", fontWeight: "500" });
@@ -746,15 +868,18 @@
       .map((b) => ({ b, td: firstPass(b, { tSweep: 70.9 }) }))
       .filter(({ b, td }) => b.q && td > 71.0 && td < 73.6)
       .slice(0, 5)
-      .forEach(({ td }) => CUES.push({ t: td, type: "blip" }));
+      .forEach(({ td }) => CUES.push({ t: td + SHIFT, type: "blip" }));
 
     // transitions sonores
-    [6.3, 14.6, 28.9, 41.7, 53.3, 63.6, 70.1].forEach((tt) => CUES.push({ t: tt, type: "whoosh" }));
+    [6.3, 14.6, 28.9, 41.7, 41.7 + SHIFT, 53.3 + SHIFT, 63.6 + SHIFT, 70.1 + SHIFT].forEach((tt) => CUES.push({ t: tt, type: "whoosh" }));
     CUES.sort((a, b) => a.t - b.t);
 
     window.CUES = CUES;
     window.DURATION = DURATION;
-    window.SECTIONS = { groove: [7.2, 63.6], hats: [15.4, 63.6], arp: [15.4, 63.6], breath: [63.6, 70.2], outro: [70.2, DURATION] };
+    window.SECTIONS = {
+      groove: [7.2, 63.6 + SHIFT], hats: [15.4, 63.6 + SHIFT], arp: [15.4, 63.6 + SHIFT],
+      breath: [63.6 + SHIFT, 70.2 + SHIFT], outro: [70.2 + SHIFT, DURATION],
+    };
     window.renderFrame = function (t) {
       drawBg(bg, t);
       fx.setTransform(1, 0, 0, 1, 0, 0);
@@ -763,7 +888,7 @@
       for (const sc of SCENES) {
         const on = t >= sc.start && t <= sc.end;
         sc.root.style.display = on ? "block" : "none";
-        if (on) sc.update(t);
+        if (on) sc.update(t - sc.shift);
       }
       brandUpdate(t);
       fade.style.opacity = Math.max(1 - P(t, 0, 0.5), P(t, DURATION - 1.0, 1.0, E.io3)).toFixed(3);

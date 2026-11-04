@@ -106,3 +106,28 @@ canvas { position: absolute; inset: 0; }
 .stat b { font-family: "Inter Display", "Inter"; color: #25c2f5; font-size: 34px; font-weight: 750; margin-right: 8px; }
 .cta { position: absolute; left: 50%; padding: 16px 30px; border-radius: 999px; font-size: 26px; font-weight: 600;
   border: 1.5px solid rgba(37,194,245,.6); background: rgba(37,194,245,.08); color: #e8eaf6; white-space: nowrap; }
+
+/* Pré-due diligence */
+.page { position: absolute; width: 380px; border-radius: 10px; border: 1px solid #3a3a66;
+  box-shadow: 0 40px 100px rgba(0,0,0,.55); background: #fff; }
+.ddl { font-size: 14px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #9aa0c8; }
+.ddl b { color: #25c2f5; font-size: 16px; }
+.evtrack { height: 20px; border-radius: 10px; background: #2c2c4d; }
+.evfill { position: absolute; top: 0; bottom: 0; border-radius: 10px; background: linear-gradient(90deg, #1a85ad, #25c2f5);
+  box-shadow: 0 0 24px rgba(37,194,245,.45); }
+.evlab { position: absolute; top: 28px; transform: translateX(-50%); font-family: "Inter Display", "Inter"; font-size: 22px;
+  font-weight: 750; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.stackbar { height: 44px; border-radius: 10px; overflow: hidden; background: #2c2c4d; display: flex; gap: 3px; }
+.stackbar i, .sq { display: block; height: 100%; }
+.sg1 { background: #1a85ad; } .sg2 { background: #7fd0ec; } .sg3 { background: #e8eaf6; }
+.seglabels { display: flex; gap: 30px; font-size: 19px; color: #c8cbec; white-space: nowrap; }
+.seglabels .sq { display: inline-block; width: 13px; height: 13px; border-radius: 3px; margin-right: 9px; vertical-align: -1px; }
+.ddsig { display: flex; gap: 12px; flex-wrap: wrap; }
+.ddchip { padding: 8px 16px; border-radius: 999px; font-size: 17px; white-space: nowrap; transform-origin: 0 50%; }
+.lv-high { color: #ff6b81; border: 1.5px solid rgba(255,107,129,.5); background: rgba(255,107,129,.08); }
+.lv-mid { color: #ffb547; border: 1.5px solid rgba(255,181,71,.5); background: rgba(255,181,71,.08); }
+.lv-info { color: #c8cbec; border: 1.5px solid rgba(154,160,200,.4); background: rgba(154,160,200,.08); }
+.qline { font-size: 19px; color: #e3e5f7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.qline b { color: #6b6f8e; margin-right: 12px; font-size: 14px; vertical-align: 2px; }
+.qline b.trig { color: #ffb547; }
+.stamp.go { border-color: #2ee6a6; color: #2ee6a6; background: rgba(46,230,166,.08); box-shadow: 0 0 40px rgba(46,230,166,.25); }
