@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+from collections import Counter
 from datetime import date
+from pathlib import Path
 
 import pandas as pd
 import typer
@@ -14,6 +16,7 @@ from . import __version__, funnel, outreach
 from . import enrich as enrich_mod
 from . import export as export_mod
 from . import onepager as onepager_mod
+from . import report as report_mod
 from .config import ConfigError, DataPaths, load_scoring, load_thesis, load_yaml
 from .deliverability import render_report, run_checks
 from .llm.analysis import analyze_top, get_provider
@@ -44,6 +47,7 @@ ThesisOpt = typer.Option("config/thesis.yaml", help="Fichier de thèse d'investi
 ScoringOpt = typer.Option("config/scoring.yaml", help="Fichier de barèmes de scoring.")
 CampaignOpt = typer.Option("config/campaign.yaml", help="Seuils et mentions de campagne.")
 FixturesOpt = typer.Option("tests/fixtures", help="Dossier des fixtures (mode --offline).")
+SirenOpt = typer.Option(None, "--siren", help="Dossier(s) précis (option répétable).")
 
 
 def _version(value: bool) -> None:
@@ -270,11 +274,13 @@ def onepager(
 def export(
     data_dir: str = DataDir,
     sheets: bool = typer.Option(True, help="Exporter vers Google Sheets si configuré."),
+    thesis: str = ThesisOpt,
+    scoring: str = ScoringOpt,
 ) -> None:
     """Exporte CSV (toujours) et Google Sheets (si GOOGLE_* renseignés)."""
     paths = DataPaths(data_dir)
     src = paths.analyzed if paths.analyzed.exists() else paths.scored
-    targets = export_mod.targets_frame(_read(src, "score"))
+    targets = export_mod.targets_frame(_read(src, "score"), _scoring(scoring), _thesis(thesis))
     tabs = export_mod.build_tabs(targets, outreach.load_campaign(paths.out / "campaign.csv"))
     files = export_mod.export_csv(tabs, paths.out)
     typer.echo(f"{len(files)} CSV écrits dans {paths.out}")
@@ -284,6 +290,45 @@ def export(
     else:
         typer.echo("Google Sheets non configuré : export CSV uniquement.")
     _print_funnel(tabs["Funnel"])
+
+
+@app.command()
+def report(
+    data_dir: str = DataDir,
+    thesis: str = ThesisOpt,
+    scoring: str = ScoringOpt,
+    campaign_config: str = CampaignOpt,
+    top_n: int = typer.Option(
+        10, help="Cibles à approcher détaillées (+ cibles à creuser et à documenter, N/4 au plus)."
+    ),
+    siren: list[str] | None = SirenOpt,
+    output: str = typer.Option(
+        "", help="Fichier de sortie (défaut : data/out/rapport_deal_flow.html)."
+    ),
+) -> None:
+    """Rapport de deal flow : synthèse du pipeline + dossier de pré-due diligence par cible."""
+    paths = DataPaths(data_dir)
+    src = paths.analyzed if paths.analyzed.exists() else paths.scored
+    companies = _read(src, "score")
+    html_text, chosen = report_mod.build_report(
+        companies,
+        _scoring(scoring),
+        _thesis(thesis),
+        campaign=outreach.load_campaign(paths.out / "campaign.csv"),
+        top_n=top_n,
+        sirens=siren or None,
+        footer=load_yaml(campaign_config).get("compliance_footer"),
+    )
+    if siren and not chosen:
+        _fail("Aucun des SIREN demandés n'est parmi les cibles notées.")
+    out = Path(output) if output else paths.out / "rapport_deal_flow.html"
+    paths.ensure(out).write_text(html_text, encoding="utf-8")
+    labels = Counter(d.rec.label for d in chosen)
+    detail = ", ".join(f"{n} {lbl.lower()}" for lbl, n in labels.most_common())
+    typer.echo(f"Rapport de deal flow : {len(chosen)} dossier(s) ({detail}) → {out}")
+    typer.echo(
+        "Ouvrir dans un navigateur ; « Imprimer > Enregistrer en PDF » pour une version papier."
+    )
 
 
 @app.command()
@@ -304,7 +349,8 @@ def run(
     enrich(data_dir, offline, thesis, fixtures, False, False, refresh)
     score(data_dir, thesis, scoring)
     draft(data_dir, scoring, llm, top_n, "", campaign_config, True)
-    export(data_dir, True)
+    export(data_dir, True, thesis, scoring)
+    report(data_dir, thesis, scoring, campaign_config, 10, None, "")
 
 
 @app.command()

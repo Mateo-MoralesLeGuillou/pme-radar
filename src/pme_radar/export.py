@@ -37,6 +37,9 @@ def company_row(c: Company) -> dict[str, Any]:
         "has_collective_procedure": c.has_collective_procedure,
         "stage": c.stage.value,
         "score": s.total if s else None,
+        "score_ceiling": s.ceiling if s else None,
+        "confidence": s.confidence if s else None,
+        "to_document": s.to_document if s else None,
         "score_summary": s.summary if s else None,
         "score_detail": json.dumps(
             [
@@ -53,8 +56,32 @@ def company_row(c: Company) -> dict[str, Any]:
     }
 
 
-def targets_frame(companies: list[Company]) -> pd.DataFrame:
-    return pd.DataFrame([company_row(c) for c in companies])
+def targets_frame(
+    companies: list[Company],
+    scoring_cfg: dict[str, Any] | None = None,
+    thesis: dict[str, Any] | None = None,
+) -> pd.DataFrame:
+    """Une ligne par société. Avec les configurations : recommandation, signaux factuels,
+    valeur indicative et fonds propres à réunir (rapport de deal flow, ADR-020)."""
+    df = pd.DataFrame([company_row(c) for c in companies])
+    if scoring_cfg is None or thesis is None or df.empty:
+        return df
+    from .report import evaluate  # import local : évite un cycle export -> report -> outreach
+
+    extra = {
+        d.company.siren: {
+            "recommendation": d.rec.label,
+            "signals": " | ".join(f"{s.level} : {s.title}" for s in d.signals),
+            "ev_low": d.plan.ev_low if d.plan else None,
+            "ev_high": d.plan.ev_high if d.plan else None,
+            "equity_needed": d.plan.equity if d.plan else None,
+        }
+        for d in evaluate(companies, scoring_cfg, thesis)
+    }
+    cols = ["recommendation", "signals", "ev_low", "ev_high", "equity_needed"]
+    for col in cols:
+        df[col] = df["siren"].map(lambda s, col=col: extra.get(s, {}).get(col))
+    return df
 
 
 def build_tabs(targets: pd.DataFrame, campaign: pd.DataFrame) -> dict[str, pd.DataFrame]:

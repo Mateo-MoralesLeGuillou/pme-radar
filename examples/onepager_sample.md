@@ -35,9 +35,9 @@
 | Dirigeant-exploitant (personne physique) | 10/10 | oui (via holding personnelle) |
 | Pas de successeur évident | 5/5 | 1 dirigeant(s) personne physique |
 | Chiffre d'affaires | 15/15 | 8,5 M€ |
-| Effectif | 10/10 | tranche 12 |
-| Rentabilité : marge d'EBE | 6/8 | 12% (EBE 0,9 M€, 2024) |
-| Régularité / croissance du CA | 6/6 | +7.9%/an |
+| Effectif | 10/10 | 20-49 salariés |
+| Rentabilité : marge d'EBE | 6/8 | 12 % (EBE 0,9 M€, 2024) |
+| Régularité / croissance du CA | 6/6 | +7,9 %/an |
 | Ancienneté | 6/6 | 33 ans |
 | Adéquation à la thèse | 15/15 | NAF 33.20A (core) |
 
@@ -49,8 +49,9 @@
 
 ## Signaux d'alerte
 
-- Activité possiblement liée à la personne du dirigeant unique.
-- Dépendance client et cyclicité à vérifier lors d'un premier échange.
+- Dépendance au dirigeant (signal factuel).
+- Détention via une holding personnelle (signal factuel).
+- Hypothèse : dépendance client et cyclicité à vérifier lors d'un premier échange.
 
 ## Valorisation indicative
 

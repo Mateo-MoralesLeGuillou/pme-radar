@@ -34,8 +34,13 @@ COLUMNS = [
     "siren", "name", "naf_code", "naf_label", "city", "department", "headcount_band",
     "company_age_years", "director_age", "revenue_last", "ebe_margin", "net_margin",
     "accounts_available", "score", "stage", "score_summary", "score_detail", "mini_thesis",
-    "red_flags", "email_subject",
+    "red_flags", "email_subject", "score_ceiling", "confidence", "to_document", "recommendation",
+    "signals", "ev_low", "ev_high", "equity_needed",
 ]  # fmt: skip
+RECO_COLORS = {
+    "À approcher": "#2ee6a6", "À creuser": AMBER, "À documenter": "#8c9bff",
+    "Non prioritaire": "#6b6f8e", "Écartée": RED,
+}  # fmt: skip
 
 st.set_page_config(
     page_title="pme-radar · origination",
@@ -107,6 +112,21 @@ def styled(fig: go.Figure, height: int) -> go.Figure:
 def esc(v: object) -> str:
     """Texte inséré dans du HTML : échappé, et vide si la valeur manque."""
     return "" if v is None or (isinstance(v, float) and pd.isna(v)) else html.escape(str(v))
+
+
+def ev_text(row: pd.Series) -> str:
+    if pd.isna(row.get("ev_low")):
+        return "n.d. (EBE indisponible)"
+    return f"{fmt_m(row['ev_low'])} à {fmt_m(row['ev_high'])} · fonds propres ≈ {fmt_m(row['equity_needed'])}"
+
+
+def reco_badge(row: pd.Series) -> str:
+    label = row.get("recommendation")
+    if not isinstance(label, str):
+        return ""
+    color = RECO_COLORS.get(label, MUTED)
+    return (f"<div style='margin-top:.8rem'><span class='pr-chip' style='color:{color};"
+            f"border-color:{color};background:transparent;font-weight:700'>{esc(label)}</span></div>")  # fmt: skip
 
 
 def fmt_pct(v: float) -> str:
@@ -283,6 +303,20 @@ with tab_overview:
         p[2].metric("Marge d'EBE médiane", fmt_pct(q["ebe_margin"].median()))
         p[3].metric("Ancienneté médiane", f"{q['company_age_years'].median():.0f} ans")
 
+    recos = targets["recommendation"].dropna()
+    if len(recos):
+        st.subheader("Recommandations du rapport de deal flow")
+        counts = recos.value_counts().reindex(list(RECO_COLORS)).dropna()
+        reco_bar = go.Bar(
+            x=counts.values, y=counts.index, orientation="h",
+            marker_color=[RECO_COLORS[k] for k in counts.index], text=counts.values,
+            textposition="outside", cliponaxis=False,
+        )  # fmt: skip
+        fig_reco = styled(go.Figure(reco_bar), 230)
+        fig_reco.update_xaxes(visible=False, range=[0, counts.max() * 1.2])
+        fig_reco.update_yaxes(autorange="reversed")
+        st.plotly_chart(fig_reco, width="stretch")
+
 # --- Cibles ------------------------------------------------------------------
 with tab_targets:
     st.subheader("Meilleures cibles")
@@ -297,9 +331,10 @@ with tab_targets:
                 "director_age",
                 "revenue_m",
                 "ebe_margin",
-                "net_margin",
                 "score",
-                "stage",
+                "score_ceiling",
+                "confidence",
+                "recommendation",
             ]
         ],  # fmt: skip
         hide_index=True,
@@ -311,6 +346,9 @@ with tab_targets:
             "city": "Ville",
             "director_age": st.column_config.NumberColumn("Âge dirigeant", format="%d ans"),
             "revenue_m": st.column_config.NumberColumn("CA", format="%.1f M€"),
+            "score_ceiling": st.column_config.NumberColumn("Plafond", format="%d/100"),
+            "confidence": st.column_config.NumberColumn("Fiabilité", format="percent"),
+            "recommendation": "Recommandation",
             "ebe_margin": st.column_config.NumberColumn("Marge EBE", format="percent"),
             "net_margin": st.column_config.NumberColumn("Marge nette", format="percent"),
             "score": st.column_config.NumberColumn("Score", format="%d/100"),
@@ -323,6 +361,19 @@ with tab_targets:
         file_name="pme-radar_selection.csv",
         mime="text/csv",
     )
+
+    report_path = (
+        ROOT / "data/out/rapport_deal_flow.html"
+        if use_live
+        else ROOT / "examples/rapport_deal_flow_sample.html"
+    )
+    if report_path.exists():
+        st.download_button(
+            "Rapport de deal flow : dossiers de pré-DD (HTML, imprimable en PDF)",
+            report_path.read_bytes(),
+            file_name="rapport_deal_flow.html",
+            mime="text/html",
+        )
 
     labels = {f"{r['name']} · {r['siren']}": r["siren"] for _, r in top.iterrows()}
     choice = st.selectbox("Fiche cible", list(labels))
@@ -338,12 +389,18 @@ with tab_targets:
             )
             st.markdown(
                 f"""<div class="pr-card"><h4>{esc(row["name"])}</h4>
-                <div class="sub">{esc(row["naf_label"])} · {esc(row["city"])} ({esc(row["department"])})</div>
+                <div class="sub">{esc(row["naf_label"])} · {esc(row["city"])} ({
+                    esc(row["department"])
+                })</div>
                 <div class="pr-kv"><b>SIREN</b><span>{row["siren"]}</span>
                 <b>Dirigeant</b><span>{age}</span><b>Ancienneté</b><span>{seniority}</span>
                 <b>CA</b><span>{fmt_m(row["revenue_last"])}</span>
                 <b>Marge d'EBE</b><span>{fmt_pct(row["ebe_margin"])}</span>
-                <b>Marge nette</b><span>{fmt_pct(row["net_margin"])}</span></div></div>""",
+                <b>Marge nette</b><span>{fmt_pct(row["net_margin"])}</span>
+                <b>Valeur indicative</b><span>{ev_text(row)}</span>
+                <b>Fiabilité</b><span>{fmt_pct(row["confidence"])} du barème · plafond {
+                    "n.d." if pd.isna(row["score_ceiling"]) else f"{row['score_ceiling']:.0f}/100"
+                }</span></div>{reco_badge(row)}</div>""",
                 unsafe_allow_html=True,
             )
             gauge = go.Indicator(
@@ -417,7 +474,16 @@ with tab_targets:
                 st.markdown("\n".join(f"- {t}" for t in row["mini_thesis"].split(" | ")))
             else:
                 st.caption("Non générée : lancer `pme-radar draft`.")
-            st.markdown("##### Signaux d'alerte")
+            if isinstance(row.get("signals"), str) and row["signals"]:
+                st.markdown("##### Signaux factuels")
+                st.markdown(
+                    "".join(
+                        f"<span class='pr-chip'>{esc(t)}</span>"
+                        for t in row["signals"].split(" | ")
+                    ),
+                    unsafe_allow_html=True,
+                )
+            st.markdown("##### Hypothèses de l'IA, à vérifier")
             if isinstance(row.get("red_flags"), str):
                 chips = "".join(
                     f"<span class='pr-chip'>{esc(t)}</span>" for t in row["red_flags"].split(" | ")
