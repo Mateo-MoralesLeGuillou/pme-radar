@@ -1,4 +1,5 @@
 import os
+import shlex
 import stat
 import sys
 
@@ -13,8 +14,7 @@ from .conftest import ROOT
 pytestmark = pytest.mark.skipif(os.name == "nt", reason="faux navigateur en script POSIX")
 
 # Faux navigateur : vérifie les options d'impression et écrit un PDF minimal.
-FAKE = """#!{python}
-import sys
+FAKE = """import sys
 from pathlib import Path
 args = sys.argv[1:]
 assert "--headless" in args and "--no-pdf-header-footer" in args, args
@@ -26,7 +26,11 @@ sys.exit({code})
 
 
 def make_browser(path, code=0):
-    path.write_text(FAKE.format(python=sys.executable, code=code), encoding="utf-8")
+    # lanceur sh : un shebang ne supporte pas les espaces dans le chemin de l'interpréteur
+    script = path.with_suffix(".py")
+    script.write_text(FAKE.format(code=code), encoding="utf-8")
+    launcher = f'#!/bin/sh\nexec {shlex.quote(sys.executable)} {shlex.quote(str(script))} "$@"\n'
+    path.write_text(launcher, encoding="utf-8")
     path.chmod(path.stat().st_mode | stat.S_IEXEC)
     return path
 
