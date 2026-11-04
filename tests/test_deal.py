@@ -9,7 +9,16 @@ from typer.testing import CliRunner
 
 from pme_radar.cli import app
 from pme_radar.config import ConfigError, validate_scoring, validate_thesis
-from pme_radar.deal import data_gaps, dd_questions, financing_plan, recommend
+from pme_radar.deal import (
+    data_gaps,
+    dd_plan,
+    dd_questions,
+    financing_plan,
+    highlights,
+    information_requests,
+    recommend,
+    sensitivity,
+)
 from pme_radar.enrich import normalize
 from pme_radar.llm.analysis import analyze_top
 from pme_radar.llm.mock_provider import MockLLM
@@ -167,7 +176,11 @@ def test_financing_plan_math(thesis):
     p = financing_plan(c, thesis)
     assert (p.ev_low, p.ev_mid, p.ev_high) == (4_000_000, 5_000_000, 6_000_000)
     assert p.senior_debt == 2_500_000  # 2,5x l'EBE, sous le plafond de 60 % du prix
-    assert p.vendor_loan == 500_000 and p.equity == 2_000_000 and p.equity_share == 0.4
+    # emplois = prix 5 M€ + frais 4 % ; ressources = dette 2,5 + crédit vendeur 0,5 + fonds propres
+    assert p.fees == 200_000 and p.uses == 5_200_000
+    assert p.vendor_loan == 500_000 and p.equity == 2_200_000
+    assert p.senior_debt + p.vendor_loan + p.equity == p.uses
+    assert p.equity_share == pytest.approx(2.2 / 5.2)
     r, n = 0.055, 7
     assert p.annual_debt_service == pytest.approx(2_500_000 * r / (1 - (1 + r) ** -n))
     assert p.coverage == pytest.approx(600_000 / p.annual_debt_service)
@@ -267,11 +280,16 @@ def test_report_contains_every_section(scoring_cfg, thesis):
     html, chosen = build_report(cs, scoring_cfg, thesis, footer="Mention RGPD.", as_of=AS_OF)
     assert len(chosen) == 3  # l'exclue n'a pas de dossier
     assert chosen[0].rec.tone == "go"  # à approcher d'abord
-    for section in ("Synthèse du pipeline", "Dossiers détaillés", "Identité et gouvernance",
-                    "Données financières", "Score détaillé", "Valorisation et montage indicatifs",
-                    "Signaux factuels", "Données et documents à obtenir", "Questions de due diligence",
-                    "Brouillon d'approche", "Méthodologie et limites", "Mention RGPD."):  # fmt: skip
-        assert section in html
+    for section in ("Rapport de pré-due diligence", "Synthèse exécutive", "Vue d'ensemble des cibles",
+                    "Thèse d'investissement", "Points de vigilance", "Données financières",
+                    "Analyse du score", "Valorisation indicative", "Sensibilité de la valeur",
+                    "Structure de financement indicative", "Emplois", "Ressources",
+                    "Signaux factuels", "Plan de due diligence", "Demandes d'informations",
+                    "Prochaines étapes", "brouillon d'approche", "Méthodologie, hypothèses et avertissement",
+                    "Strictement confidentiel", "Mention RGPD."):  # fmt: skip
+        assert section in html, section
+    assert html.count('class="dossier"') == 3
+    assert 'href="#d-999000000"' in html  # sommaire cliquable
     assert "échantillon synthétique" in html and "données personnelles" in html
     assert "<script>alert(1)</script>" not in html and "&lt;script&gt;" in html  # échappé
     assert "Non calculable" in html  # cibles sans EBE
@@ -297,7 +315,7 @@ def test_cli_report(tmp_path, monkeypatch):
     r = CliRunner().invoke(app, ["run", "--offline", "--data-dir", data])
     assert r.exit_code == 0, r.output
     out = tmp_path / "data" / "out" / "rapport_deal_flow.html"
-    assert out.exists() and "Rapport de deal flow" in out.read_text(encoding="utf-8")
+    assert out.exists() and "Rapport de pré-due diligence" in out.read_text(encoding="utf-8")
     one = tmp_path / "un.html"
     r = CliRunner().invoke(
         app, ["report", "--data-dir", data, "--siren", "999000197", "--output", str(one)]
@@ -312,3 +330,42 @@ def test_as_of_used_for_stale_accounts(scoring_cfg):
     c.ebe, c.ebe_margin, c.ebe_year = 500_000, 0.1, 2024
     assert "Comptes anciens" not in [s.title for s in assess(c, scoring_cfg, date(2026, 6, 1))]
     assert "Comptes anciens" in [s.title for s in assess(c, scoring_cfg, date(2028, 6, 1))]
+
+
+def test_sensitivity_grid(thesis):
+    c = normalize(raw_company(), AS_OF)
+    c.ebe = 1_000_000
+    multiples, deltas, grid = sensitivity(financing_plan(c, thesis), thesis)
+    assert multiples == [3.5, 4.0, 5.0, 6.0, 6.5] and deltas == [-0.2, -0.1, 0.0, 0.1, 0.2]
+    assert grid[2][2] == 5_000_000 and grid[0][0] == pytest.approx(0.8 * 3.5e6)
+
+
+def test_highlights_are_factual():
+    c = normalize(raw_company(), AS_OF)
+    c.ebe_margin, c.debt_ratio = 0.12, 30
+    hl = highlights(c, "core")
+    assert any("66 ans" in h for h in hl) and any("12,0" in h for h in hl)
+    assert any("33.12Z" in h for h in hl) and any("30 %" in h for h in hl)
+    young = normalize(raw_company(dirigeants=[{"type_dirigeant": "personne physique", "nom": "X",
+                                               "date_de_naissance": "1990-01"}]), AS_OF)  # fmt: skip
+    assert not any("fenêtre de transmission" in h for h in highlights(young, "adjacent"))
+
+
+def test_information_requests_prioritised(scoring_cfg):
+    c = normalize(raw_company(finances={}), AS_OF)
+    c.debt_ratio = 300
+    irl = information_requests(assess(c, scoring_cfg, AS_OF))
+    high = [d for d, p in irl if p == "Haute"]
+    assert "Tableau d'endettement : échéancier, taux, covenants et garanties" in high
+    assert "Trois dernières liasses fiscales et comptes annuels" in high
+    assert [p for _, p in irl] == sorted([p for _, p in irl], key=["Haute", "Normale"].index)
+    assert len({d for d, _ in irl}) == len(irl)  # pas de doublon
+
+
+def test_dd_plan_codes_and_priorities():
+    sig = [Signal("moyen", "Commercial", "CA en baisse", "-10 %", "Pourquoi la baisse ?")]
+    plan = dd_plan(sig)
+    assert plan[0][0] == "T.1"
+    commercial = [r for r in plan if r[1] == "Commercial"]
+    assert commercial[0] == ("C.1", "Commercial", "Pourquoi la baisse ?", "Haute")
+    assert all(r[3] == "Normale" for r in commercial[1:])

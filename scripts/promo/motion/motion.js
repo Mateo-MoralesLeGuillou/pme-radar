@@ -656,8 +656,8 @@
     const ddSub = words(sdd.root, "Pour chaque cible : valeur, montage, risques et questions à poser au cédant.", "muted", 122, 405, {
       fontSize: "27px", width: "700px", lineHeight: "1.4",
     });
-    const ddChecks = ["Valorisation et montage LBO indicatifs", "Signaux factuels et hypothèses de l'IA",
-      "Données manquantes, documents à demander", "Questions de DD classées par thème"].map((txt, i) =>
+    const ddChecks = ["Thèse d'investissement, points de vigilance", "Valorisation, sensibilité, financement",
+      "Plan de DD et demandes d'informations", "Recommandation et prochaines étapes"].map((txt, i) =>
       place($("div", "check", sdd.root, `${icon("check")}<span>${esc(txt)}</span>`), 124, 548 + i * 58));
     const pages = D.pages.map((file, i) => {
       const img = place($("img", "page", sdd.root), PAGE_POS[i][0], PAGE_POS[i][1], { transformOrigin: "50% 50%" });

@@ -1702,8 +1702,8 @@
   },
   {
    "siren": "999000281",
-   "nom_complet": "KLEIN TUYAUTERIE",
-   "nom_raison_sociale": "KLEIN TUYAUTERIE",
+   "nom_complet": "LACOMBE TUYAUTERIE",
+   "nom_raison_sociale": "LACOMBE TUYAUTERIE",
    "nature_juridique": "5599",
    "activite_principale": "33.20A",
    "categorie_entreprise": "PME",
@@ -1720,7 +1720,7 @@
    "dirigeants": [
     {
      "type_dirigeant": "personne physique",
-     "nom": "KLEIN",
+     "nom": "LACOMBE",
      "prenoms": "Dominique",
      "qualite": "Président",
      "annee_de_naissance": 1960
@@ -1822,8 +1822,8 @@
   },
   {
    "siren": "999000302",
-   "nom_complet": "JOLIVET TUYAUTERIE",
-   "nom_raison_sociale": "JOLIVET TUYAUTERIE",
+   "nom_complet": "KERBRAT TUYAUTERIE",
+   "nom_raison_sociale": "KERBRAT TUYAUTERIE",
    "nature_juridique": "5599",
    "activite_principale": "33.20A",
    "categorie_entreprise": "PME",
@@ -1840,7 +1840,7 @@
    "dirigeants": [
     {
      "type_dirigeant": "personne physique",
-     "nom": "JOLIVET",
+     "nom": "KERBRAT",
      "prenoms": "Daniel",
      "qualite": "Président",
      "annee_de_naissance": 1977,

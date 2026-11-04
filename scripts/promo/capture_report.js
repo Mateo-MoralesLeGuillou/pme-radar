@@ -1,5 +1,5 @@
-// Captures de trois pages du rapport de deal flow (vidéo) : synthèse, ouverture du premier dossier,
-// questions de due diligence. Usage : node scripts/promo/capture_report.js <rapport.html> <dossier>
+// Captures de trois pages du rapport de pré-due diligence (vidéo) : page de garde, ouverture du premier
+// dossier, valorisation et sensibilité. Usage : node scripts/promo/capture_report.js <rapport.html> <dossier>
 const { chromium } = require("playwright");
 const path = require("path");
 (async () => {
@@ -14,7 +14,7 @@ const path = require("path");
   const first = p.locator(".dossier").first();
   await scrollTo(first, 20);
   await p.screenshot({ path: `${out}/report_p2.png` });
-  await scrollTo(first.locator("h3", { hasText: "Valorisation et montage" }), 30);
+  await scrollTo(first.locator("h3", { hasText: "Valorisation indicative" }), 30);
   await p.screenshot({ path: `${out}/report_p3.png` });
   await b.close();
 })();

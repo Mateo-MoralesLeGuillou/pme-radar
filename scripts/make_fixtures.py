@@ -190,11 +190,19 @@ def build() -> tuple[dict, dict]:
     no_accounts = {2, 11, 19, 26, 35, 41}  # comptes confidentiels / absents
     year_only = {1, 6, 13, 24, 30, 40}  # date de naissance partielle
     no_director = {44}
+    used: set[str] = set()
     for i in range(N):
         siren = f"{999000001 + i * 7:09d}"
         naf = rnd.choice(core if rnd.random() < 0.7 else nafs)
         surname = rnd.choice(SURNAMES)
+        # nom unique (deux sociétés homonymes prêtent à confusion dans le rapport et le dashboard) ;
+        # le nom suivant de la liste est pris sans tirage aléatoire : les autres données ne changent pas
+        k = SURNAMES.index(surname)
+        while f"{surname} {NAF_NAMES[naf]}".upper() in used:
+            k = (k + 1) % len(SURNAMES)
+            surname = SURNAMES[k]
         name = f"{surname} {NAF_NAMES[naf]}".upper()
+        used.add(name)
         dept = rnd.choice(list(DEPTS))
         city, cp = DEPTS[dept]
         senior = rnd.random() < 0.55

@@ -130,7 +130,7 @@ def validate_thesis(t: dict[str, Any]) -> dict[str, Any]:
         bounds = {
             "senior_debt_multiple": (0, 8), "max_debt_share": (0, 1), "vendor_loan_share": (0, 0.6),
             "interest_rate": (0, 0.3), "amortization_years": (1, 15), "cash_conversion": (0, 1),
-            "min_coverage": (0, 5), "max_equity_ticket": (0, 1e9),
+            "min_coverage": (0, 5), "max_equity_ticket": (0, 1e9), "transaction_fees": (-1e-9, 0.2),
         }  # fmt: skip
         for key, (lo, hi) in bounds.items():
             v = fin.get(key)
