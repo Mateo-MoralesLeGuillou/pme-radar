@@ -69,8 +69,11 @@ note, on prépare un message pour les meilleures, et on mesure ce qui se passe e
 
 ### `export.py` et `dashboard/`
 - **Fait** : CSV toujours ; Google Sheets si configuré (un onglet par étape + Funnel) ; tableau de
-  bord avec entonnoir, scores, top 20 détaillé, KPI.
-- **Pourquoi** : le fondateur travaille sous Sheets ; le dashboard donne la vue d'ensemble.
+  bord en trois onglets : vue d'ensemble (KPI, entonnoir, qualifiées par département, distribution
+  des scores avec le seuil), cibles (fiche avec jauge, points par critère, mini-thèse, signaux
+  d'alerte et brouillon « à relire »), campagne (délivrabilité, statuts, suivi des contacts).
+- **Pourquoi** : le fondateur travaille sous Sheets ; le dashboard donne la vue d'ensemble et permet
+  de défendre une cible en comité en montrant d'où vient chaque point.
 - **Limite** : l'export Sheets n'a pas été testé sur un vrai classeur (testé avec un faux).
 
 ### `n8n/`

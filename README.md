@@ -1,14 +1,19 @@
-# pme-radar 📡
+<p align="center"><img src="docs/img/banner.png" alt="pme-radar : moteur d'origination open source pour search funds" width="100%"></p>
 
-[![CI](https://github.com/Mateo-MoralesLeGuillou/pme-radar/actions/workflows/ci.yml/badge.svg)](https://github.com/Mateo-MoralesLeGuillou/pme-radar/actions/workflows/ci.yml)
+<p align="center">
+  <a href="https://github.com/Mateo-MoralesLeGuillou/pme-radar/actions/workflows/ci.yml"><img src="https://github.com/Mateo-MoralesLeGuillou/pme-radar/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <img src="https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-25c2f5" alt="Python 3.11 à 3.13">
+  <img src="https://img.shields.io/badge/typage-mypy-1f5f8b" alt="Typage mypy">
+  <img src="https://img.shields.io/badge/style-ruff-d7ff64" alt="Ruff">
+  <img src="https://img.shields.io/badge/licence-MIT-9aa0c8" alt="Licence MIT">
+</p>
 
-🎬 **[Vidéo de présentation (58 s)](docs/video/pme-radar-promo.mp4)** · régénérable avec `scripts/promo/build.sh`
-
-![Entonnoir](docs/img/dashboard-entonnoir.png)
-![Distribution des scores](docs/img/dashboard-scores.png)
-![Détail d'une cible](docs/img/dashboard-detail-cible.png)
-
-*Captures du dashboard sur l'échantillon **synthétique** (`examples/`).*
+<p align="center">
+  <img src="docs/img/demo.gif" alt="Animation : les 343 sociétés du run réel traversent le pipeline, 29 sont exclues, 35 qualifiées" width="860">
+  <br>
+  <b><a href="docs/video/pme-radar-promo.mp4">🎬 Vidéo de présentation (77 s, avec son)</a></b>
+  · générée par <code>scripts/promo/build_video.sh</code>
+</p>
 
 > **Moteur d'origination open source pour search fund français** : il transforme l'open data en une
 > liste courte de PME transmissibles, notées de façon explicable, avec brouillon d'approche et
@@ -23,6 +28,19 @@
 > (API Recherche d'entreprises, BODACC, ratios BCE/INPI) ; les paramètres et champs sont confirmés (voir
 > [`PLAN.md`](PLAN.md)). **Non exécutés en réel** : provider Anthropic, Google Sheets, workflow n8n.
 > Le mode `--offline` (fixtures synthétiques) reste la référence des tests et de la CI.
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/img/dashboard-entonnoir.png" alt="Vue d'ensemble"><br><sub><b>Vue d'ensemble</b> · KPI, entonnoir, qualifiées par département</sub></td>
+    <td width="50%"><img src="docs/img/dashboard-detail-cible.png" alt="Fiche cible"><br><sub><b>Fiche cible</b> · jauge, points par critère, mini-thèse, brouillon à relire</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/img/dashboard-scores.png" alt="Distribution des scores"><br><sub><b>Distribution des scores</b> · seuil de qualification, profil type</sub></td>
+    <td width="50%"><img src="docs/img/dashboard-campagne.png" alt="Campagne"><br><sub><b>Campagne</b> · délivrabilité, statuts, suivi des contacts</sub></td>
+  </tr>
+</table>
+
+*Captures du dashboard sur l'échantillon **synthétique** (`examples/`) : aucune donnée réelle.*
 
 ## Run réel (département 92, 2026-11-04) — chiffres agrégés
 
