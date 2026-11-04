@@ -786,7 +786,9 @@
       hl.style.opacity = kp.toFixed(3);
       hl.style.boxShadow = `0 0 ${(20 + 25 * Math.sin(t * 7) ** 2).toFixed(0)}px rgba(37,194,245,.65)`;
       co1.style.opacity = win(t, 57.3, 59.3, 0.3, 0.3).toFixed(3);
-      co1.style.transform = `translate(${(cx + 36).toFixed(1)}px,${(cy - 78).toFixed(1)}px)`;
+      const co1w = co1.offsetWidth; // à gauche du curseur s'il déborderait de l'image
+      const co1x = cx + 36 + co1w > 1880 ? cx - 36 - co1w : cx + 36;
+      co1.style.transform = `translate(${co1x.toFixed(1)}px,${(cy - 78).toFixed(1)}px)`;
       co2.style.opacity = win(t, 58.3, 59.4, 0.3, 0.3).toFixed(3);
       co3.style.opacity = (P(t, 61.0, 0.5) * hout).toFixed(3);
       co3.style.transform = `translateY(${((1 - P(t, 61.0, 0.6, E.out5)) * 20).toFixed(1)}px)`;
