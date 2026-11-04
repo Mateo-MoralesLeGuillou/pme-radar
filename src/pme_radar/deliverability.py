@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from typing import Protocol
 
@@ -60,7 +61,7 @@ def check_mx(r: Resolver, domain: str) -> Check:
 
 
 def check_spf(r: Resolver, domain: str) -> Check:
-    recs = [t for t in r.txt(domain) if t.lower().startswith("v=spf1")]
+    recs = [t.strip() for t in r.txt(domain) if t.strip().lower().startswith("v=spf1")]
     if not recs:
         return Check(
             "SPF",
@@ -76,15 +77,23 @@ def check_spf(r: Resolver, domain: str) -> Check:
             "Fusionner en un seul enregistrement SPF.",
         )
     rec = recs[0].lower()
-    if rec.endswith("-all"):
+    m = re.search(r"(?:^|\s)([-~?+]?)all(?:\s|$)", rec)
+    if m is None:
+        if "redirect=" in rec:  # politique déléguée à un autre domaine : valide
+            return Check("SPF", "ok", recs[0] + " (politique déléguée via redirect=)")
+        return Check("SPF", "fail", recs[0], "Terminer par -all (ou ~all).")
+    qualifier = m.group(1) or "+"
+    if qualifier == "-":
         return Check("SPF", "ok", recs[0])
-    if rec.endswith("~all"):
+    if qualifier == "~":
         return Check("SPF", "warn", recs[0], "Passer de ~all à -all une fois les flux validés.")
     return Check("SPF", "fail", recs[0], "Terminer par -all (ou ~all) ; éviter ?all et +all.")
 
 
 def check_dmarc(r: Resolver, domain: str) -> Check:
-    recs = [t for t in r.txt(f"_dmarc.{domain}") if t.lower().startswith("v=dmarc1")]
+    recs = [
+        t.strip() for t in r.txt(f"_dmarc.{domain}") if t.strip().lower().startswith("v=dmarc1")
+    ]
     if not recs:
         return Check(
             "DMARC",
@@ -93,8 +102,15 @@ def check_dmarc(r: Resolver, domain: str) -> Check:
             "Publier _dmarc : « v=DMARC1; p=none; rua=mailto:dmarc@<domaine> » pour "
             "commencer, puis durcir.",
         )
+    if len(recs) > 1:
+        return Check(
+            "DMARC",
+            "fail",
+            "plusieurs enregistrements DMARC (ignorés par les destinataires)",
+            "Ne garder qu'un seul enregistrement TXT sur _dmarc.",
+        )
     tags = {
-        kv.split("=", 1)[0].strip(): kv.split("=", 1)[1].strip()
+        kv.split("=", 1)[0].strip().lower(): kv.split("=", 1)[1].strip()
         for kv in recs[0].split(";")
         if "=" in kv
     }

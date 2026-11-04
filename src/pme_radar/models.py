@@ -61,6 +61,7 @@ class TargetAnalysis(BaseModel):
     email_body: str
     prompt_version: str = ""
     provider: str = ""
+    facts_hash: str = ""  # empreinte des faits transmis (réutilisation sans nouvel appel)
 
 
 class Company(BaseModel):

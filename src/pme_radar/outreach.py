@@ -28,7 +28,14 @@ _DATE_FIELD = {
 }
 
 
-def drafts_frame(companies: list[Company]) -> pd.DataFrame:
+def with_footer(body: str, footer: str | None) -> str:
+    """Ajoute la mention de conformité (source des données + droit d'opposition), déterministe :
+    elle ne dépend pas du LLM et ne peut donc pas être oubliée ou reformulée (ADR-016)."""
+    footer = (footer or "").strip()
+    return f"{body.rstrip()}\n\n--\n{footer}" if footer else body
+
+
+def drafts_frame(companies: list[Company], footer: str | None = None) -> pd.DataFrame:
     """Brouillons à RELIRE par un humain avant tout envoi."""
     rows = []
     for c in companies:
@@ -43,7 +50,7 @@ def drafts_frame(companies: list[Company]) -> pd.DataFrame:
                 "director": director,
                 "score": c.score.total if c.score else None,
                 "subject": c.analysis.email_subject,
-                "body": c.analysis.email_body,
+                "body": with_footer(c.analysis.email_body, footer),
                 "review_status": "À RELIRE - ne pas envoyer sans validation humaine",
             }
         )

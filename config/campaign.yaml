@@ -3,3 +3,10 @@ bounce_rate:   { warning: 0.02, critical: 0.05 }   # au-delà : stopper l'envoi,
 reply_rate:    { warning_below: 0.05 }             # en-deçà : revoir le ciblage / le message
 meeting_rate:  { warning_below: 0.01 }
 min_sample: 20            # en-dessous, les taux ne sont pas jugés (échantillon trop faible)
+
+# Mention ajoutée à la fin de CHAQUE brouillon (RGPD : source des données + droit d'opposition).
+# Indépendante du LLM. Adapter l'identité de l'expéditeur avant tout envoi (ADR-016).
+compliance_footer: >-
+  Vos coordonnées professionnelles proviennent de sources publiques (annuaire des entreprises,
+  data.gouv.fr). Si vous ne souhaitez pas être recontacté, une simple réponse suffit : je ne
+  vous solliciterai plus et vos données seront supprimées de mon fichier.

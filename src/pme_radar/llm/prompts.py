@@ -5,6 +5,7 @@ Le LLM ne touche jamais au score : il rédige une analyse qualitative et un brou
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 
@@ -85,7 +86,8 @@ class _Validated(TargetAnalysis):
     @classmethod
     def _tone(cls, v: str) -> str:
         low = v.lower()
-        bad = [w for w in FORBIDDEN if w in low]
+        # mots entiers (+ accords) : « garantie » est refusé, « sans rien garantir » est accepté
+        bad = [w for w in FORBIDDEN if re.search(rf"\b{re.escape(w)}(e|s|es)?\b", low)]
         if bad:
             raise ValueError(f"formulation interdite dans l'email : {bad}")
         if len(v.split()) > 200:
@@ -105,3 +107,10 @@ def parse_analysis(raw: str, provider: str) -> TargetAnalysis:
     except (json.JSONDecodeError, ValidationError) as exc:
         raise ValueError(f"sortie LLM invalide : {exc}") from exc
     return TargetAnalysis(**obj.model_dump())
+
+
+def facts_fingerprint(c: Company, provider: str) -> str:
+    """Empreinte (faits transmis + version du prompt + fournisseur) : si elle ne change pas,
+    l'analyse précédente est réutilisée au lieu de repayer un appel LLM (ADR-015)."""
+    payload = json.dumps(company_facts(c), ensure_ascii=False, default=str, sort_keys=True)
+    return hashlib.sha256(f"{PROMPT_VERSION}|{provider}|{payload}".encode()).hexdigest()[:16]

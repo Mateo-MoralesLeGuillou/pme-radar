@@ -93,13 +93,25 @@ def sheets_configured() -> bool:
     return bool(os.getenv("GOOGLE_APPLICATION_CREDENTIALS") and os.getenv("GOOGLE_SHEET_ID"))
 
 
+def _worksheet_not_found() -> tuple[type[Exception], ...]:
+    """Exception « onglet absent » : seule celle-ci déclenche la création d'un onglet (une erreur
+    d'authentification ou de quota doit remonter telle quelle)."""
+    try:
+        from gspread.exceptions import WorksheetNotFound
+
+        return (WorksheetNotFound, KeyError)
+    except ImportError:  # gspread non installé (tests avec un faux classeur)
+        return (KeyError,)
+
+
 def export_sheets(spreadsheet: Any, tabs: dict[str, pd.DataFrame]) -> None:
     """Écrit un onglet par DataFrame (créé s'il n'existe pas, vidé sinon)."""
+    not_found = _worksheet_not_found()
     for name, df in tabs.items():
         try:
             ws = spreadsheet.worksheet(name)
             ws.clear()
-        except Exception:  # onglet absent (gspread.WorksheetNotFound)
+        except not_found:
             ws = spreadsheet.add_worksheet(
                 title=name, rows=max(len(df) + 1, 10), cols=max(len(df.columns), 5)
             )
