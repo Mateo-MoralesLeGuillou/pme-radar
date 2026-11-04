@@ -4,6 +4,7 @@ from typer.testing import CliRunner
 from pme_radar import export
 from pme_radar.cli import app
 from pme_radar.enrich import normalize
+from pme_radar.store import read_companies
 
 from .conftest import AS_OF, ROOT, raw_company
 
@@ -79,6 +80,15 @@ def test_cli_run_offline_end_to_end(tmp_path, monkeypatch):
     assert CliRunner().invoke(app, ["track", sir, "contacted", "--data-dir", data]).exit_code == 0
     r = CliRunner().invoke(app, ["deliverability", "--data-dir", data])
     assert r.exit_code == 0 and "sent" in r.output
+
+
+def test_sample_companies_are_synthetic_and_complete():
+    """Échantillon du dashboard (mode Démo) : synthétique, noté, avec brouillons pour le top."""
+    sample = read_companies(ROOT / "examples" / "sample_companies.jsonl")
+    assert len(sample) == 45 and all(c.siren.startswith("999") for c in sample)
+    assert all(c.score is not None for c in sample)
+    assert sum(c.analysis is not None for c in sample) >= 10
+    assert len({c.name for c in sample}) == len(sample)  # pas d'homonymes
 
 
 def test_sample_targets_consistent_with_pipeline():

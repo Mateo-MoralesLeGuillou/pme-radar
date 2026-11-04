@@ -4,7 +4,8 @@
   versionné, ces agrégats sont la source).
 - Cible, dossier de pré-DD et brouillon : meilleure cible d'un run hors ligne (données SYNTHÉTIQUES).
 - Nombre de tests : collecté par pytest au moment du rendu.
-- Positions du curseur de score : détectées sur les captures du dashboard (pixels cyan).
+- Positions animées (curseur de score, bouton « Ouvrir ») : mesurées par le navigateur pendant
+  les captures du dashboard (layout.json).
 
 Usage : python scripts/promo/motion/facts.py <dossier_captures> <dossier_data> > facts.json
 """
@@ -16,32 +17,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-import numpy as np
-from PIL import Image
-
 ROOT = Path(__file__).resolve().parents[3]
 RUN_92 = {"sourced": 343, "excluded": 29, "scored": 314, "qualified": 35, "date": "4 novembre 2026"}
-
-
-def slider_handle(path: Path) -> list[float]:
-    """Centre de la poignée du curseur « Score minimum » (coordonnées CSS d'une page de 1440 px)."""
-    im = np.asarray(Image.open(path).convert("RGB")).astype(int)
-    scale = im.shape[1] / 1440
-    y0, y1, x1 = int(300 * scale), int(800 * scale), int(300 * scale)
-    zone = im[y0:y1, :x1]
-    cyan = (
-        (abs(zone[..., 0] - 37) < 45)
-        & (abs(zone[..., 1] - 194) < 45)
-        & (abs(zone[..., 2] - 245) < 45)
-    )
-    cols = cyan.sum(axis=0)
-    tall = np.where(cols >= 22 * scale / 2)[0]  # colonnes traversant le disque (pas le texte)
-    if len(tall) == 0:
-        raise SystemExit(f"Poignée du curseur introuvable dans {path}")
-    groups = np.split(tall, np.where(np.diff(tall) > 2)[0] + 1)
-    best = max(groups, key=lambda g: cols[g].sum())
-    ys = np.where(cyan[:, best].any(axis=1))[0]
-    return [round(float(best.mean()) / scale, 1), round((y0 + float(np.median(ys))) / scale, 1)]
 
 
 def main(captures: Path, data_dir: Path) -> None:
@@ -121,10 +98,8 @@ def main(captures: Path, data_dir: Path) -> None:
         "tests": sum(1 for line in collected.splitlines() if "::" in line),
         "threshold": scoring_cfg["qualified_threshold"],
         "repo": "github.com/Mateo-MoralesLeGuillou/pme-radar",
-        "layout": {
-            "slider_from": slider_handle(captures / "overview_top.png"),
-            "slider_to": slider_handle(captures / "overview_filtered.png"),
-        },
+        # positions (px CSS, page de 1440 px) mesurées par le navigateur lors des captures
+        "layout": json.loads((captures / "layout.json").read_text(encoding="utf-8")),
     }
     print(json.dumps(facts, ensure_ascii=False, default=str))
 

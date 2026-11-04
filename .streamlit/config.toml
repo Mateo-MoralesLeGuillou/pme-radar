@@ -1,10 +1,24 @@
 [theme]
 base = "dark"
 primaryColor = "#25c2f5"
-backgroundColor = "#23233f"
-secondaryBackgroundColor = "#1a1a30"
-textColor = "#e8eaf6"
+backgroundColor = "#0f1629"
+secondaryBackgroundColor = "#172038"
+textColor = "#e6ebf5"
+borderColor = "#26304a"
+dataframeBorderColor = "#232c45"
+dataframeHeaderBackgroundColor = "#1a2340"
+showWidgetBorder = true
+baseRadius = "10px"
+buttonRadius = "10px"
 font = "sans serif"
+metricValueFontWeight = 700
+greenColor = "#2ee6a6"
+orangeColor = "#ffb547"
+redColor = "#ff6b81"
+violetColor = "#8c9bff"
+blueColor = "#25c2f5"
+linkUnderline = false
+chartCategoricalColors = ["#25c2f5", "#2ee6a6", "#ffb547", "#8c9bff", "#ff6b81", "#7b86a6"]
 
 [client]
 toolbarMode = "viewer"

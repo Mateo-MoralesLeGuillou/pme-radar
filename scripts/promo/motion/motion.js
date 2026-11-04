@@ -766,7 +766,7 @@
       reveal(s6h.spans, t, 54.6, 0.05);
       reveal(s6sub.spans, t, 55.0, 0.03);
       s6h.box.style.opacity = s6sub.box.style.opacity = hout.toFixed(3);
-      // états du dashboard : vue d'ensemble -> filtrée -> fiche cible
+      // états du dashboard : liste des cibles -> filtrée (score ≥ 80) -> fiche ouverte depuis le tableau
       imgB.style.opacity = P(t, 57.4, 0.5, E.io3).toFixed(3);
       const sl = P(t, 59.5, 0.8, E.io5);
       imgA.style.transform = imgB.style.transform = `translateY(${(-VH * sl).toFixed(1)}px)`;
@@ -774,7 +774,7 @@
       imgC.style.transform = `translateY(${(VH * (1 - sl)).toFixed(1)}px) scale(${lerp(1, 1.18, zoom).toFixed(4)})`;
       // curseur
       const [ax, ay] = toStage(F.layout.slider_from), [bx, by] = toStage(F.layout.slider_to);
-      const tabXY = toStage([505, 333]);
+      const tabXY = toStage(F.layout.open);
       let cx = 1180, cy = 900;
       const m1 = P(t, 56.0, 0.9, E.io3), drag = P(t, 57.0, 1.0, E.io3), m2 = P(t, 58.7, 0.6, E.io3);
       cx = lerp(lerp(lerp(cx, ax, m1), bx, drag), tabXY[0], m2);
@@ -792,19 +792,20 @@
       co3.style.transform = `translateY(${((1 - P(t, 61.0, 0.6, E.out5)) * 20).toFixed(1)}px)`;
     }, SHIFT);
     const s6h = words(s6.root, "Tout le pipeline, en un coup d'œil.", "display center", 0, 44, { fontSize: "54px" });
-    const s6sub = words(s6.root, "Filtrer, comparer, suivre chaque contact.", "center muted", 0, 118, { fontSize: "25px" });
+    const s6sub = words(s6.root, "Chercher, filtrer, ouvrir la fiche complète d'une cible.", "center muted", 0, 118, { fontSize: "25px" });
     const browser = place($("div", "browser", s6.root), FR.x, FR.y, { width: `${VW}px` });
     browser.innerHTML = `<div class="bar"><i style="background:#ff6b81"></i><i style="background:#ffb547"></i><i style="background:#2ee6a6"></i><u>localhost:8501 · pme-radar</u></div>
-      <div class="viewport" style="height:${VH}px"><img class="a" src="${A.shots}/overview_top.png"><img class="b" src="${A.shots}/overview_filtered.png" style="opacity:0"><img class="c" src="${A.shots}/targets_detail.png" style="transform-origin:32% 46%"></div>`;
+      <div class="viewport" style="height:${VH}px"><img class="a" src="${A.shots}/screener.png"><img class="b" src="${A.shots}/screener_filtered.png" style="opacity:0"><img class="c" src="${A.shots}/company.png" style="transform-origin:50% 45%"></div>`;
     const imgA = browser.querySelector(".a"), imgB = browser.querySelector(".b"), imgC = browser.querySelector(".c");
-    const KPI = { x0: 381, y0: 200, x1: 1359, y1: 296 };
+    const [kx0, ky0, kx1, ky1] = F.layout.count;
+    const KPI = { x0: kx0 - 8, y0: ky0 - 4, x1: kx1 + 8, y1: ky1 + 4 };
     const [hx0, hy0] = toStage([KPI.x0 - 6, KPI.y0 - 6]), [hx1, hy1] = toStage([KPI.x1 + 6, KPI.y1 + 6]);
     const hl = place($("div", "hl", s6.root), hx0, hy0, { width: `${hx1 - hx0}px`, height: `${hy1 - hy0}px`, opacity: 0 });
     const cursor = place($("div", "cursor", s6.root), 0, 0, { transformOrigin: "4px 3px" });
     cursor.innerHTML = `<svg viewBox="0 0 24 24" width="34" height="34"><path d="M4 2.5l14 11.2-6.3.9 3.6 7.1-2.9 1.4-3.5-7.2L4 20.4z" fill="#fff" stroke="#0d0d1d" stroke-width="1.4" stroke-linejoin="round"/></svg>`;
-    const co1 = place($("div", "callout", s6.root, "Score minimum, département, NAF…"), 0, 0, { opacity: 0 });
-    const co2 = place($("div", "callout", s6.root, "KPI recalculés à chaque filtre"), hx1 - 430, hy1 + 18, { opacity: 0 });
-    const co3 = place($("div", "callout", s6.root, "Fiche cible : jauge, critères, brouillon à relire"), FR.x + VW / 2, FR.y + BAR + VH - 36, { opacity: 0, marginLeft: "-290px", width: "580px", textAlign: "center" });
+    const co1 = place($("div", "callout", s6.root, "Score minimum, recherche, sélections rapides…"), 0, 0, { opacity: 0 });
+    const co2 = place($("div", "callout", s6.root, "Liste recalculée à chaque filtre"), hx0, hy1 + 18, { opacity: 0 });
+    const co3 = place($("div", "callout", s6.root, "Fiche entreprise : chiffres clés, valorisation, due diligence"), FR.x + VW / 2, FR.y + BAR + VH - 36, { opacity: 0, marginLeft: "-290px", width: "580px", textAlign: "center" });
     CUES.push({ t: 57.0 + SHIFT, type: "click" }, { t: 58.1 + SHIFT, type: "click" }, { t: 59.28 + SHIFT, type: "click" });
 
     // ================================================================ S7 · confiance

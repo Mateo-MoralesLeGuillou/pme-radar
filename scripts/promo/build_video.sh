@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Vidéo de présentation pme-radar (motion design, 1080p 60 i/s, bande-son synthétisée, voix off option.).
-#   1. run hors ligne + rapport de deal flow (données synthétiques) ; captures du dashboard et du rapport
+#   1. run hors ligne + rapport de deal flow (données synthétiques) ; captures du dashboard (vidéo et
+#      README : docs/img/dashboard-*.png) et du rapport
 #   2. faits affichés (agrégats réels du run 92, dossier de pré-DD de la meilleure cible, nombre de tests)
 #   3. rendu image par image de scripts/promo/motion (Playwright -> ffmpeg)
 #   4. voix off ElevenLabs si ELEVENLABS_API_KEY est définie, puis bande-son mixée (numpy)
@@ -18,7 +19,7 @@ fi
 FPS="${FPS:-60}"
 TMP="$(mktemp -d)"
 PORT=8611
-streamlit run dashboard/app.py --server.headless true --server.port "$PORT" \
+PME_RADAR_DATA=sample streamlit run dashboard/app.py --server.headless true --server.port "$PORT" \
   --browser.gatherUsageStats false >/dev/null 2>&1 &
 ST_PID=$!
 cleanup() { kill "$ST_PID" 2>/dev/null || true; rm -rf "$TMP"; }
@@ -30,6 +31,7 @@ cp examples/sample_campaign.csv "$TMP/data/out/campaign.csv"
 pme-radar report --data-dir "$TMP/data" --top-n 4 --output "$TMP/rapport.html" >/dev/null
 node scripts/promo/capture_report.js "$TMP/rapport.html" "$TMP"
 node scripts/promo/capture_dashboard.js "$TMP" "$PORT"
+cp "$TMP"/dashboard-*.png docs/img/  # captures du README, toujours sur l'échantillon synthétique
 kill "$ST_PID" 2>/dev/null || true
 
 echo "2/5 Faits affichés"

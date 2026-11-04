@@ -152,6 +152,14 @@ def test_campaign_tracking(tmp_path, scoring_cfg, thesis):
         outreach.update_status(path, c.siren, "sent")
     with pytest.raises(KeyError):
         outreach.update_status(path, "000", "contacted")
+    # contact pris hors brouillon : ajouté au suivi avec la campagne indiquée
+    outreach.update_status(path, "000", "contacted", date(2026, 11, 6), campaign_id="manuel")
+    added = outreach.load_campaign(path).set_index("siren").loc["000"]
+    assert (added.campaign_id, added.status, added.sent_date) == (
+        "manuel",
+        "contacted",
+        "2026-11-06",
+    )
 
 
 def test_drafts_marked_for_human_review():

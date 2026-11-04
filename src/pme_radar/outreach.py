@@ -88,13 +88,23 @@ def init_campaign(companies: list[Company], campaign_id: str, path: Path) -> pd.
 
 
 def update_status(
-    path: Path, siren: str, status: str, on: date | None = None, note: str = ""
+    path: Path,
+    siren: str,
+    status: str,
+    on: date | None = None,
+    note: str = "",
+    campaign_id: str | None = None,
 ) -> None:
-    """Met à jour le statut d'une cible (saisie manuelle après envoi/réponse)."""
+    """Met à jour le statut d'une cible (saisie manuelle après envoi/réponse). Avec `campaign_id`,
+    une cible absente du suivi y est ajoutée (contact pris hors brouillon : appel, salon…)."""
     if status not in STATUSES:
         raise ValueError(f"Statut inconnu : {status} (attendu : {', '.join(STATUSES)})")
     df = load_campaign(path)
     mask = df["siren"] == siren
+    if not mask.any() and campaign_id:
+        row = dict.fromkeys(CAMPAIGN_COLS, "") | {"siren": siren, "campaign_id": campaign_id}
+        df = pd.concat([df, pd.DataFrame([row], columns=CAMPAIGN_COLS)], ignore_index=True)
+        mask = df["siren"] == siren
     if not mask.any():
         raise KeyError(f"SIREN {siren} absent du suivi de campagne")
     day = (on or date.today()).isoformat()

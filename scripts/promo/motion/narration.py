@@ -47,8 +47,8 @@ SEGMENTS = [
     Segment(56.6, "L'IA rédige le brouillon d'approche. Mais rien ne part sans relecture humaine.",
             "L'intelligence artificielle rédige le brouillon d'approche. Mais rien ne part sans "
             "relecture humaine."),
-    Segment(68.0, "Tout le pipeline se pilote depuis un tableau de bord : filtres, indicateurs, suivi "
-                  "des contacts."),
+    Segment(68.0, "Tout se pilote depuis un tableau de bord : une recherche, un filtre, et la fiche "
+                  "complète de chaque cible."),
     Segment(78.3, "Score déterministe, données publiques, conformité RGPD : un outil conçu pour la "
                   "confiance.",
             "Score déterministe, données publiques, conformité R.G.P.D. : un outil conçu pour la "
