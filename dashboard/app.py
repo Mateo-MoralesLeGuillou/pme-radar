@@ -58,7 +58,8 @@ st.plotly_chart(hist, width="stretch")
 # --- Top 20 ---------------------------------------------------------------
 st.subheader("Top 20 cibles")
 top = scored.sort_values("score", ascending=False).head(20).reset_index(drop=True)
-st.dataframe(top[["siren", "name", "naf_code", "city", "director_age", "revenue_last", "net_margin",
+st.dataframe(top[["siren", "name", "naf_code", "city", "director_age", "revenue_last", "ebe_margin",
+                  "net_margin",
                   "score", "stage"]], hide_index=True, width="stretch")
 choice = st.selectbox("Détail du score", top["name"] if len(top) else [])
 if choice:

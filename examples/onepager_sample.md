@@ -1,3 +1,5 @@
+> Cible **synthétique** (aucune donnée réelle), générée par `pme-radar onepager` en mode `--offline`.
+
 # PELLETIER TUYAUTERIE
 
 **SIREN 999000197** · score **95/100** · statut `qualified`

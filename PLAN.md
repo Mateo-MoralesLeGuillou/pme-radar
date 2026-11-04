@@ -52,3 +52,10 @@ Voir « Avancement » ci-dessous.
 - [x] Phase 6 — Export, dashboard, `run`
 - [x] Phase 7 — Workflow n8n
 - [x] Phase 8 — Tests, CI, docs, README, memo, walkthrough
+- [x] Phase 9 — CI vérifiée (Python 3.11 et 3.12 : ruff + pytest + run offline)
+- [x] Phase 10 — Run réel dép. 92 : API, BODACC, holdings, NAF validés ; corrections 302 et `ca: 0`
+- [x] Phase 11 — EBE via ratios BCE/INPI (ADR-005), repli marge nette
+- [x] Phase 12 — `pme-radar onepager` + exemple synthétique
+- [x] Phase 13 — Captures dashboard (`docs/img/`), licence MIT
+- [ ] Run réel sur les 7 autres départements IDF ; utiliser le NAF 2025 ; noter l'endettement
+- [ ] Provider Anthropic, Google Sheets, n8n : premier run réel
