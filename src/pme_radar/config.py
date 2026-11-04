@@ -92,9 +92,12 @@ def validate_scoring(cfg: dict[str, Any]) -> dict[str, Any]:
             errors.append(f"`{key}` doit être un nombre")
     if not 0 <= cfg.get("qualified_threshold", 0) <= 100:
         errors.append("`qualified_threshold` doit être entre 0 et 100")
-    for key in ("corporate_director", "missing_financials"):
-        if cfg.get("penalties", {}).get(key, 0) > 0:
-            errors.append(f"penalties.{key} doit être négatif ou nul")
+    for key, value in (cfg.get("penalties") or {}).items():
+        if not isinstance(value, int | float) or value > 0:
+            errors.append(f"penalties.{key} doit être un nombre négatif ou nul")
+    for key, value in (cfg.get("risk_thresholds") or {}).items():
+        if not isinstance(value, int | float):
+            errors.append(f"risk_thresholds.{key} doit être un nombre")
     if errors:
         raise ConfigError("scoring.yaml invalide :\n- " + "\n- ".join(errors))
     return cfg
@@ -122,6 +125,17 @@ def validate_thesis(t: dict[str, Any]) -> dict[str, Any]:
         errors.append(f"`headcount_bands` invalides : {bad or 'liste vide'}")
     if not t.get("departments"):
         errors.append("`departments` doit être une liste non vide")
+    fin = t.get("financing")
+    if fin is not None:
+        bounds = {
+            "senior_debt_multiple": (0, 8), "max_debt_share": (0, 1), "vendor_loan_share": (0, 0.6),
+            "interest_rate": (0, 0.3), "amortization_years": (1, 15), "cash_conversion": (0, 1),
+            "min_coverage": (0, 5), "max_equity_ticket": (0, 1e9),
+        }  # fmt: skip
+        for key, (lo, hi) in bounds.items():
+            v = fin.get(key)
+            if not isinstance(v, int | float) or not lo < v <= hi:
+                errors.append(f"financing.{key} doit être compris dans ]{lo} ; {hi}]")
     val = t.get("valuation")
     if val is not None and not 0 < val.get("ebe_multiple_low", 0) <= val.get(
         "ebe_multiple_high", 0

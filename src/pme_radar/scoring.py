@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from . import labels
+from .fmt import pct
 from .models import Company, CriterionScore, ScoreBreakdown, Stage
 
 
@@ -26,10 +28,17 @@ def score_company(c: Company, cfg: dict[str, Any], tiers: dict[str, str]) -> Sco
     k = cfg["criteria"]
     rows: list[CriterionScore] = []
 
-    def add(key: str, label: str, pts: float, detail: str, spec: dict[str, Any]) -> None:
+    def add(
+        key: str, label: str, pts: float, detail: str, spec: dict[str, Any], missing: bool
+    ) -> None:
         rows.append(
             CriterionScore(
-                key=key, label=label, points=pts, max_points=spec["max_points"], detail=detail
+                key=key,
+                label=label,
+                points=pts,
+                max_points=spec["max_points"],
+                detail=detail,
+                missing=missing,
             )
         )
 
@@ -40,6 +49,7 @@ def score_company(c: Company, cfg: dict[str, Any], tiers: dict[str, str]) -> Sco
         _band_points(age, k["director_age"]["bands"]),
         f"{age} ans" if age is not None else "n.d.",
         k["director_age"],
+        age is None,
     )
     oo = k["owner_operator"]
     add(
@@ -50,6 +60,7 @@ def score_company(c: Company, cfg: dict[str, Any], tiers: dict[str, str]) -> Sco
         if c.holding_owner
         else {True: "oui", False: "non (groupe)", None: "n.d."}[c.is_owner_operator],
         oo,
+        c.is_owner_operator is None,
     )
     ns = k["no_obvious_successor"]
     solo = c.n_natural_directors == 1
@@ -57,8 +68,9 @@ def score_company(c: Company, cfg: dict[str, Any], tiers: dict[str, str]) -> Sco
         "no_obvious_successor",
         "Pas de successeur évident",
         ns["max_points"] if solo else 0,
-        f"{c.n_natural_directors} dirigeant(s) personne physique",
+        f"{c.n_natural_directors} dirigeant(s) personne physique" if c.directors else "n.d.",
         ns,
+        not c.directors,
     )
 
     rev_m = None if c.revenue_last is None else c.revenue_last / 1e6
@@ -68,14 +80,16 @@ def score_company(c: Company, cfg: dict[str, Any], tiers: dict[str, str]) -> Sco
         _band_points(rev_m, k["revenue"]["bands"]),
         _fmt_m(c.revenue_last),
         k["revenue"],
+        c.revenue_last is None,
     )
     hc = k["headcount"]
     add(
         "headcount",
         "Effectif",
         float(hc["by_band"].get(c.headcount_band or "", 0)),
-        f"tranche {c.headcount_band or 'n.d.'}",
+        labels.headcount(c.headcount_band),
         hc,
+        c.headcount_band is None,
     )
 
     prof = k["profitability"]
@@ -84,23 +98,26 @@ def score_company(c: Company, cfg: dict[str, Any], tiers: dict[str, str]) -> Sco
             "profitability",
             "Rentabilité : marge d'EBE",
             _band_points(c.ebe_margin, prof["ebe_margin_bands"]),
-            f"{c.ebe_margin:.0%} (EBE {_fmt_m(c.ebe)}, {c.ebe_year})",
+            f"{pct(c.ebe_margin, 0)} (EBE {_fmt_m(c.ebe)}, {c.ebe_year})",
             prof,
+            False,
         )
     else:
         add(
             "profitability",
             "Rentabilité : marge nette (repli, EBE n.d.)",
             _band_points(c.net_margin, prof["net_margin_bands"]),
-            "n.d." if c.net_margin is None else f"{c.net_margin:.0%}",
+            pct(c.net_margin, 0),
             prof,
+            c.net_margin is None,
         )
     add(
         "revenue_cagr",
         "Régularité / croissance du CA",
         _band_points(c.revenue_cagr, k["revenue_cagr"]["bands"]),
-        "n.d." if c.revenue_cagr is None else f"{c.revenue_cagr:+.1%}/an",
+        "n.d." if c.revenue_cagr is None else f"{pct(c.revenue_cagr, signed=True)}/an",
         k["revenue_cagr"],
+        c.revenue_cagr is None,
     )
     add(
         "company_age",
@@ -108,6 +125,7 @@ def score_company(c: Company, cfg: dict[str, Any], tiers: dict[str, str]) -> Sco
         _band_points(c.company_age_years, k["company_age"]["bands"]),
         "n.d." if c.company_age_years is None else f"{c.company_age_years} ans",
         k["company_age"],
+        c.company_age_years is None,
     )
 
     tier = tiers.get(c.naf_code or "")
@@ -118,6 +136,7 @@ def score_company(c: Company, cfg: dict[str, Any], tiers: dict[str, str]) -> Sco
         float(th["by_tier"].get(tier or "", 0)),
         f"NAF {c.naf_code or 'n.d.'} ({tier or 'hors thèse'})",
         th,
+        c.naf_code is None,
     )
 
     penalties: list[CriterionScore] = []
@@ -143,6 +162,30 @@ def score_company(c: Company, cfg: dict[str, Any], tiers: dict[str, str]) -> Sco
             )
         )
 
+    debt_limit = cfg.get("risk_thresholds", {}).get("high_debt_ratio")
+    if (
+        pen.get("high_debt")
+        and debt_limit is not None
+        and c.debt_ratio is not None
+        and c.debt_ratio > debt_limit
+    ):
+        penalties.append(
+            CriterionScore(
+                key="high_debt",
+                label="Endettement élevé",
+                points=pen["high_debt"],
+                max_points=0,
+                detail=f"{c.debt_ratio:.0f} % des capitaux propres (seuil {debt_limit:.0f} %)",
+            )
+        )
+
+    # Fiabilité : part du barème évaluée sur des données réelles. Plafond : score obtenu si chaque
+    # donnée manquante s'avérait favorable (et la pénalité « comptes non disponibles » levée).
+    total_max = sum(r.max_points for r in rows)
+    confidence = sum(r.max_points for r in rows if not r.missing) / total_max if total_max else 0.0
+    upside = sum(r.max_points - r.points for r in rows if r.missing)
+    upside -= sum(p.points for p in penalties if p.key == "missing_financials")
+
     excl = cfg.get("exclusions", {})
     if excl.get("collective_procedure") and c.has_collective_procedure:
         return ScoreBreakdown(
@@ -152,26 +195,30 @@ def score_company(c: Company, cfg: dict[str, Any], tiers: dict[str, str]) -> Sco
             excluded=True,
             exclusion_reason="procédure collective (BODACC)",
             summary="Exclue : procédure collective en cours ou passée (BODACC).",
+            confidence=round(confidence, 2),
         )
 
     total = max(0.0, min(100.0, sum(r.points for r in rows) + sum(p.points for p in penalties)))
+    ceiling = max(total, min(100.0, total + upside))
     return ScoreBreakdown(
         total=round(total, 1),
         criteria=rows,
         penalties=penalties,
-        summary=_summary(c, total, penalties),
+        summary=_summary(c, total, ceiling, penalties),
+        ceiling=round(ceiling, 1),
+        confidence=round(confidence, 2),
     )
 
 
-def _summary(c: Company, total: float, penalties: list[CriterionScore]) -> str:
+def _summary(c: Company, total: float, ceiling: float, penalties: list[CriterionScore]) -> str:
     parts = [
         f"dirigeant {c.director_age} ans"
         if c.director_age is not None
         else "âge du dirigeant n.d.",
         f"CA {_fmt_m(c.revenue_last)}",
-        f"marge d'EBE {c.ebe_margin:.0%}"
+        f"marge d'EBE {pct(c.ebe_margin, 0)}"
         if c.ebe_margin is not None
-        else f"marge nette {c.net_margin:.0%}"
+        else f"marge nette {pct(c.net_margin, 0)}"
         if c.net_margin is not None
         else "marge n.d.",
         f"{c.company_age_years} ans d'ancienneté" if c.company_age_years is not None else "",
@@ -179,6 +226,8 @@ def _summary(c: Company, total: float, penalties: list[CriterionScore]) -> str:
     text = f"{total:.0f}/100 : " + ", ".join(p for p in parts if p)
     if penalties:
         text += " ; pénalités : " + ", ".join(p.label.lower() for p in penalties)
+    if ceiling > total + 0.5:
+        text += f" ; jusqu'à {ceiling:.0f} si les données manquantes sont favorables"
     return text + "."
 
 
@@ -196,6 +245,7 @@ def score_all(
             c.stage = Stage.QUALIFIED
         else:
             c.stage = Stage.IDENTIFIED
+        c.score.to_document = c.stage == Stage.IDENTIFIED and c.score.ceiling >= threshold
     return sorted(
         companies,
         key=lambda c: (c.stage == Stage.EXCLUDED, -(c.score.total if c.score else 0.0)),

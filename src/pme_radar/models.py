@@ -39,17 +39,21 @@ class CriterionScore(BaseModel):
     points: float
     max_points: float
     detail: str
+    missing: bool = False  # donnée absente : 0 point, mais le critère reste « à documenter »
 
 
 class ScoreBreakdown(BaseModel):
     """Score explicable : points par critère + phrase lisible."""
 
-    total: float
+    total: float  # score officiel (plancher) : seules les données disponibles rapportent des points
     criteria: list[CriterionScore] = Field(default_factory=list)
     penalties: list[CriterionScore] = Field(default_factory=list)
     excluded: bool = False
     exclusion_reason: str | None = None
     summary: str = ""
+    ceiling: float = 0.0  # score atteignable si toutes les données manquantes étaient favorables
+    confidence: float = 1.0  # part des points du barème évaluée sur des données réelles (0 à 1)
+    to_document: bool = False  # sous le seuil, mais le plafond l'atteint : un appel peut trancher
 
 
 class TargetAnalysis(BaseModel):

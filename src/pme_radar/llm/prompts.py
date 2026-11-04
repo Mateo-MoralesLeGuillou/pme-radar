@@ -13,7 +13,7 @@ from pydantic import ValidationError, field_validator
 
 from ..models import Company, TargetAnalysis
 
-PROMPT_VERSION = "v1"
+PROMPT_VERSION = "v2"  # v2 : signaux factuels transmis au modèle
 FACTS_OPEN, FACTS_CLOSE = "<facts>", "</facts>"
 
 # Promesses ou pressions interdites dans un email d'approche à un cédant.
@@ -30,6 +30,9 @@ FORBIDDEN = (
 SYSTEM_PROMPT = """Tu es analyste dans un search fund français qui cherche à reprendre une PME \
 et à la diriger sur le long terme. Tu t'appuies UNIQUEMENT sur les faits fournis entre balises \
 <facts>. N'invente aucun chiffre, aucun client, aucun événement. Si une donnée manque, dis-le.
+Les « signaux_factuels » sont établis par des règles sur les données : reprends dans red_flags \
+ceux qui comptent pour un repreneur, puis ajoute tes propres hypothèses en les présentant comme \
+telles.
 Réponds par un unique objet JSON, sans texte autour, avec exactement les clés :
 - "mini_thesis" : liste de 3 phrases courtes (pourquoi un repreneur pourrait s'y intéresser) ;
 - "red_flags" : liste de signaux d'alerte (dépendance client, cyclicité, activité liée à la \
@@ -62,7 +65,10 @@ _FIELDS = (
 
 def company_facts(c: Company) -> dict:
     """Faits minimisés transmis au LLM (RGPD : nom du dirigeant seulement pour la salutation)."""
+    from ..risks import assess  # import local : risks dépend des modèles, pas de la couche IA
+
     facts = {k: getattr(c, k) for k in _FIELDS}
+    facts["signaux_factuels"] = [f"{s.title} : {s.detail}" for s in assess(c)]
     person = c.main_person()
     facts["director_name"] = person.name if person else None
     facts["score_summary"] = c.score.summary if c.score else None

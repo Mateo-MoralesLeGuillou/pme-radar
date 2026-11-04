@@ -44,6 +44,16 @@ criteria:
 penalties:
   corporate_director: -10    # dirigeant personne morale : probable filiale / holding de groupe
   missing_financials: -5     # comptes absents ou confidentiels (pénalité légère, pas d'exclusion)
+  high_debt: -5              # endettement INPI au-dessus de risk_thresholds.high_debt_ratio (ADR-019)
+
+# Seuils des signaux factuels du rapport de deal flow (risks.py) et de la pénalité d'endettement.
+risk_thresholds:
+  high_debt_ratio: 150       # dettes en % des capitaux propres (ratios BCE/INPI)
+  low_ebe_margin: 0.05       # marge d'EBE jugée faible
+  low_net_margin: 0.03       # repli quand l'EBE n'est pas disponible
+  declining_cagr: -0.03      # CA en baisse au-delà de -3 %/an
+  stale_accounts_years: 3    # EBE plus ancien que N ans : comptes à actualiser
+  min_confidence: 0.7        # fiabilité minimale pour recommander une approche directe
 
 exclusions:
   collective_procedure: true # procédure collective BODACC => statut "excluded"

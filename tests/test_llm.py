@@ -6,7 +6,7 @@ from pme_radar.enrich import normalize
 from pme_radar.llm.analysis import analyze_company, analyze_top, get_provider
 from pme_radar.llm.base import LLMProvider
 from pme_radar.llm.mock_provider import MockLLM
-from pme_radar.llm.prompts import build_user_prompt, parse_analysis
+from pme_radar.llm.prompts import PROMPT_VERSION, build_user_prompt, company_facts, parse_analysis
 from pme_radar.models import Stage
 from pme_radar.scoring import score_all
 
@@ -23,7 +23,8 @@ def test_mock_is_deterministic_and_valid(scoring_cfg, thesis):
     p = MockLLM()
     a = analyze_company(c, p).analysis
     b = analyze_company(company(scoring_cfg, thesis), p).analysis
-    assert a == b and len(a.mini_thesis) == 3 and a.provider == "mock" and a.prompt_version == "v1"
+    assert a == b and len(a.mini_thesis) == 3 and a.provider == "mock"
+    assert a.prompt_version == PROMPT_VERSION
     assert "parfaitement" in a.email_body  # le refus est explicitement entendable
     assert "6,0 M€" in a.mini_thesis[1]
 
@@ -199,3 +200,11 @@ def test_anthropic_truncated_answer_is_explicit():
     p = AnthropicProvider(client=_fake_client(stop_reason="max_tokens", text='{"mini'))
     with pytest.raises(RuntimeError, match="tronquée"):
         p.complete("s", "u")
+
+
+def test_factual_signals_reach_the_model(scoring_cfg, thesis):
+    c = company(scoring_cfg, thesis, finances={})
+    facts = company_facts(c)
+    assert any(f.startswith("Comptes non publiés") for f in facts["signaux_factuels"])
+    flags = analyze_company(c, MockLLM()).analysis.red_flags
+    assert flags[0].endswith("(signal factuel).") and flags[-1].startswith("Hypothèse")

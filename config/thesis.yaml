@@ -34,3 +34,14 @@ categories: ["PME"]
 valuation:
   ebe_multiple_low: 4.0
   ebe_multiple_high: 6.0
+
+# Montage LBO indicatif du rapport de deal flow (ordre de grandeur, à confronter aux banques).
+financing:
+  senior_debt_multiple: 2.5  # dette senior = 2,5 x EBE
+  max_debt_share: 0.6        # plafonnée à 60 % du prix
+  vendor_loan_share: 0.10    # crédit vendeur, en part du prix
+  interest_rate: 0.055       # taux annuel de la dette senior
+  amortization_years: 7      # durée d'amortissement
+  cash_conversion: 0.6       # part de l'EBE disponible pour la dette (après IS, investissements, BFR)
+  min_coverage: 1.3          # couverture du service de la dette jugée confortable
+  max_equity_ticket: 6000000 # fonds propres au-delà desquels la levée du searcher devient difficile
