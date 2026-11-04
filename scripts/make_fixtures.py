@@ -245,6 +245,32 @@ def build() -> tuple[dict, dict]:
     return {"results": results}, bodacc, {"results": holdings}
 
 
+def build_ratios(results: list[dict]) -> dict:
+    """Lignes « ratios INPI » synthétiques (EBE, endettement), RNG séparé : autres sorties stables."""
+    r = random.Random(3000)
+    rows = []
+    for i, c in enumerate(results):
+        if i % 5 == 4:  # pas de ratios publiés pour 1 société sur 5
+            continue
+        ca0 = next((v["ca"] for v in c["finances"].values() if v.get("ca")), None)
+        years = range(2020, 2025)
+        base = ca0 or r.choice([2.5, 5, 9]) * 1e6
+        ebe_m = r.uniform(0.0, 0.17)
+        for k, y in enumerate(years):
+            ca = int(base * (1.03 ** (k - 4)))
+            partial = i % 7 == 3 and y == 2024  # dernier bilan partiellement confidentiel
+            rows.append({
+                "siren": c["siren"],
+                "date_cloture_exercice": f"{y}-12-31",
+                "chiffre_d_affaires": 0 if partial else ca,
+                "ebe": 0 if partial else int(ca * ebe_m * r.uniform(0.85, 1.15)),
+                "resultat_net": int(ca * ebe_m * 0.45),
+                "taux_d_endettement": round(r.uniform(5, 140), 3),
+                "confidentiality": "Partiellement confidentiel" if partial else "Public",
+            })
+    return {"total_count": len(rows), "results": rows}
+
+
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
     search, bodacc, holdings = build()
@@ -256,5 +282,8 @@ if __name__ == "__main__":
     )
     (OUT / "recherche_entreprises_holdings.json").write_text(
         json.dumps(holdings, ensure_ascii=False, indent=1), encoding="utf-8"
+    )
+    (OUT / "inpi_ratios.json").write_text(
+        json.dumps(build_ratios(search["results"]), ensure_ascii=False, indent=1), encoding="utf-8"
     )
     print(f"{len(search['results'])} entreprises synthétiques, {len(bodacc['results'])} procédures")

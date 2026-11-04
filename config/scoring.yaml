@@ -2,7 +2,7 @@
 # Les barèmes sont des listes de paliers : le premier palier dont `min` est atteint (et `max` non
 # dépassé) donne ses points. Donnée manquante = 0 point sur le critère (jamais de zéro inventé).
 
-qualified_threshold: 65      # score >= seuil -> statut "qualified" (calibré sur run réel, ADR-011)
+qualified_threshold: 70      # score >= seuil -> statut "qualified" (calibré sur run réel, ADR-011)
 top_n_drafts: 10             # nombre de cibles passées à la couche IA
 
 criteria:
@@ -24,10 +24,12 @@ criteria:
     max_points: 10
     by_band: { "11": 5, "12": 10, "21": 10, "22": 7, "31": 4 }
   # --- Qualité (20) ---
-  net_margin:
+  profitability:             # marge d'EBE si disponible (ratios INPI, ADR-005), sinon marge nette
     max_points: 8
-    bands: [{ min: 0.08, points: 8 }, { min: 0.05, points: 6 }, { min: 0.03, points: 4 },
-            { min: 0.0, points: 2 }]
+    ebe_margin_bands: [{ min: 0.12, points: 8 }, { min: 0.08, points: 6 }, { min: 0.05, points: 4 },
+                       { min: 0.0, points: 2 }]
+    net_margin_bands: [{ min: 0.08, points: 8 }, { min: 0.05, points: 6 }, { min: 0.03, points: 4 },
+                       { min: 0.0, points: 2 }]
   revenue_cagr:              # régularité / croissance du CA
     max_points: 6
     bands: [{ min: 0.05, points: 6 }, { min: 0.0, points: 4 }, { min: -0.05, points: 2 }]

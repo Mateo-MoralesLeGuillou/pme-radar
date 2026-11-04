@@ -1,0 +1,1625 @@
+{
+ "total_count": 180,
+ "results": [
+  {
+   "siren": "999000001",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 11722915,
+   "ebe": 1201510,
+   "resultat_net": 572946,
+   "taux_d_endettement": 42.879,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000001",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 12074603,
+   "ebe": 1369386,
+   "resultat_net": 590134,
+   "taux_d_endettement": 24.007,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000001",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 12436841,
+   "ebe": 1421611,
+   "resultat_net": 607838,
+   "taux_d_endettement": 64.762,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000001",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 12809946,
+   "ebe": 1274638,
+   "resultat_net": 626073,
+   "taux_d_endettement": 78.674,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000001",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 13194245,
+   "ebe": 1310303,
+   "resultat_net": 644856,
+   "taux_d_endettement": 33.618,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000008",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 6994807,
+   "ebe": 1065034,
+   "resultat_net": 446265,
+   "taux_d_endettement": 47.23,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000008",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 7204651,
+   "ebe": 1058338,
+   "resultat_net": 459653,
+   "taux_d_endettement": 62.291,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000008",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 7420790,
+   "ebe": 984004,
+   "resultat_net": 473443,
+   "taux_d_endettement": 108.119,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000008",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 7643414,
+   "ebe": 1100435,
+   "resultat_net": 487646,
+   "taux_d_endettement": 139.407,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000008",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 7872717,
+   "ebe": 1022377,
+   "resultat_net": 502275,
+   "taux_d_endettement": 138.052,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000015",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 4442435,
+   "ebe": 311528,
+   "resultat_net": 132585,
+   "taux_d_endettement": 139.0,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000015",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 4575708,
+   "ebe": 322155,
+   "resultat_net": 136562,
+   "taux_d_endettement": 48.735,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000015",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 4712979,
+   "ebe": 278354,
+   "resultat_net": 140659,
+   "taux_d_endettement": 122.323,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000015",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 4854368,
+   "ebe": 358202,
+   "resultat_net": 144879,
+   "taux_d_endettement": 80.218,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000015",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 5000000,
+   "ebe": 325402,
+   "resultat_net": 149225,
+   "taux_d_endettement": 15.933,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000022",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 892744,
+   "ebe": 91915,
+   "resultat_net": 40391,
+   "taux_d_endettement": 91.167,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000022",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 919527,
+   "ebe": 93529,
+   "resultat_net": 41603,
+   "taux_d_endettement": 29.783,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000022",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 947112,
+   "ebe": 104126,
+   "resultat_net": 42851,
+   "taux_d_endettement": 95.588,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000022",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 975526,
+   "ebe": 108891,
+   "resultat_net": 44136,
+   "taux_d_endettement": 34.391,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000022",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 0,
+   "ebe": 0,
+   "resultat_net": 45461,
+   "taux_d_endettement": 132.464,
+   "confidentiality": "Partiellement confidentiel"
+  },
+  {
+   "siren": "999000036",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 17850452,
+   "ebe": 1005349,
+   "resultat_net": 405361,
+   "taux_d_endettement": 78.816,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000036",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 18385966,
+   "ebe": 811997,
+   "resultat_net": 417522,
+   "taux_d_endettement": 26.008,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000036",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 18937545,
+   "ebe": 961164,
+   "resultat_net": 430047,
+   "taux_d_endettement": 128.169,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000036",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 19505671,
+   "ebe": 929679,
+   "resultat_net": 442949,
+   "taux_d_endettement": 79.984,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000036",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 20090842,
+   "ebe": 933129,
+   "resultat_net": 456237,
+   "taux_d_endettement": 47.727,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000043",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 11359928,
+   "ebe": 379362,
+   "resultat_net": 184975,
+   "taux_d_endettement": 8.765,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000043",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 11700726,
+   "ebe": 439429,
+   "resultat_net": 190524,
+   "taux_d_endettement": 131.417,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000043",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 12051748,
+   "ebe": 379700,
+   "resultat_net": 196240,
+   "taux_d_endettement": 31.943,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000043",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 12413300,
+   "ebe": 455869,
+   "resultat_net": 202127,
+   "taux_d_endettement": 22.529,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000043",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 12785700,
+   "ebe": 397126,
+   "resultat_net": 208191,
+   "taux_d_endettement": 82.907,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000050",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 12403044,
+   "ebe": 1794100,
+   "resultat_net": 861553,
+   "taux_d_endettement": 60.858,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000050",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 12775135,
+   "ebe": 2118523,
+   "resultat_net": 887400,
+   "taux_d_endettement": 24.953,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000050",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 13158390,
+   "ebe": 2290150,
+   "resultat_net": 914022,
+   "taux_d_endettement": 118.396,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000050",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 13553141,
+   "ebe": 2312185,
+   "resultat_net": 941443,
+   "taux_d_endettement": 75.014,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000050",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 13959736,
+   "ebe": 1930788,
+   "resultat_net": 969686,
+   "taux_d_endettement": 122.03,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000057",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 32994764,
+   "ebe": 2661900,
+   "resultat_net": 1078535,
+   "taux_d_endettement": 139.966,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000057",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 33984607,
+   "ebe": 2335502,
+   "resultat_net": 1110891,
+   "taux_d_endettement": 25.165,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000057",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 35004145,
+   "ebe": 2575513,
+   "resultat_net": 1144218,
+   "taux_d_endettement": 78.507,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000057",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 36054269,
+   "ebe": 2610916,
+   "resultat_net": 1178544,
+   "taux_d_endettement": 86.894,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000057",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 37135898,
+   "ebe": 2658156,
+   "resultat_net": 1213900,
+   "taux_d_endettement": 106.554,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000071",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 3413366,
+   "ebe": 239841,
+   "resultat_net": 102620,
+   "taux_d_endettement": 13.559,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000071",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 3515767,
+   "ebe": 206776,
+   "resultat_net": 105698,
+   "taux_d_endettement": 97.848,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000071",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 3621240,
+   "ebe": 217063,
+   "resultat_net": 108869,
+   "taux_d_endettement": 120.34,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000071",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 3729877,
+   "ebe": 244081,
+   "resultat_net": 112135,
+   "taux_d_endettement": 16.448,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000071",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 0,
+   "ebe": 0,
+   "resultat_net": 115499,
+   "taux_d_endettement": 59.728,
+   "confidentiality": "Partiellement confidentiel"
+  },
+  {
+   "siren": "999000078",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 2221217,
+   "ebe": 390579,
+   "resultat_net": 159636,
+   "taux_d_endettement": 5.868,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000078",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 2287854,
+   "ebe": 331478,
+   "resultat_net": 164425,
+   "taux_d_endettement": 51.065,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000078",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 2356489,
+   "ebe": 373123,
+   "resultat_net": 169358,
+   "taux_d_endettement": 40.218,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000078",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 2427184,
+   "ebe": 334233,
+   "resultat_net": 174439,
+   "taux_d_endettement": 107.269,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000078",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 2500000,
+   "ebe": 455102,
+   "resultat_net": 179672,
+   "taux_d_endettement": 55.191,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000085",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 24044579,
+   "ebe": 2482774,
+   "resultat_net": 1164271,
+   "taux_d_endettement": 30.749,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000085",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 24765916,
+   "ebe": 2782587,
+   "resultat_net": 1199199,
+   "taux_d_endettement": 81.489,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000085",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 25508894,
+   "ebe": 2513211,
+   "resultat_net": 1235175,
+   "taux_d_endettement": 48.533,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000085",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 26274161,
+   "ebe": 2574441,
+   "resultat_net": 1272230,
+   "taux_d_endettement": 100.949,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000085",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 27062386,
+   "ebe": 3003916,
+   "resultat_net": 1310397,
+   "taux_d_endettement": 12.846,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000092",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 18781160,
+   "ebe": 2898608,
+   "resultat_net": 1333147,
+   "taux_d_endettement": 71.334,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000092",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 19344595,
+   "ebe": 3215995,
+   "resultat_net": 1373141,
+   "taux_d_endettement": 130.79,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000092",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 19924933,
+   "ebe": 2673202,
+   "resultat_net": 1414335,
+   "taux_d_endettement": 70.43,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000092",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 20522681,
+   "ebe": 2867382,
+   "resultat_net": 1456765,
+   "taux_d_endettement": 125.893,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000092",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 21138362,
+   "ebe": 3262202,
+   "resultat_net": 1500468,
+   "taux_d_endettement": 48.034,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000106",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 6653957,
+   "ebe": 677375,
+   "resultat_net": 271796,
+   "taux_d_endettement": 38.5,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000106",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 6853576,
+   "ebe": 604439,
+   "resultat_net": 279950,
+   "taux_d_endettement": 14.864,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000106",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 7059183,
+   "ebe": 586379,
+   "resultat_net": 288348,
+   "taux_d_endettement": 93.636,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000106",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 7270959,
+   "ebe": 627418,
+   "resultat_net": 296999,
+   "taux_d_endettement": 97.25,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000106",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 7489088,
+   "ebe": 646018,
+   "resultat_net": 305909,
+   "taux_d_endettement": 117.224,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000113",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 3727269,
+   "ebe": 492327,
+   "resultat_net": 200089,
+   "taux_d_endettement": 40.095,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000113",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 3839087,
+   "ebe": 479259,
+   "resultat_net": 206092,
+   "taux_d_endettement": 20.451,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000113",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 3954260,
+   "ebe": 439319,
+   "resultat_net": 212275,
+   "taux_d_endettement": 50.62,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000113",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 4072888,
+   "ebe": 538255,
+   "resultat_net": 218643,
+   "taux_d_endettement": 58.102,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000113",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 4195075,
+   "ebe": 498437,
+   "resultat_net": 225202,
+   "taux_d_endettement": 98.525,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000120",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 15794799,
+   "ebe": 603395,
+   "resultat_net": 302896,
+   "taux_d_endettement": 10.159,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000120",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 16268643,
+   "ebe": 702312,
+   "resultat_net": 311983,
+   "taux_d_endettement": 133.446,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000120",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 16756702,
+   "ebe": 754393,
+   "resultat_net": 321342,
+   "taux_d_endettement": 83.705,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000120",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 17259403,
+   "ebe": 726391,
+   "resultat_net": 330982,
+   "taux_d_endettement": 49.527,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000120",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 0,
+   "ebe": 0,
+   "resultat_net": 340912,
+   "taux_d_endettement": 113.793,
+   "confidentiality": "Partiellement confidentiel"
+  },
+  {
+   "siren": "999000127",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 19303499,
+   "ebe": 1394004,
+   "resultat_net": 735891,
+   "taux_d_endettement": 50.044,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000127",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 19882604,
+   "ebe": 1706422,
+   "resultat_net": 757967,
+   "taux_d_endettement": 53.572,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000127",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 20479082,
+   "ebe": 1767614,
+   "resultat_net": 780706,
+   "taux_d_endettement": 40.214,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000127",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 21093455,
+   "ebe": 1663952,
+   "resultat_net": 804127,
+   "taux_d_endettement": 85.884,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000127",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 21726259,
+   "ebe": 1899813,
+   "resultat_net": 828251,
+   "taux_d_endettement": 56.761,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000141",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 4528180,
+   "ebe": 73886,
+   "resultat_net": 37375,
+   "taux_d_endettement": 139.249,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000141",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 4664025,
+   "ebe": 92911,
+   "resultat_net": 38496,
+   "taux_d_endettement": 38.492,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000141",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 4803946,
+   "ebe": 80930,
+   "resultat_net": 39651,
+   "taux_d_endettement": 115.781,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000141",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 4948065,
+   "ebe": 85884,
+   "resultat_net": 40841,
+   "taux_d_endettement": 42.336,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000141",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 5096507,
+   "ebe": 94304,
+   "resultat_net": 42066,
+   "taux_d_endettement": 134.88,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000148",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 7015106,
+   "ebe": 103761,
+   "resultat_net": 48690,
+   "taux_d_endettement": 108.418,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000148",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 7225559,
+   "ebe": 96893,
+   "resultat_net": 50151,
+   "taux_d_endettement": 21.81,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000148",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 7442326,
+   "ebe": 125554,
+   "resultat_net": 51655,
+   "taux_d_endettement": 136.655,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000148",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 7665596,
+   "ebe": 119278,
+   "resultat_net": 53205,
+   "taux_d_endettement": 67.151,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000148",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 7895564,
+   "ebe": 109246,
+   "resultat_net": 54801,
+   "taux_d_endettement": 101.682,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000155",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 8930502,
+   "ebe": 758727,
+   "resultat_net": 309235,
+   "taux_d_endettement": 119.006,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000155",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 9198417,
+   "ebe": 798985,
+   "resultat_net": 318512,
+   "taux_d_endettement": 8.714,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000155",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 9474369,
+   "ebe": 726297,
+   "resultat_net": 328068,
+   "taux_d_endettement": 111.382,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000155",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 9758600,
+   "ebe": 669479,
+   "resultat_net": 337910,
+   "taux_d_endettement": 114.606,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000155",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 10051359,
+   "ebe": 831435,
+   "resultat_net": 348047,
+   "taux_d_endettement": 128.904,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000162",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 9175120,
+   "ebe": 1212238,
+   "resultat_net": 497102,
+   "taux_d_endettement": 39.383,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000162",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 9450374,
+   "ebe": 1240824,
+   "resultat_net": 512015,
+   "taux_d_endettement": 81.617,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000162",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 9733885,
+   "ebe": 1279686,
+   "resultat_net": 527375,
+   "taux_d_endettement": 6.273,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000162",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 10025901,
+   "ebe": 1043456,
+   "resultat_net": 543197,
+   "taux_d_endettement": 124.856,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000162",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 10326679,
+   "ebe": 1257404,
+   "resultat_net": 559493,
+   "taux_d_endettement": 78.651,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000176",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 15907903,
+   "ebe": 1234480,
+   "resultat_net": 483161,
+   "taux_d_endettement": 55.34,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000176",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 16385141,
+   "ebe": 1114589,
+   "resultat_net": 497656,
+   "taux_d_endettement": 12.122,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000176",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 16876695,
+   "ebe": 1053250,
+   "resultat_net": 512586,
+   "taux_d_endettement": 117.66,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000176",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 17382996,
+   "ebe": 1339640,
+   "resultat_net": 527963,
+   "taux_d_endettement": 16.732,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000176",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 17904486,
+   "ebe": 1055257,
+   "resultat_net": 543802,
+   "taux_d_endettement": 81.964,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000183",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 2221217,
+   "ebe": 379874,
+   "resultat_net": 159864,
+   "taux_d_endettement": 36.402,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000183",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 2287854,
+   "ebe": 418529,
+   "resultat_net": 164660,
+   "taux_d_endettement": 44.457,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000183",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 2356489,
+   "ebe": 400216,
+   "resultat_net": 169600,
+   "taux_d_endettement": 10.308,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000183",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 2427184,
+   "ebe": 398038,
+   "resultat_net": 174688,
+   "taux_d_endettement": 137.647,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000183",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 2500000,
+   "ebe": 437168,
+   "resultat_net": 179929,
+   "taux_d_endettement": 39.005,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000190",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 14219251,
+   "ebe": 542333,
+   "resultat_net": 263560,
+   "taux_d_endettement": 10.686,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000190",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 14645829,
+   "ebe": 677450,
+   "resultat_net": 271467,
+   "taux_d_endettement": 7.771,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000190",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 15085204,
+   "ebe": 632718,
+   "resultat_net": 279611,
+   "taux_d_endettement": 85.389,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000190",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 15537760,
+   "ebe": 715940,
+   "resultat_net": 288000,
+   "taux_d_endettement": 12.64,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000190",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 16003893,
+   "ebe": 563146,
+   "resultat_net": 296640,
+   "taux_d_endettement": 24.441,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000197",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 6483171,
+   "ebe": 707345,
+   "resultat_net": 326985,
+   "taux_d_endettement": 76.532,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000197",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 6677666,
+   "ebe": 794511,
+   "resultat_net": 336795,
+   "taux_d_endettement": 14.218,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000197",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 6877996,
+   "ebe": 830847,
+   "resultat_net": 346899,
+   "taux_d_endettement": 9.12,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000197",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 7084336,
+   "ebe": 770487,
+   "resultat_net": 357306,
+   "taux_d_endettement": 58.636,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000197",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 7296867,
+   "ebe": 870230,
+   "resultat_net": 368025,
+   "taux_d_endettement": 29.966,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000211",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 13619954,
+   "ebe": 239773,
+   "resultat_net": 125190,
+   "taux_d_endettement": 103.232,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000211",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 14028553,
+   "ebe": 253494,
+   "resultat_net": 128946,
+   "taux_d_endettement": 94.033,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000211",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 14449409,
+   "ebe": 312393,
+   "resultat_net": 132814,
+   "taux_d_endettement": 19.371,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000211",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 14882892,
+   "ebe": 320560,
+   "resultat_net": 136799,
+   "taux_d_endettement": 127.866,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000211",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 15329379,
+   "ebe": 271939,
+   "resultat_net": 140903,
+   "taux_d_endettement": 12.133,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000218",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 2893895,
+   "ebe": 417799,
+   "resultat_net": 195243,
+   "taux_d_endettement": 79.594,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000218",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 2980712,
+   "ebe": 478840,
+   "resultat_net": 201100,
+   "taux_d_endettement": 116.039,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000218",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 3070133,
+   "ebe": 528576,
+   "resultat_net": 207133,
+   "taux_d_endettement": 86.218,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000218",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 3162237,
+   "ebe": 480462,
+   "resultat_net": 213347,
+   "taux_d_endettement": 125.469,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000218",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 0,
+   "ebe": 0,
+   "resultat_net": 219748,
+   "taux_d_endettement": 115.097,
+   "confidentiality": "Partiellement confidentiel"
+  },
+  {
+   "siren": "999000225",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 4038105,
+   "ebe": 388291,
+   "resultat_net": 175882,
+   "taux_d_endettement": 28.333,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000225",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 4159248,
+   "ebe": 413997,
+   "resultat_net": 181159,
+   "taux_d_endettement": 114.061,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000225",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 4284025,
+   "ebe": 462513,
+   "resultat_net": 186593,
+   "taux_d_endettement": 40.71,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000225",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 4412546,
+   "ebe": 408925,
+   "resultat_net": 192191,
+   "taux_d_endettement": 15.523,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000225",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 4544923,
+   "ebe": 394481,
+   "resultat_net": 197957,
+   "taux_d_endettement": 124.992,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000232",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 1110786,
+   "ebe": 69974,
+   "resultat_net": 31337,
+   "taux_d_endettement": 131.618,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000232",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 1144110,
+   "ebe": 82291,
+   "resultat_net": 32277,
+   "taux_d_endettement": 134.125,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000232",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 1178433,
+   "ebe": 82846,
+   "resultat_net": 33245,
+   "taux_d_endettement": 11.296,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000232",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 1213786,
+   "ebe": 68558,
+   "resultat_net": 34243,
+   "taux_d_endettement": 42.192,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000232",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 1250200,
+   "ebe": 85928,
+   "resultat_net": 35270,
+   "taux_d_endettement": 37.089,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000246",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 7996383,
+   "ebe": 426623,
+   "resultat_net": 199733,
+   "taux_d_endettement": 106.526,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000246",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 8236274,
+   "ebe": 508608,
+   "resultat_net": 205725,
+   "taux_d_endettement": 72.58,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000246",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 8483363,
+   "ebe": 463874,
+   "resultat_net": 211897,
+   "taux_d_endettement": 100.617,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000246",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 8737864,
+   "ebe": 509267,
+   "resultat_net": 218254,
+   "taux_d_endettement": 42.823,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000246",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 9000000,
+   "ebe": 451964,
+   "resultat_net": 224801,
+   "taux_d_endettement": 65.55,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000253",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 17349916,
+   "ebe": 300133,
+   "resultat_net": 124175,
+   "taux_d_endettement": 128.374,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000253",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 17870414,
+   "ebe": 320628,
+   "resultat_net": 127901,
+   "taux_d_endettement": 131.526,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000253",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 18406526,
+   "ebe": 299123,
+   "resultat_net": 131738,
+   "taux_d_endettement": 85.019,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000253",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 18958722,
+   "ebe": 273859,
+   "resultat_net": 135690,
+   "taux_d_endettement": 22.331,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000253",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 19527484,
+   "ebe": 352981,
+   "resultat_net": 139760,
+   "taux_d_endettement": 134.897,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000260",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 4787683,
+   "ebe": 607512,
+   "resultat_net": 281059,
+   "taux_d_endettement": 81.269,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000260",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 4931314,
+   "ebe": 702469,
+   "resultat_net": 289491,
+   "taux_d_endettement": 115.783,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000260",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 5079253,
+   "ebe": 755343,
+   "resultat_net": 298175,
+   "taux_d_endettement": 25.443,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000260",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 5231631,
+   "ebe": 647618,
+   "resultat_net": 307121,
+   "taux_d_endettement": 111.201,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000260",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 5388580,
+   "ebe": 801588,
+   "resultat_net": 316334,
+   "taux_d_endettement": 79.501,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000267",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 24030710,
+   "ebe": 409732,
+   "resultat_net": 162724,
+   "taux_d_endettement": 82.658,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000267",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 24751631,
+   "ebe": 423941,
+   "resultat_net": 167605,
+   "taux_d_endettement": 117.541,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000267",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 25494180,
+   "ebe": 405163,
+   "resultat_net": 172633,
+   "taux_d_endettement": 45.09,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000267",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 26259005,
+   "ebe": 451081,
+   "resultat_net": 177812,
+   "taux_d_endettement": 5.374,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000267",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 0,
+   "ebe": 0,
+   "resultat_net": 183147,
+   "taux_d_endettement": 53.925,
+   "confidentiality": "Partiellement confidentiel"
+  },
+  {
+   "siren": "999000281",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 24449389,
+   "ebe": 2833020,
+   "resultat_net": 1196119,
+   "taux_d_endettement": 41.292,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000281",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 25182870,
+   "ebe": 2537741,
+   "resultat_net": 1232003,
+   "taux_d_endettement": 31.262,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000281",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 25938357,
+   "ebe": 2880239,
+   "resultat_net": 1268963,
+   "taux_d_endettement": 77.257,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000281",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 26716507,
+   "ebe": 3154232,
+   "resultat_net": 1307032,
+   "taux_d_endettement": 98.021,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000281",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 27518003,
+   "ebe": 2757079,
+   "resultat_net": 1346243,
+   "taux_d_endettement": 125.647,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000288",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 2221217,
+   "ebe": 232864,
+   "resultat_net": 102541,
+   "taux_d_endettement": 11.633,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000288",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 2287854,
+   "ebe": 239762,
+   "resultat_net": 105617,
+   "taux_d_endettement": 134.492,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000288",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 2356489,
+   "ebe": 237058,
+   "resultat_net": 108785,
+   "taux_d_endettement": 92.075,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000288",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 2427184,
+   "ebe": 276029,
+   "resultat_net": 112049,
+   "taux_d_endettement": 109.548,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000288",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 2500000,
+   "ebe": 287484,
+   "resultat_net": 115411,
+   "taux_d_endettement": 75.39,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000295",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 12132440,
+   "ebe": 821239,
+   "resultat_net": 356018,
+   "taux_d_endettement": 127.557,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000295",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 12496414,
+   "ebe": 920706,
+   "resultat_net": 366699,
+   "taux_d_endettement": 70.24,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000295",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 12871306,
+   "ebe": 797114,
+   "resultat_net": 377699,
+   "taux_d_endettement": 17.527,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000295",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 13257445,
+   "ebe": 829642,
+   "resultat_net": 389030,
+   "taux_d_endettement": 131.472,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000295",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 13655169,
+   "ebe": 919900,
+   "resultat_net": 400701,
+   "taux_d_endettement": 21.33,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000302",
+   "date_cloture_exercice": "2020-12-31",
+   "chiffre_d_affaires": 11094893,
+   "ebe": 1080055,
+   "resultat_net": 468281,
+   "taux_d_endettement": 113.414,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000302",
+   "date_cloture_exercice": "2021-12-31",
+   "chiffre_d_affaires": 11427739,
+   "ebe": 1041831,
+   "resultat_net": 482329,
+   "taux_d_endettement": 56.877,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000302",
+   "date_cloture_exercice": "2022-12-31",
+   "chiffre_d_affaires": 11770572,
+   "ebe": 971056,
+   "resultat_net": 496799,
+   "taux_d_endettement": 70.251,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000302",
+   "date_cloture_exercice": "2023-12-31",
+   "chiffre_d_affaires": 12123689,
+   "ebe": 969488,
+   "resultat_net": 511703,
+   "taux_d_endettement": 42.307,
+   "confidentiality": "Public"
+  },
+  {
+   "siren": "999000302",
+   "date_cloture_exercice": "2024-12-31",
+   "chiffre_d_affaires": 12487400,
+   "ebe": 1260992,
+   "resultat_net": 527054,
+   "taux_d_endettement": 116.458,
+   "confidentiality": "Public"
+  }
+ ]
+}

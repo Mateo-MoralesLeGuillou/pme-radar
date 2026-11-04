@@ -78,13 +78,23 @@ def score_company(c: Company, cfg: dict[str, Any], tiers: dict[str, str]) -> Sco
         hc,
     )
 
-    add(
-        "net_margin",
-        "Marge nette",
-        _band_points(c.net_margin, k["net_margin"]["bands"]),
-        "n.d." if c.net_margin is None else f"{c.net_margin:.0%}",
-        k["net_margin"],
-    )
+    prof = k["profitability"]
+    if c.ebe_margin is not None:  # EBE : métrique principale, insensible à la structure financière
+        add(
+            "profitability",
+            "Rentabilité : marge d'EBE",
+            _band_points(c.ebe_margin, prof["ebe_margin_bands"]),
+            f"{c.ebe_margin:.0%} (EBE {_fmt_m(c.ebe)}, {c.ebe_year})",
+            prof,
+        )
+    else:
+        add(
+            "profitability",
+            "Rentabilité : marge nette (repli, EBE n.d.)",
+            _band_points(c.net_margin, prof["net_margin_bands"]),
+            "n.d." if c.net_margin is None else f"{c.net_margin:.0%}",
+            prof,
+        )
     add(
         "revenue_cagr",
         "Régularité / croissance du CA",
@@ -159,7 +169,11 @@ def _summary(c: Company, total: float, penalties: list[CriterionScore]) -> str:
         if c.director_age is not None
         else "âge du dirigeant n.d.",
         f"CA {_fmt_m(c.revenue_last)}",
-        f"marge nette {c.net_margin:.0%}" if c.net_margin is not None else "marge n.d.",
+        f"marge d'EBE {c.ebe_margin:.0%}"
+        if c.ebe_margin is not None
+        else f"marge nette {c.net_margin:.0%}"
+        if c.net_margin is not None
+        else "marge n.d.",
         f"{c.company_age_years} ans d'ancienneté" if c.company_age_years is not None else "",
     ]
     text = f"{total:.0f}/100 : " + ", ".join(p for p in parts if p)

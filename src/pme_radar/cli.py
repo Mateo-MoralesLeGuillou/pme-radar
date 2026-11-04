@@ -17,6 +17,7 @@ from .llm.analysis import analyze_top, get_provider
 from .scoring import score_all
 from .sources import bodacc
 from .sources._http import CachedClient, FixtureFetcher, JsonFetcher
+from .sources.inpi_ratios import fetch_ratios
 from .sources.recherche_entreprises import (
     fetch_companies,
     fetch_company_by_siren,
@@ -71,6 +72,7 @@ def enrich(
     thesis: str = ThesisOpt,
     fixtures: str = FixturesOpt,
     skip_bodacc: bool = typer.Option(False, help="Ne pas interroger le BODACC."),
+    skip_ratios: bool = typer.Option(False, help="Ne pas interroger les ratios BCE/INPI (EBE)."),
 ) -> None:
     """Normalise, calcule les champs dérivés et signale les procédures collectives."""
     paths = DataPaths(data_dir)
@@ -85,8 +87,14 @@ def enrich(
     )
     labels = {n["code"]: n["label"] for n in th["naf_codes"]}
     api = _fetcher(offline, paths, fixtures)
+    ratios = None if skip_ratios else fetch_ratios(api, [r["siren"] for r in raw])
     companies = enrich_mod.enrich(
-        raw, date.today(), labels, procs, lambda siren: fetch_company_by_siren(api, siren)
+        raw,
+        date.today(),
+        labels,
+        procs,
+        lambda siren: fetch_company_by_siren(api, siren),
+        ratios,
     )
     write_companies(companies, paths.enriched)
     n_proc = sum(bool(c.has_collective_procedure) for c in companies)
@@ -161,7 +169,7 @@ def run(
 ) -> None:
     """Enchaîne source → enrich → score → draft → export."""
     source(data_dir, offline, thesis, fixtures)
-    enrich(data_dir, offline, thesis, fixtures, False)
+    enrich(data_dir, offline, thesis, fixtures, False, False)
     score(data_dir, thesis, scoring)
     draft(data_dir, scoring, llm, top_n, "")
     export(data_dir, True)

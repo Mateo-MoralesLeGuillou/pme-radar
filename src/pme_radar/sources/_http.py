@@ -8,6 +8,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import threading
 import time
 from pathlib import Path
@@ -125,6 +126,12 @@ class FixtureFetcher:
                 "per_page": per_page,
                 "total_pages": -(-len(results) // per_page),
             }
+        if "ratios_inpi_bce" in url:
+            wanted = set(re.findall(r'"(\d{9})"', str(params.get("where", ""))))
+            rows = [r for r in self._load("inpi_ratios.json")["results"] if r["siren"] in wanted]
+            rows.sort(key=lambda r: r["date_cloture_exercice"], reverse=True)
+            offset, limit = int(params.get("offset", 0)), int(params.get("limit", 100))
+            return {"total_count": len(rows), "results": rows[offset : offset + limit]}
         if "opendatasoft" in url:
             return self._load("bodacc_records.json")
         raise ValueError(f"Aucune fixture pour {url}")

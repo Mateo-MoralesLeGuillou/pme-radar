@@ -10,7 +10,9 @@ from datetime import date
 from typing import Any
 
 from .models import Company, Director, FinancialYear
+from .sources import inpi_ratios as inpi
 
+MAX_RATIO_AGE = 4  # ans, par rapport à la date de calcul
 HOLDING_NAF = "64.20Z"  # activités des sociétés holding
 HoldingLookup = Callable[[str], dict[str, Any] | None]
 
@@ -60,6 +62,20 @@ def parse_financials(raw: dict[str, Any] | None) -> list[FinancialYear]:
             )
         )
     return out
+
+
+def merge_ratios(fin: list[FinancialYear], rows: list[dict[str, Any]]) -> list[FinancialYear]:
+    """Complète les exercices de l'API avec l'historique INPI (l'API prime sur une année commune)."""
+    by_year = {f.year: f for f in fin}
+    for r in rows:
+        year = int(str(r["date_cloture_exercice"])[:4])
+        have = by_year.get(year)
+        if have and have.revenue is not None:
+            continue
+        rev = r["chiffre_d_affaires"] if inpi.usable(r) else None
+        net = r.get("resultat_net") if have is None else have.net_income
+        by_year[year] = FinancialYear(year=year, revenue=rev, net_income=net)
+    return [by_year[y] for y in sorted(by_year)]
 
 
 def principal_director(directors: list[Director]) -> Director | None:
@@ -118,11 +134,20 @@ def normalize(
     as_of: date,
     naf_labels: dict[str, str] | None = None,
     holding_lookup: HoldingLookup | None = None,
+    ratios: list[dict[str, Any]] | None = None,
 ) -> Company:
     siege = raw.get("siege") or {}
     naf = raw.get("activite_principale") or siege.get("activite_principale")
     directors = [parse_director(d) for d in raw.get("dirigeants") or []]
     fin = parse_financials(raw.get("finances"))
+    # bilans de plus de MAX_RATIO_AGE ans écartés : un EBE de 2016 ne dit rien de la société actuelle
+    ratios = [
+        r for r in ratios or [] if int(r["date_cloture_exercice"][:4]) >= as_of.year - MAX_RATIO_AGE
+    ]
+    if ratios:
+        fin = merge_ratios(fin, ratios)
+    ebe_row = next((r for r in ratios if inpi.usable(r) and r.get("ebe") is not None), None)
+    debt_row = next((r for r in ratios if r.get("taux_d_endettement") is not None), None)
     creation = _parse_date(raw.get("date_creation"))
     principal = principal_director(directors)
 
@@ -168,6 +193,10 @@ def normalize(
         net_income_last=last_any.net_income if last_any else None,
         net_margin=margin,
         revenue_cagr=revenue_cagr(with_rev),
+        ebe=ebe_row["ebe"] if ebe_row else None,
+        ebe_margin=ebe_row["ebe"] / ebe_row["chiffre_d_affaires"] if ebe_row else None,
+        ebe_year=int(ebe_row["date_cloture_exercice"][:4]) if ebe_row else None,
+        debt_ratio=debt_row["taux_d_endettement"] if debt_row else None,
         accounts_available=last is not None,  # CA publié (sinon pénalité)
     )
 
@@ -178,6 +207,7 @@ def enrich(
     naf_labels: dict[str, str] | None = None,
     procedure_sirens: set[str] | None = None,
     holding_lookup: HoldingLookup | None = None,
+    ratios: dict[str, list[dict[str, Any]]] | None = None,
 ) -> list[Company]:
     """`procedure_sirens=None` => BODACC non interrogé (flag laissé à None)."""
     memo: dict[str, dict[str, Any] | None] = {}
@@ -188,7 +218,14 @@ def enrich(
         return memo[siren]
 
     companies = [
-        normalize(r, as_of, naf_labels, lookup if holding_lookup else None) for r in raw_results
+        normalize(
+            r,
+            as_of,
+            naf_labels,
+            lookup if holding_lookup else None,
+            (ratios or {}).get(r["siren"]),
+        )
+        for r in raw_results
     ]
     if procedure_sirens is not None:
         for c in companies:

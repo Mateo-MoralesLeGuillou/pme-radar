@@ -27,14 +27,19 @@ Score sur **100 points**, entièrement piloté par `config/scoring.yaml`. Chaque
 - **Qualité** : marge et régularité plutôt que la croissance, car on achète de la stabilité.
 - **Données absentes** : 0 point sur le critère concerné (on n'invente pas) + pénalité légère.
   Une cible à fort potentiel mais sans comptes reste visible, avec son « n.d. ».
-- **Seuil** : `qualified_threshold: 65` (ADR-011). Sur le run réel du département 92 (314 sociétés non
-  exclues, médiane 38/100), 70 qualifiait 8,9 %, 65 qualifie 11,8 %, 60 en qualifierait 16,9 % : 65 place
-  le seuil dans la cible « 10-20 % supérieurs ». Le seuil a été abaissé et non les barèmes, pour ne pas
-  masquer le fait que 60 % des sociétés n'ont pas de CA publié (donc 0 pt sur 15 + 5 pts de pénalité).
+- **EBE plutôt que résultat net** : l'EBE est neutre vis-à-vis de la dette, des amortissements et de
+  l'exceptionnel, et c'est la base des multiples de valorisation. Les paliers d'EBE sont plus
+  hauts que ceux de la marge nette (l'EBE est calculé avant amortissements, charges financières et impôts) :
+  ≥ 12 % est un bon niveau pour des services techniques. Le repli sur la marge
+  nette est mentionné dans le détail du critère. Un EBE de plus de 4 ans n'est pas utilisé.
+- **Seuil** : `qualified_threshold: 70` (ADR-011). Sur le run réel du département 92 (314 sociétés non
+  exclues, médiane 41/100, avec EBE), 70 qualifie 11,1 % de la population, 65 en qualifierait 17,8 %, 60
+  22,3 %. Avant l'enrichissement EBE, 70 qualifiait 8,9 % : le manque de CA (60 % des sociétés) tirait
+  les scores vers le bas, ce qui justifiait d'enrichir plutôt que d'abaisser le seuil.
 
 ## Limites assumées
 - Pondérations posées par jugement, **non apprises** : la feuille de route prévoit de les
   recalibrer sur les RDV obtenus.
-- Aucune donnée sur la dépendance client, la récurrence réelle ou le bilan (dette) : c'est le rôle
+- Aucune donnée sur la dépendance client ni la récurrence réelle ; l'endettement INPI est exporté mais non noté : c'est le rôle
   des « signaux d'alerte » qualitatifs puis de la due diligence.
 - Les dirigeants sont des mandataires sociaux, pas nécessairement les propriétaires du capital.

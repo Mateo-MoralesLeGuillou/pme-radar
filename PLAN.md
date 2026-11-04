@@ -34,7 +34,10 @@ préparer le contact → piloter l'entonnoir. Portfolio pour un poste d'analyste
 Champs : `familleavis` (`collective` = procédures collectives), `typeavis`, `dateparution`, `commercant`,
 `registre` (liste de SIREN au format « 123 456 789 »).
 
-### Ratios BCE/INPI — optionnel, non implémenté en réseau (ADR-005).
+### Ratios BCE/INPI — `GET https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/ratios_inpi_bce/records` (sans clé) ✅
+Opendatasoft v2.1 : `where=siren IN ("…")`, `order_by`, `limit` ≤ 100, `offset`. Champs : `siren`,
+`date_cloture_exercice`, `chiffre_d_affaires`, `ebe`, `resultat_net`, `taux_d_endettement`, `marge_ebe`,
+`confidentiality`. Bilans « partiellement confidentiels » : CA et EBE masqués à 0 (ADR-005).
 
 ## Phases
 Voir « Avancement » ci-dessous.

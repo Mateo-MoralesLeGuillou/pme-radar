@@ -92,6 +92,10 @@ class Company(BaseModel):
     net_income_last: float | None = None
     net_margin: float | None = None
     revenue_cagr: float | None = None
+    ebe: float | None = None  # EBE du dernier exercice public (ratios INPI, ADR-005)
+    ebe_margin: float | None = None  # EBE / CA du même exercice
+    ebe_year: int | None = None
+    debt_ratio: float | None = None  # taux d'endettement INPI (% des capitaux propres)
     accounts_available: bool = False
     has_collective_procedure: bool | None = None  # None = BODACC non interrogé
 

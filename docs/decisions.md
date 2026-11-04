@@ -29,9 +29,20 @@ Format : contexte → décision → conséquence.
   (affiché « n.d. ») et les comptes absents subissent une pénalité légère (−5), pas une exclusion :
   beaucoup de PME saines ne publient pas leurs comptes.
 
-## ADR-005 — Ratios INPI/BCE non implémentés
-- Jeu optionnel, non accessible à la construction. `sources/inpi_ratios.py` est un point d'extension
-  documenté. EBE et endettement entreraient dans `scoring.yaml` (critère qualité) une fois branchés.
+## ADR-005 — Ratios BCE/INPI : EBE comme métrique de rentabilité principale
+- **Implémenté** (`sources/inpi_ratios.py`, jeu `ratios_inpi_bce` de data.economie.gouv.fr, sans clé, interrogé
+  par lots de 10 SIREN). Apporte `ebe`, `taux_d_endettement` et un historique pluriannuel.
+- **Pourquoi l'EBE** : le résultat net dépend de la structure financière, de l'amortissement et d'éléments
+  exceptionnels ; l'EBE est ce que l'acquéreur capitalise (et ce que les banques financent). Le score
+  utilise la **marge d'EBE** si elle est disponible, **sinon la marge nette** (repli signalé dans le libellé).
+- **Pièges constatés sur données réelles** : pour les bilans « partiellement confidentiels », le jeu met
+  CA et EBE à **0** (valeur masquée, pas réelle) → ces lignes ne servent ni au CA ni à l'EBE
+  (`inpi_ratios.usable`). L'API Recherche d'entreprises n'a qu'un exercice : l'historique INPI comble
+  CA et CAGR. Les bilans de plus de 4 ans sont écartés (`MAX_RATIO_AGE`).
+- **Effet mesuré (dép. 92, 314 sociétés notées)** : CA connu 40 % → 48 %, EBE connu pour 44 %, CAGR
+  calculable pour 36 % (0 % avant). Les sociétés sans bilan public récent restent en repli sur la marge nette.
+- Hors score : l'endettement (`debt_ratio`) est exporté et transmis au LLM, pas noté (à calibrer).
+- Mode `--offline` : fixtures synthétiques `tests/fixtures/inpi_ratios.json` (`scripts/make_fixtures.py`).
 
 ## ADR-006 — Aucun envoi d'email
 - Le pipeline produit des brouillons marqués « À RELIRE ». Aucune dépendance SMTP. L'envoi, la
@@ -67,9 +78,11 @@ Format : contexte → décision → conséquence.
 
 ## ADR-011 — Seuil de qualification à 70
 - Première version : 70, calibrée sur l'échantillon synthétique (volontairement favorable).
-- **Recalibré à 65 après le run réel (dép. 92, 314 sociétés non exclues)** : 70 ne qualifiait que 8,9 %
-  de la population, 65 en qualifie 11,8 % (60 : 16,9 %). Cible : les 10-20 % supérieurs.
-  À revoir quand l'EBE (ADR-005) fera monter les scores des sociétés sans CA publié.
+- Run réel (dép. 92, 314 sociétés non exclues), **avant EBE** : 70 ne qualifiait que 8,9 % de la
+  population (65 : 11,8 %) car 60 % des sociétés n'avaient pas de CA exploitable.
+- **Après EBE (ADR-005)** : 60 → 22,3 % · 65 → 17,8 % · **70 → 11,1 %** · 75 → 8,6 %. Le seuil **reste à 70**
+  (cible : les 10-20 % supérieurs) ; l'abaissement à 65 envisagé avant l'EBE aurait été un artefact de
+  données manquantes. Un seuil tenu ne doit pas compenser un manque de données.
 
 ## ADR-012 — Une requête par code NAF
 - Contourne le plafond de résultats par requête de l'API et permet un cache fin. Déduplication par
