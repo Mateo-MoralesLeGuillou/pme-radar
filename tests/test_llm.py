@@ -116,7 +116,86 @@ def test_provider_factory():
         get_provider("nope")
 
 
-def test_anthropic_requires_key(monkeypatch):
-    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
-    with pytest.raises(RuntimeError):
+def _no_credentials(monkeypatch, tmp_path):
+    from pme_radar.llm import anthropic_provider as ap
+
+    for name in ap.CREDENTIAL_ENV:
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setattr(ap.Path, "home", lambda: tmp_path)  # aucun profil `ant auth login`
+
+
+def test_anthropic_requires_credentials(monkeypatch, tmp_path):
+    _no_credentials(monkeypatch, tmp_path)
+    with pytest.raises(RuntimeError, match="ant auth login"):
         get_provider("anthropic")
+
+
+def test_anthropic_accepts_cli_profile(monkeypatch, tmp_path):
+    from pme_radar.llm import anthropic_provider as ap
+
+    _no_credentials(monkeypatch, tmp_path)
+    (tmp_path / ".config" / "anthropic").mkdir(parents=True)
+    assert ap.has_credentials()
+
+
+class FakeMessages:
+    def __init__(self, reply):
+        self.reply, self.calls = reply, []
+
+    def create(self, **kwargs):
+        self.calls.append(kwargs)
+        return self.reply
+
+
+def _fake_client(stop_reason="end_turn", text="{}", category=None):
+    from types import SimpleNamespace as NS
+
+    reply = NS(
+        stop_reason=stop_reason,
+        stop_details=NS(category=category) if category else None,
+        content=[NS(type="thinking", thinking=""), NS(type="text", text=text)],
+    )
+    return NS(beta=NS(messages=FakeMessages(reply)))
+
+
+def test_anthropic_request_shape_and_text_extraction(monkeypatch):
+    from pme_radar.llm.anthropic_provider import FALLBACK_BETA, AnthropicProvider
+
+    monkeypatch.delenv("ANTHROPIC_MODEL", raising=False)
+    monkeypatch.delenv("ANTHROPIC_FALLBACKS", raising=False)
+    client = _fake_client(text='{"ok": 1}')
+    p = AnthropicProvider(client=client)
+    assert p.complete("sys", "user") == '{"ok": 1}'  # blocs thinking ignorés
+    call = client.beta.messages.calls[0]
+    assert call["model"] == "claude-opus-5-5" and call["max_tokens"] >= 16000
+    assert call["fallbacks"] == "default" and call["betas"] == [FALLBACK_BETA]
+
+
+def test_anthropic_fallbacks_only_where_supported(monkeypatch):
+    from pme_radar.llm.anthropic_provider import AnthropicProvider
+
+    monkeypatch.setenv("ANTHROPIC_MODEL", "claude-haiku-5-5")  # pas de repli serveur
+    assert "fallbacks" not in AnthropicProvider(client=_fake_client()).request("s", "u")
+    monkeypatch.setenv("ANTHROPIC_MODEL", "claude-sonnet-5-5")
+    monkeypatch.setenv("ANTHROPIC_FALLBACKS", "off")
+    assert "fallbacks" not in AnthropicProvider(client=_fake_client()).request("s", "u")
+
+
+def test_anthropic_refusal_is_not_retried(scoring_cfg, thesis):
+    from pme_radar.llm.anthropic_provider import AnthropicProvider, LLMRefusal
+
+    client = _fake_client(stop_reason="refusal", text="", category="general_harms")
+    p = AnthropicProvider(client=client)
+    with pytest.raises(LLMRefusal, match="general_harms"):
+        p.complete("s", "u")
+    report = analyze_top([company(scoring_cfg, thesis)], p, top_n=1)
+    assert "refus du modèle" in next(iter(report.failed.values()))
+    assert len(client.beta.messages.calls) == 2  # 1 appel direct + 1 dans le lot, sans retry
+
+
+def test_anthropic_truncated_answer_is_explicit():
+    from pme_radar.llm.anthropic_provider import AnthropicProvider
+
+    p = AnthropicProvider(client=_fake_client(stop_reason="max_tokens", text='{"mini'))
+    with pytest.raises(RuntimeError, match="tronquée"):
+        p.complete("s", "u")
