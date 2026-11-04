@@ -19,6 +19,8 @@ note, on prépare un message pour les meilleures, et on mesure ce qui se passe e
   dirigeants, chiffres) et le BODACC (annonces légales, dont les faillites). Gère la pagination, la
   limite de débit, les erreurs temporaires, et mémorise les réponses sur disque.
 - **Pourquoi** : open data = zéro coût, auditable ; le cache rend les runs reproductibles et polis.
+  Il expire au bout de 6 jours pour que le run hebdomadaire voie les nouvelles entreprises et les
+  nouvelles procédures collectives (ADR-014).
 - **Limite** : les API n'étaient pas joignables pendant la construction. Le code suit leur documentation
   telle que connue ; **le premier run réel doit confirmer les noms de paramètres** (ADR-001).
 
@@ -41,7 +43,8 @@ note, on prépare un message pour les meilleures, et on mesure ce qui se passe e
   brouillon d'email. Un faux modèle (`MockLLM`) permet de tout faire tourner sans clé ni coût.
 - **Pourquoi** : l'IA est utile là où il faut rédiger et nuancer ; elle est **tenue à l'écart du
   score** pour garder un classement stable et auditable. Sa sortie est vérifiée automatiquement
-  (3 lignes de thèse, ton, mots interdits).
+  (3 lignes de thèse, ton, mots interdits). Une cible en échec n'arrête pas le lot, et une analyse
+  dont les faits n'ont pas changé est réutilisée au lieu d'être repayée (ADR-015).
 - **Limite** : la qualité réelle des textes avec un vrai modèle n'a pas été mesurée ici (pas de clé) ;
   l'IA ne connaît que les faits fournis et peut rester générique.
 

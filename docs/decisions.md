@@ -48,10 +48,12 @@ Format : contexte → décision → conséquence.
 - Le pipeline produit des brouillons marqués « À RELIRE ». Aucune dépendance SMTP. L'envoi, la
   relecture et la décision de contacter restent humains (éthique d'approche + RGPD).
 
-## ADR-007 — `MockLLM` par défaut
+## ADR-007 — `MockLLM` par défaut, provider Anthropic optionnel
 - Le projet tourne sans clé. Le mock produit un JSON valide et déterministe à partir des faits.
-  `AnthropicProvider` (clé dans `.env`) n'a **pas pu être exécuté en réel** ici ; sa sortie passe par
-  la même validation pydantic que le mock. Modèle configurable via `ANTHROPIC_MODEL`.
+- `AnthropicProvider` (identifiants dans `.env` ou profil `ant auth login`) n'a **pas été exécuté en
+  réel** ; sa sortie passe par la même validation pydantic que le mock. Modèle par défaut
+  `claude-opus-5-5` (audit du 2026-11-04), modifiable via `ANTHROPIC_MODEL`. `max_tokens` à 16 000 :
+  la réflexion adaptative, active par défaut sur les modèles récents, consomme ce plafond.
 
 ## ADR-008 — Stockage : Parquet (brut) + JSONL (modèles)
 - Brut : Parquet (SIREN + payload JSON) pour rejouer l'enrichissement sans rappeler l'API.
@@ -91,3 +93,41 @@ Format : contexte → décision → conséquence.
 ## ADR-013 — Taux de campagne rapportés aux emails délivrés
 - Réponse et RDV = / (envoyés − rebonds). Rebond = / envoyés. En dessous de `min_sample` (20) les
   taux ne sont pas jugés : évite de conclure sur du bruit.
+
+## ADR-014 — Cache disque avec expiration (audit du 2026-11-04)
+- **Contexte** : le cache n'expirait jamais. Le run hebdomadaire n8n relisait donc les réponses
+  du premier run : ni nouvelles entreprises, ni nouvelles procédures collectives BODACC. Une
+  société entrée en liquidation après le premier run n'aurait jamais été exclue.
+- **Décision** : durée de validité de 6 jours par défaut (`PME_RADAR_CACHE_TTL_DAYS`), donc toujours
+  inférieure à la cadence hebdomadaire ; `--refresh` force une relecture ; `0` rend le cache
+  permanent (rejouer un run à l'identique). Écriture atomique (fichier temporaire puis
+  renommage) ; un fichier corrompu est refait au lieu de faire échouer le run.
+- **Conséquence** : le premier run de chaque semaine refait tous les appels (quota : ~2 req/s).
+
+## ADR-015 — Lots d'analyses IA robustes et économes
+- **Un échec n'arrête plus le lot** (réseau, quota, sortie invalide, refus du modèle) : la cible est
+  listée en échec, les autres continuent ; code retour 1 seulement si aucune analyse n'est produite.
+- **Réutilisation** : une analyse est réutilisée si l'empreinte (faits transmis + version du prompt
+  + fournisseur) est identique au run précédent ; sinon nouvel appel. Sur un run hebdomadaire, seules
+  les cibles nouvelles ou modifiées coûtent un appel. `--no-reuse` force la régénération.
+- **`stop_reason` vérifié** avant de lire la réponse : `refusal` (classifieurs de sécurité) et
+  `max_tokens` lèvent une erreur explicite **sans nouvel essai** (un essai identique serait refusé
+  ou tronqué à nouveau, et facturé). Seule une sortie JSON invalide est retentée une fois.
+- **Repli serveur** `fallbacks: "default"` (beta `server-side-fallback-2026-07-01`) sur les modèles
+  qui l'acceptent ; `ANTHROPIC_FALLBACKS=off` le désactive. Limite : pour Claude Sonnet 5.5, le repli
+  ne couvre que certaines catégories de refus.
+
+## ADR-016 — Mention de conformité ajoutée hors LLM
+- Chaque brouillon se termine par une mention fixe (`config/campaign.yaml` : `compliance_footer`) :
+  source publique des coordonnées et droit d'opposition. Elle est ajoutée par le code, pas
+  demandée au LLM : elle ne peut être ni oubliée ni reformulée. À adapter (identité de
+  l'expéditeur) avant tout envoi ; ce n'est pas un avis juridique (`docs/rgpd.md`).
+
+## ADR-017 — Configuration validée au chargement
+- `thesis.yaml` et `scoring.yaml` sont validés avant chaque commande (`pme-radar check-config` pour
+  le faire seul) : total de 100 points, paliers complets, pénalités négatives, codes NAF au format
+  `43.21A` sans doublon, tranches d'effectif INSEE, multiples de valorisation cohérents. Toutes les
+  erreurs sont listées d'un coup, avec un message lisible au lieu d'une trace Python.
+- Les chemins par défaut (`config/…`, `tests/fixtures`) sont cherchés dans le dossier courant puis
+  à la racine du dépôt : la CLI fonctionne lancée depuis n'importe quel dossier.
+

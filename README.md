@@ -53,8 +53,8 @@ voir ADR-011.
 
 3 entreprises exclues automatiquement (procédure collective). Les étapes « contactées » et au-delà
 viennent d'un suivi de campagne **fictif** (`examples/sample_campaign.csv`) ; les 14 envois sont sous
-le seuil de 20 : les taux ne sont pas jugés. Exemple de ligne : *« 100/100 : dirigeant 71 ans, CA
-19,0 M€, marge d'EBE 11 %, 31 ans d'ancienneté. »*
+le seuil de 20 : les taux ne sont pas jugés. Exemple de ligne : *« 95/100 : dirigeant 64 ans, CA
+8,5 M€, marge d'EBE 12 %, 33 ans d'ancienneté. »*
 
 ## Architecture
 
@@ -97,11 +97,24 @@ Une donnée manquante n'est jamais un zéro : 0 point + mention « n.d. ». Dét
 |---|---|
 | `config/thesis.yaml` | NAF (cœur/adjacent), tranches d'effectif, départements, état |
 | `config/scoring.yaml` | Barèmes, seuil de qualification, nombre de cibles passées à l'IA |
-| `config/campaign.yaml` | Seuils d'alerte rebonds / réponses / RDV |
-| `.env` (copie de `.env.example`) | **Optionnel** : `ANTHROPIC_API_KEY`, `GOOGLE_APPLICATION_CREDENTIALS`, `GOOGLE_SHEET_ID` |
+| `config/campaign.yaml` | Seuils d'alerte rebonds / réponses / RDV, mention de conformité ajoutée à chaque brouillon |
+| `.env` (copie de `.env.example`) | **Optionnel** : `ANTHROPIC_API_KEY` (ou profil `ant auth login`), `ANTHROPIC_MODEL`, `GOOGLE_APPLICATION_CREDENTIALS`, `GOOGLE_SHEET_ID`, `PME_RADAR_CACHE_TTL_DAYS` |
 
-Commandes : `source`, `enrich`, `score`, `draft [--llm mock|anthropic]`, `export`, `run`,
-`onepager [--siren … | --top-n …]` (fiche cible + fourchette de valorisation, exemple : [`examples/onepager_sample.md`](examples/onepager_sample.md)), `track <SIREN> <statut>`, `deliverability --domain … [--selector …]`.
+Les deux YAML sont **validés à chaque commande** (total de 100 points, codes NAF, paliers) :
+`pme-radar check-config` le fait seul. Le cache des API expire après 6 jours, pour qu'un run
+hebdomadaire voie les nouvelles entreprises et procédures ; `--refresh` force une relecture.
+
+| Commande | Rôle |
+|---|---|
+| `run [--offline] [--llm mock\|anthropic] [--refresh]` | Enchaîne source → enrich → score → draft → export |
+| `source`, `enrich`, `score`, `draft`, `export` | Les étapes une à une (reprise possible après chacune) |
+| `onepager [--siren … \| --top-n …]` | Fiche cible + fourchette de valorisation ([exemple](examples/onepager_sample.md)) |
+| `track <SIREN> <statut> [--date AAAA-MM-JJ]` | Suivi manuel : contacted, replied, meeting, declined, bounced |
+| `deliverability --domain … [--selector …]` | Audit SPF / DKIM / DMARC / MX + KPI de campagne |
+| `check-config`, `--version` | Validation de la configuration, version |
+
+`draft` réutilise les analyses dont les faits n'ont pas changé (aucun nouvel appel LLM) et
+continue si une cible échoue ; le bilan généré / réutilisé / échecs s'affiche à la fin.
 
 ## Conformité RGPD et éthique d'approche
 `data/` non versionné, échantillon synthétique, minimisation des données envoyées au LLM, **aucun envoi
@@ -118,7 +131,9 @@ sans pression ni prix. Voir [`docs/rgpd.md`](docs/rgpd.md) (pas un avis juridiqu
 - **Holdings** : une holding de fondateur d'un autre NAF que 64.20Z reste pénalisée comme « groupe » (ADR-009) ;
   sur le run réel, 58 sociétés dirigées par une société non-holding à dirigeant personne physique sont dans ce cas.
 - Procédures collectives BODACC : toute annonce de famille « collective » exclut, y compris ancienne ou clôturée.
-- NAF 2025 applicable au 01/01/2027 : l'API expose `activite_principale_naf25`, non encore utilisée.
+- **NAF 2025 applicable au 01/01/2027** : l'API expose `activite_principale_naf25`, non encore utilisée.
+  Les correspondances de codes sont à vérifier sur la table INSEE avant cette date (recommandation n° 1 de
+  [l'audit](docs/audit.md)).
 - Provider Anthropic, Google Sheets et workflow n8n non exécutés en réel. Pondérations non apprises.
 
 ## Feuille de route
@@ -128,7 +143,7 @@ sur les RDV obtenus · endettement INPI dans le score · bénéficiaires effecti
 
 ## Documentation
 [Runbook (reprise en 30 min + warm-up)](docs/runbook.md) · [Walkthrough pédagogique + 10 questions d'entretien](docs/walkthrough.md) ·
-[Décisions](docs/decisions.md) · [Memo sectoriel](memo/memo_sectoriel.md) · [n8n](n8n/README.md) · [Plan](PLAN.md)
+[Décisions](docs/decisions.md) · [Audit du 2026-11-04](docs/audit.md) · [Memo sectoriel](memo/memo_sectoriel.md) · [n8n](n8n/README.md) · [Plan](PLAN.md)
 
 ## Méthode
 Projet construit en développement assisté par IA (Claude Code), **conçu, piloté et vérifié par

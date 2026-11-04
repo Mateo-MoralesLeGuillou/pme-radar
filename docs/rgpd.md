@@ -15,7 +15,9 @@
 
 ## À faire par l'utilisateur d'un run réel (hors périmètre du code)
 - **Base légale** : intérêt légitime (prospection B2B). Information des personnes au premier contact
-  (identité, source des données, finalité, droit d'opposition) — à intégrer à la signature.
+  (identité, source des données, finalité, droit d'opposition) : chaque brouillon se termine déjà
+  par une mention fixe sur la source des données et le droit d'opposition (`compliance_footer` dans
+  `config/campaign.yaml`, ADR-016). Compléter l'identité de l'expéditeur avant tout envoi.
 - **Droit d'opposition** : tout « non » ou demande d'effacement est enregistré (`declined`) et la
   personne n'est plus jamais sollicitée.
 - **Durée de conservation** : définir et purger (ex. 3 ans après dernier contact).

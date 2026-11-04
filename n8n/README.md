@@ -24,5 +24,11 @@ Cron lundi 7h → pme-radar run → lire qualified.csv → parser → garder les
   uniquement en exécution planifiée, pas en test manuel). La première exécution notifie donc tout.
 - Le workflow lance un run réel (sans `--offline`) : vérifier que
   `pme-radar source` atteint bien les API (voir `docs/runbook.md`).
+- **Fraîcheur des données** : le cache disque expire après 6 jours (`PME_RADAR_CACHE_TTL_DAYS`),
+  donc chaque exécution hebdomadaire réinterroge les API (nouvelles entreprises, nouvelles
+  procédures BODACC). Ne pas mettre ce paramètre à 0 sur le serveur n8n.
+- **Échecs partiels** : si l'IA échoue sur quelques cibles, le run continue et le nœud reste vert ;
+  il ne passe en erreur (code retour 1) que si une configuration est invalide ou si aucune analyse
+  n'a pu être produite.
 - Ce workflow n'a pas pu être exécuté dans l'environnement de construction (pas d'instance n8n) :
   structure validée en JSON uniquement. À tester avant mise en production.

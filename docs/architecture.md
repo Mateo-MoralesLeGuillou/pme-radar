@@ -46,3 +46,5 @@ flowchart LR
 2. Tout ce qui peut changer sans toucher au code est en YAML.
 3. Toute dépendance externe (API, LLM, Sheets) est injectable et remplaçable par un mock.
 4. Le dossier `data/` (potentiellement nominatif) n'est jamais versionné.
+5. Le cache disque des API expire (6 jours) : chaque run hebdomadaire repart de données fraîches.
+6. Une configuration invalide arrête la commande avant tout appel réseau (`check-config`).

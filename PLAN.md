@@ -59,3 +59,15 @@ Voir « Avancement » ci-dessous.
 - [x] Phase 13 — Captures dashboard (`docs/img/`), licence MIT
 - [ ] Run réel sur les 7 autres départements IDF ; utiliser le NAF 2025 ; noter l'endettement
 - [ ] Provider Anthropic, Google Sheets, n8n : premier run réel
+
+## Audit du 2026-11-04
+Détail : [`docs/audit.md`](docs/audit.md). 18 constats corrigés, 7 recommandations ouvertes.
+- [x] Cache avec expiration + `--refresh` (constat critique : run hebdomadaire aveugle)
+- [x] Lots IA robustes : échec isolé, réutilisation des analyses, `stop_reason` vérifié, repli serveur
+- [x] Configuration validée et résolue hors du dépôt (`check-config`)
+- [x] Données aberrantes (âge, ancienneté, dates INPI) et mention de conformité des brouillons
+- [x] Délivrabilité (SPF `redirect=`, DMARC multiples), export Sheets, dashboard (filtres, export)
+- [x] Qualité : mypy à 0 erreur, formatage, CI 3.11-3.13, documentation et vidéo à jour
+- [ ] NAF 2025 avant le 01/01/2027 (recommandation n° 1)
+- [ ] BODACC : filtrer les procédures anciennes ou clôturées (recommandation n° 2)
+
