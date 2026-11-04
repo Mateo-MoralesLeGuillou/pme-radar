@@ -150,14 +150,14 @@ st.plotly_chart(hist, width="stretch")
 st.subheader("Top 20 cibles")
 top = scored.sort_values("score", ascending=False).head(20).reset_index(drop=True)
 st.dataframe(
-    top[
+    top.assign(revenue_m=top["revenue_last"] / 1e6)[
         [
             "siren",
             "name",
             "naf_code",
             "city",
             "director_age",
-            "revenue_last",
+            "revenue_m",
             "ebe_margin",
             "net_margin",
             "score",
@@ -167,12 +167,16 @@ st.dataframe(
     hide_index=True,
     width="stretch",
     column_config={
+        "siren": "SIREN",
         "name": "Entreprise",
+        "naf_code": "NAF",
+        "city": "Ville",
         "director_age": st.column_config.NumberColumn("Âge dirigeant", format="%d ans"),
-        "revenue_last": st.column_config.NumberColumn("CA (€)", format="%.0f"),
+        "revenue_m": st.column_config.NumberColumn("CA", format="%.1f M€"),
         "ebe_margin": st.column_config.NumberColumn("Marge EBE", format="percent"),
         "net_margin": st.column_config.NumberColumn("Marge nette", format="percent"),
-        "score": st.column_config.ProgressColumn("Score", min_value=0, max_value=100, format="%d"),
+        "score": st.column_config.NumberColumn("Score", format="%d/100"),
+        "stage": "Statut",
     },
 )
 st.download_button(
