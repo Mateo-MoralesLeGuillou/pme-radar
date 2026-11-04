@@ -1,0 +1,32 @@
+<!doctype html><html lang="fr"><meta charset="utf-8"><style>
+*{margin:0;box-sizing:border-box}
+body{width:1280px;height:320px;overflow:hidden;font-family:"Inter",sans-serif;color:#e8eaf6;
+ background:radial-gradient(900px 420px at 88% 50%,#2c2c58 0%,#1c1c38 55%,#141428 100%)}
+.rings{position:absolute;right:-120px;top:50%;width:620px;height:620px;transform:translateY(-50%)}
+.wrap{position:absolute;left:64px;top:0;bottom:0;display:flex;align-items:center;gap:36px}
+.wrap img{width:132px;height:132px;filter:drop-shadow(0 12px 30px rgba(37,194,245,.35))}
+h1{font-family:"Inter Display","Inter",sans-serif;font-size:76px;font-weight:700;letter-spacing:-2px;line-height:1}
+h1 span{color:#25c2f5}
+p{font-size:25px;color:#c4c8ea;margin-top:14px;font-weight:500}
+.tags{display:flex;gap:10px;margin-top:20px}
+.tags b{font-size:15px;font-weight:600;letter-spacing:.5px;color:#25c2f5;border:1.5px solid rgba(37,194,245,.45);
+ border-radius:999px;padding:6px 14px;background:rgba(37,194,245,.07)}
+</style><body>
+<svg class="rings" viewBox="0 0 620 620"><g fill="none" stroke="#25c2f5">
+ <circle cx="310" cy="310" r="300" stroke-opacity=".10" stroke-width="2"/>
+ <circle cx="310" cy="310" r="225" stroke-opacity=".13" stroke-width="2"/>
+ <circle cx="310" cy="310" r="150" stroke-opacity=".16" stroke-width="2"/>
+ <circle cx="310" cy="310" r="75" stroke-opacity=".2" stroke-width="2"/></g>
+ <defs><linearGradient id="g" x1="310" y1="310" x2="120" y2="70" gradientUnits="userSpaceOnUse">
+ <stop offset="0" stop-color="#25c2f5" stop-opacity="0"/><stop offset="1" stop-color="#25c2f5" stop-opacity=".18"/></linearGradient></defs>
+ <path d="M310 310 L10 310 A300 300 0 0 1 97.9 97.9 Z" fill="url(#g)"/>
+ <g fill="#25c2f5"><circle cx="150" cy="215" r="5" fill-opacity=".8"/><circle cx="215" cy="140" r="4" fill-opacity=".6"/>
+ <circle cx="95" cy="290" r="3.5" fill-opacity=".5"/><circle cx="420" cy="420" r="3" fill-opacity=".3"/>
+ <circle cx="380" cy="190" r="3" fill-opacity=".3"/><circle cx="250" cy="470" r="3" fill-opacity=".25"/></g>
+ <circle cx="182" cy="182" r="16" fill="#25c2f5" fill-opacity=".25"/><circle cx="182" cy="182" r="7" fill="#fff"/>
+</svg>
+<div class="wrap"><img src="../../docs/img/logo.svg" alt="">
+ <div><h1>pme<span>-</span>radar</h1>
+ <p>Moteur d'origination open source pour search funds</p>
+ <div class="tags"><b>OPEN DATA</b><b>SCORE EXPLICABLE</b><b>IA ENCADRÉE</b><b>RGPD</b></div></div></div>
+</body></html>

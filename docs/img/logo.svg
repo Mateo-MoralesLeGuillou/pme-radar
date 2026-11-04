@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="pme-radar">
+  <defs>
+    <linearGradient id="pr-sweep" x1="64" y1="64" x2="108" y2="18" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#25c2f5" stop-opacity="0"/>
+      <stop offset="1" stop-color="#25c2f5" stop-opacity="0.9"/>
+    </linearGradient>
+    <radialGradient id="pr-bg" cx="50%" cy="45%" r="60%">
+      <stop offset="0" stop-color="#26264a"/>
+      <stop offset="1" stop-color="#14142a"/>
+    </radialGradient>
+  </defs>
+  <circle cx="64" cy="64" r="60" fill="url(#pr-bg)"/>
+  <circle cx="64" cy="64" r="58" fill="none" stroke="#25c2f5" stroke-opacity=".45" stroke-width="3"/>
+  <circle cx="64" cy="64" r="40" fill="none" stroke="#25c2f5" stroke-opacity=".28" stroke-width="2.5"/>
+  <circle cx="64" cy="64" r="22" fill="none" stroke="#25c2f5" stroke-opacity=".22" stroke-width="2"/>
+  <path d="M64 64 L64 6 A58 58 0 0 1 114.23 35 Z" fill="url(#pr-sweep)"/>
+  <circle cx="40" cy="82" r="3.5" fill="#25c2f5" fill-opacity=".65"/>
+  <circle cx="80" cy="94" r="3" fill="#25c2f5" fill-opacity=".45"/>
+  <circle cx="30" cy="50" r="2.5" fill="#25c2f5" fill-opacity=".4"/>
+  <circle cx="92" cy="40" r="12" fill="#25c2f5" fill-opacity=".22"/>
+  <circle cx="92" cy="40" r="6" fill="#ffffff"/>
+  <circle cx="64" cy="64" r="4.5" fill="#25c2f5"/>
+</svg>
