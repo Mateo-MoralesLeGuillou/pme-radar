@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/Mateo-MoralesLeGuillou/pme-radar/actions/workflows/ci.yml/badge.svg)](https://github.com/Mateo-MoralesLeGuillou/pme-radar/actions/workflows/ci.yml)
 
+🎬 **[Vidéo de présentation (58 s)](docs/video/pme-radar-promo.mp4)** · régénérable avec `scripts/promo/build.sh`
+
 ![Entonnoir](docs/img/dashboard-entonnoir.png)
 ![Distribution des scores](docs/img/dashboard-scores.png)
 ![Détail d'une cible](docs/img/dashboard-detail-cible.png)
