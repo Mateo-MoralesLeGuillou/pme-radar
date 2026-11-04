@@ -196,4 +196,7 @@ def score_all(
             c.stage = Stage.QUALIFIED
         else:
             c.stage = Stage.IDENTIFIED
-    return sorted(companies, key=lambda c: (c.stage == Stage.EXCLUDED, -(c.score.total)))
+    return sorted(
+        companies,
+        key=lambda c: (c.stage == Stage.EXCLUDED, -(c.score.total if c.score else 0.0)),
+    )

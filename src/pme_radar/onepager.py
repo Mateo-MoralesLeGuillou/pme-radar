@@ -38,6 +38,8 @@ def valuation_range(c: Company, cfg: dict[str, Any]) -> tuple[float, float] | No
 def render(c: Company, valuation_cfg: dict[str, Any]) -> str:
     person = c.main_person()
     s, a = c.score, c.analysis
+    if s is None:
+        raise ValueError(f"{c.siren} n'est pas notée : lancer `pme-radar score` d'abord.")
     L = [
         f"# {c.name}",
         "",
