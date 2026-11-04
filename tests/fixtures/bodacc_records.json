@@ -1,0 +1,26 @@
+{
+ "total_count": 3,
+ "results": [
+  {
+   "registre": [
+    "999 000 036"
+   ],
+   "typeavis": "annonce",
+   "dateparution": "2026-09-10"
+  },
+  {
+   "registre": [
+    "999 000 120"
+   ],
+   "typeavis": "annonce",
+   "dateparution": "2026-09-11"
+  },
+  {
+   "registre": [
+    "999 000 232"
+   ],
+   "typeavis": "annonce",
+   "dateparution": "2026-09-12"
+  }
+ ]
+}

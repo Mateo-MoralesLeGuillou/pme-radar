@@ -1,0 +1,1907 @@
+{
+ "results": [
+  {
+   "siren": "999000001",
+   "nom_complet": "TESSIER MONTAGE MÉCANIQUE",
+   "nom_raison_sociale": "TESSIER MONTAGE MÉCANIQUE",
+   "nature_juridique": "5710",
+   "activite_principale": "33.20B",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "31",
+   "etat_administratif": "A",
+   "date_creation": "1992-02-15",
+   "siege": {
+    "siret": "99900000100011",
+    "code_postal": "78000",
+    "libelle_commune": "Versailles",
+    "departement": "78",
+    "activite_principale": "33.20B"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "TESSIER",
+     "prenoms": "Sophie",
+     "qualite": "Président",
+     "annee_de_naissance": 1955,
+     "date_de_naissance": "1955-09"
+    }
+   ],
+   "finances": {
+    "2021": {
+     "ca": 13194245,
+     "resultat_net": 916272
+    },
+    "2022": {
+     "ca": 12418064,
+     "resultat_net": 664013
+    },
+    "2023": {
+     "ca": 11687545,
+     "resultat_net": 715967
+    },
+    "2024": {
+     "ca": 11000000,
+     "resultat_net": 575339
+    }
+   }
+  },
+  {
+   "siren": "999000008",
+   "nom_complet": "RIVOIRE AMÉNAGEMENTS",
+   "nom_raison_sociale": "RIVOIRE AMÉNAGEMENTS",
+   "nature_juridique": "5599",
+   "activite_principale": "43.29B",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "12",
+   "etat_administratif": "A",
+   "date_creation": "2006-11-15",
+   "siege": {
+    "siret": "99900000800011",
+    "code_postal": "94000",
+    "libelle_commune": "Créteil",
+    "departement": "94",
+    "activite_principale": "43.29B"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "RIVOIRE",
+     "prenoms": "Pierre",
+     "qualite": "Président",
+     "annee_de_naissance": 1967
+    }
+   ],
+   "finances": {
+    "2022": {
+     "ca": 7872717,
+     "resultat_net": 678891
+    },
+    "2023": {
+     "ca": 8180348,
+     "resultat_net": 725015
+    },
+    "2024": {
+     "ca": 8500000,
+     "resultat_net": 710685
+    }
+   }
+  },
+  {
+   "siren": "999000015",
+   "nom_complet": "TESSIER FACILITY",
+   "nom_raison_sociale": "TESSIER FACILITY",
+   "nature_juridique": "5499",
+   "activite_principale": "81.10Z",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "22",
+   "etat_administratif": "A",
+   "date_creation": "1996-01-15",
+   "siege": {
+    "siret": "99900001500011",
+    "code_postal": "77100",
+    "libelle_commune": "Meaux",
+    "departement": "77",
+    "activite_principale": "81.10Z"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "TESSIER",
+     "prenoms": "Catherine",
+     "qualite": "Gérant",
+     "annee_de_naissance": 1963,
+     "date_de_naissance": "1963-11"
+    }
+   ],
+   "finances": {
+    "2024": {
+     "ca": null,
+     "resultat_net": null
+    }
+   }
+  },
+  {
+   "siren": "999000022",
+   "nom_complet": "URBAIN ÉLECTRO-MAINTENANCE",
+   "nom_raison_sociale": "URBAIN ÉLECTRO-MAINTENANCE",
+   "nature_juridique": "5499",
+   "activite_principale": "33.14Z",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "22",
+   "etat_administratif": "A",
+   "date_creation": "2002-07-15",
+   "siege": {
+    "siret": "99900002200011",
+    "code_postal": "91000",
+    "libelle_commune": "Évry",
+    "departement": "91",
+    "activite_principale": "33.14Z"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne morale",
+     "denomination": "GROUPE WAGNER HOLDING SAS",
+     "siren": "998000004",
+     "qualite": "Président"
+    }
+   ],
+   "finances": {
+    "2022": {
+     "ca": 1004792,
+     "resultat_net": 55910
+    },
+    "2023": {
+     "ca": 1098066,
+     "resultat_net": 61573
+    },
+    "2024": {
+     "ca": 1200000,
+     "resultat_net": 87447
+    }
+   }
+  },
+  {
+   "siren": "999000029",
+   "nom_complet": "NOIRET SÉCURITÉ SYSTÈMES",
+   "nom_raison_sociale": "NOIRET SÉCURITÉ SYSTÈMES",
+   "nature_juridique": "5599",
+   "activite_principale": "80.20Z",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "12",
+   "etat_administratif": "A",
+   "date_creation": "2010-10-15",
+   "siege": {
+    "siret": "99900002900011",
+    "code_postal": "93200",
+    "libelle_commune": "Saint-Denis",
+    "departement": "93",
+    "activite_principale": "80.20Z"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "NOIRET",
+     "prenoms": "Martine",
+     "qualite": "Gérant",
+     "annee_de_naissance": 1965,
+     "date_de_naissance": "1965-02"
+    }
+   ],
+   "finances": {
+    "2021": {
+     "ca": 4104270,
+     "resultat_net": -56526
+    },
+    "2022": {
+     "ca": 4324186,
+     "resultat_net": -73217
+    },
+    "2023": {
+     "ca": 4555885,
+     "resultat_net": -70467
+    },
+    "2024": {
+     "ca": 4800000,
+     "resultat_net": -65155
+    }
+   }
+  },
+  {
+   "siren": "999000036",
+   "nom_complet": "SAVARY MONTAGE MÉCANIQUE",
+   "nom_raison_sociale": "SAVARY MONTAGE MÉCANIQUE",
+   "nature_juridique": "5499",
+   "activite_principale": "33.20B",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "22",
+   "etat_administratif": "A",
+   "date_creation": "2017-05-15",
+   "siege": {
+    "siret": "99900003600011",
+    "code_postal": "94000",
+    "libelle_commune": "Créteil",
+    "departement": "94",
+    "activite_principale": "33.20B"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "SAVARY",
+     "prenoms": "Thierry",
+     "qualite": "Président",
+     "annee_de_naissance": 1982,
+     "date_de_naissance": "1982-02"
+    }
+   ],
+   "finances": {
+    "2023": {
+     "ca": 20090842,
+     "resultat_net": 1844535
+    },
+    "2024": {
+     "ca": 19000000,
+     "resultat_net": 1346654
+    }
+   }
+  },
+  {
+   "siren": "999000043",
+   "nom_complet": "PERRAULT TUYAUTERIE",
+   "nom_raison_sociale": "PERRAULT TUYAUTERIE",
+   "nature_juridique": "5499",
+   "activite_principale": "33.20A",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "11",
+   "etat_administratif": "A",
+   "date_creation": "1999-11-15",
+   "siege": {
+    "siret": "99900004300011",
+    "code_postal": "75011",
+    "libelle_commune": "Paris",
+    "departement": "75",
+    "activite_principale": "33.20A"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "PERRAULT",
+     "prenoms": "François",
+     "qualite": "Gérant",
+     "annee_de_naissance": 1963
+    }
+   ],
+   "finances": {
+    "2023": {
+     "ca": 12785700,
+     "resultat_net": 201365
+    },
+    "2024": {
+     "ca": 14000000,
+     "resultat_net": 259912
+    }
+   }
+  },
+  {
+   "siren": "999000050",
+   "nom_complet": "LEMAISTRE INSTALLATIONS ÉLECTRIQUES",
+   "nom_raison_sociale": "LEMAISTRE INSTALLATIONS ÉLECTRIQUES",
+   "nature_juridique": "5710",
+   "activite_principale": "33.20D",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "21",
+   "etat_administratif": "A",
+   "date_creation": "2007-11-15",
+   "siege": {
+    "siret": "99900005000011",
+    "code_postal": "78000",
+    "libelle_commune": "Versailles",
+    "departement": "78",
+    "activite_principale": "33.20D"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "LEMAISTRE",
+     "prenoms": "Michel",
+     "qualite": "Président",
+     "annee_de_naissance": 1959,
+     "date_de_naissance": "1959-04"
+    },
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "LEMAISTRE",
+     "prenoms": "Michel",
+     "qualite": "Directeur général",
+     "annee_de_naissance": 1983,
+     "date_de_naissance": "1989-06"
+    }
+   ],
+   "finances": {
+    "2023": {
+     "ca": 13959736,
+     "resultat_net": 1204971
+    },
+    "2024": {
+     "ca": 14000000,
+     "resultat_net": 1396336
+    }
+   }
+  },
+  {
+   "siren": "999000057",
+   "nom_complet": "ESNAULT ÉLECTRO-MAINTENANCE",
+   "nom_raison_sociale": "ESNAULT ÉLECTRO-MAINTENANCE",
+   "nature_juridique": "5499",
+   "activite_principale": "33.14Z",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "31",
+   "etat_administratif": "A",
+   "date_creation": "1998-06-15",
+   "siege": {
+    "siret": "99900005700011",
+    "code_postal": "93200",
+    "libelle_commune": "Saint-Denis",
+    "departement": "93",
+    "activite_principale": "33.14Z"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "ESNAULT",
+     "prenoms": "Eric",
+     "qualite": "Président",
+     "annee_de_naissance": 1962,
+     "date_de_naissance": "1962-11"
+    },
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "DELORME",
+     "prenoms": "Eric",
+     "qualite": "Directeur général",
+     "annee_de_naissance": 1975,
+     "date_de_naissance": "1980-06"
+    }
+   ],
+   "finances": {
+    "2022": {
+     "ca": 37135898,
+     "resultat_net": 1212413
+    },
+    "2023": {
+     "ca": 35533372,
+     "resultat_net": 1359008
+    },
+    "2024": {
+     "ca": 34000000,
+     "resultat_net": 1113901
+    }
+   }
+  },
+  {
+   "siren": "999000064",
+   "nom_complet": "YVON INSTALLATIONS ÉLECTRIQUES",
+   "nom_raison_sociale": "YVON INSTALLATIONS ÉLECTRIQUES",
+   "nature_juridique": "5710",
+   "activite_principale": "33.20D",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "12",
+   "etat_administratif": "A",
+   "date_creation": "1985-03-15",
+   "siege": {
+    "siret": "99900006400011",
+    "code_postal": "75011",
+    "libelle_commune": "Paris",
+    "departement": "75",
+    "activite_principale": "33.20D"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne morale",
+     "denomination": "GROUPE LEFRANC HOLDING SAS",
+     "siren": "998000010",
+     "qualite": "Président"
+    }
+   ],
+   "finances": {
+    "2022": {
+     "ca": 15155166,
+     "resultat_net": 29390
+    },
+    "2023": {
+     "ca": 16969035,
+     "resultat_net": 31332
+    },
+    "2024": {
+     "ca": 19000000,
+     "resultat_net": 39973
+    }
+   }
+  },
+  {
+   "siren": "999000071",
+   "nom_complet": "LEFRANC PLOMBERIE FLUIDES",
+   "nom_raison_sociale": "LEFRANC PLOMBERIE FLUIDES",
+   "nature_juridique": "5599",
+   "activite_principale": "43.22A",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "12",
+   "etat_administratif": "A",
+   "date_creation": "2002-11-15",
+   "siege": {
+    "siret": "99900007100011",
+    "code_postal": "78000",
+    "libelle_commune": "Versailles",
+    "departement": "78",
+    "activite_principale": "43.22A"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "LEFRANC",
+     "prenoms": "Laurent",
+     "qualite": "Gérant",
+     "annee_de_naissance": 1968,
+     "date_de_naissance": "1968-04"
+    }
+   ],
+   "finances": {
+    "2022": {
+     "ca": 3841774,
+     "resultat_net": 330466
+    },
+    "2023": {
+     "ca": 4294242,
+     "resultat_net": 258767
+    },
+    "2024": {
+     "ca": 4800000,
+     "resultat_net": 351439
+    }
+   }
+  },
+  {
+   "siren": "999000078",
+   "nom_complet": "MARCHETTI SÉCURITÉ SYSTÈMES",
+   "nom_raison_sociale": "MARCHETTI SÉCURITÉ SYSTÈMES",
+   "nature_juridique": "5710",
+   "activite_principale": "80.20Z",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "22",
+   "etat_administratif": "A",
+   "date_creation": "1985-04-15",
+   "siege": {
+    "siret": "99900007800011",
+    "code_postal": "95000",
+    "libelle_commune": "Cergy",
+    "departement": "95",
+    "activite_principale": "80.20Z"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "MARCHETTI",
+     "prenoms": "Pierre",
+     "qualite": "Président",
+     "annee_de_naissance": 1958,
+     "date_de_naissance": "1958-09"
+    },
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "ESNAULT",
+     "prenoms": "Jacques",
+     "qualite": "Directeur général",
+     "annee_de_naissance": 1978,
+     "date_de_naissance": "1979-06"
+    }
+   ],
+   "finances": {}
+  },
+  {
+   "siren": "999000085",
+   "nom_complet": "QUENTIN TUYAUTERIE",
+   "nom_raison_sociale": "QUENTIN TUYAUTERIE",
+   "nature_juridique": "5710",
+   "activite_principale": "33.20A",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "12",
+   "etat_administratif": "A",
+   "date_creation": "2007-11-15",
+   "siege": {
+    "siret": "99900008500011",
+    "code_postal": "77100",
+    "libelle_commune": "Meaux",
+    "departement": "77",
+    "activite_principale": "33.20A"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "QUENTIN",
+     "prenoms": "Catherine",
+     "qualite": "Gérant",
+     "annee_de_naissance": 1984,
+     "date_de_naissance": "1984-10"
+    },
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "ORSINI",
+     "prenoms": "François",
+     "qualite": "Directeur général",
+     "annee_de_naissance": 1979,
+     "date_de_naissance": "1979-06"
+    }
+   ],
+   "finances": {
+    "2021": {
+     "ca": 27062386,
+     "resultat_net": 503337
+    },
+    "2022": {
+     "ca": 26703519,
+     "resultat_net": 490319
+    },
+    "2023": {
+     "ca": 26349412,
+     "resultat_net": 566036
+    },
+    "2024": {
+     "ca": 26000000,
+     "resultat_net": 520474
+    }
+   }
+  },
+  {
+   "siren": "999000092",
+   "nom_complet": "KLEIN TUYAUTERIE",
+   "nom_raison_sociale": "KLEIN TUYAUTERIE",
+   "nature_juridique": "5499",
+   "activite_principale": "33.20A",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "11",
+   "etat_administratif": "A",
+   "date_creation": "2008-02-15",
+   "siege": {
+    "siret": "99900009200011",
+    "code_postal": "75011",
+    "libelle_commune": "Paris",
+    "departement": "75",
+    "activite_principale": "33.20A"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "KLEIN",
+     "prenoms": "Michel",
+     "qualite": "Président",
+     "annee_de_naissance": 1971
+    }
+   ],
+   "finances": {
+    "2022": {
+     "ca": 21138362,
+     "resultat_net": 2319408
+    },
+    "2023": {
+     "ca": 23443494,
+     "resultat_net": 2093764
+    },
+    "2024": {
+     "ca": 26000000,
+     "resultat_net": 2230239
+    }
+   }
+  },
+  {
+   "siren": "999000099",
+   "nom_complet": "GILBERT SÉCURITÉ SYSTÈMES",
+   "nom_raison_sociale": "GILBERT SÉCURITÉ SYSTÈMES",
+   "nature_juridique": "5710",
+   "activite_principale": "80.20Z",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "22",
+   "etat_administratif": "A",
+   "date_creation": "2002-12-15",
+   "siege": {
+    "siret": "99900009900011",
+    "code_postal": "92000",
+    "libelle_commune": "Nanterre",
+    "departement": "92",
+    "activite_principale": "80.20Z"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne morale",
+     "denomination": "GROUPE IMBERT HOLDING SAS",
+     "siren": "998000015",
+     "qualite": "Président"
+    }
+   ],
+   "finances": {
+    "2023": {
+     "ca": 5541983,
+     "resultat_net": 478622
+    },
+    "2024": {
+     "ca": 6200000,
+     "resultat_net": 699337
+    }
+   }
+  },
+  {
+   "siren": "999000106",
+   "nom_complet": "SAUVAGE ÉLECTRICITÉ",
+   "nom_raison_sociale": "SAUVAGE ÉLECTRICITÉ",
+   "nature_juridique": "5599",
+   "activite_principale": "43.21A",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "12",
+   "etat_administratif": "A",
+   "date_creation": "2018-09-15",
+   "siege": {
+    "siret": "99900010600011",
+    "code_postal": "78000",
+    "libelle_commune": "Versailles",
+    "departement": "78",
+    "activite_principale": "43.21A"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "SAUVAGE",
+     "prenoms": "Hervé",
+     "qualite": "Président",
+     "annee_de_naissance": 1986,
+     "date_de_naissance": "1986-05"
+    },
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "LACOMBE",
+     "prenoms": "Patrick",
+     "qualite": "Directeur général",
+     "annee_de_naissance": 1986,
+     "date_de_naissance": "1978-06"
+    }
+   ],
+   "finances": {
+    "2021": {
+     "ca": 7489088,
+     "resultat_net": 405117
+    },
+    "2022": {
+     "ca": 7811941,
+     "resultat_net": 455503
+    },
+    "2023": {
+     "ca": 8148711,
+     "resultat_net": 457081
+    },
+    "2024": {
+     "ca": 8500000,
+     "resultat_net": 526746
+    }
+   }
+  },
+  {
+   "siren": "999000113",
+   "nom_complet": "VASSEUR MONTAGE MÉCANIQUE",
+   "nom_raison_sociale": "VASSEUR MONTAGE MÉCANIQUE",
+   "nature_juridique": "5499",
+   "activite_principale": "33.20B",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "11",
+   "etat_administratif": "A",
+   "date_creation": "1996-06-15",
+   "siege": {
+    "siret": "99900011300011",
+    "code_postal": "91000",
+    "libelle_commune": "Évry",
+    "departement": "91",
+    "activite_principale": "33.20B"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "VASSEUR",
+     "prenoms": "Christian",
+     "qualite": "Président",
+     "annee_de_naissance": 1959,
+     "date_de_naissance": "1959-05"
+    }
+   ],
+   "finances": {
+    "2021": {
+     "ca": 4195075,
+     "resultat_net": -123352
+    },
+    "2022": {
+     "ca": 4387734,
+     "resultat_net": -159964
+    },
+    "2023": {
+     "ca": 4589239,
+     "resultat_net": -143414
+    },
+    "2024": {
+     "ca": 4800000,
+     "resultat_net": -143934
+    }
+   }
+  },
+  {
+   "siren": "999000120",
+   "nom_complet": "NOIRET MONTAGE MÉCANIQUE",
+   "nom_raison_sociale": "NOIRET MONTAGE MÉCANIQUE",
+   "nature_juridique": "5710",
+   "activite_principale": "33.20B",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "12",
+   "etat_administratif": "A",
+   "date_creation": "2007-12-15",
+   "siege": {
+    "siret": "99900012000011",
+    "code_postal": "75011",
+    "libelle_commune": "Paris",
+    "departement": "75",
+    "activite_principale": "33.20B"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "NOIRET",
+     "prenoms": "Martine",
+     "qualite": "Gérant",
+     "annee_de_naissance": 1979,
+     "date_de_naissance": "1979-08"
+    },
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "LACOMBE",
+     "prenoms": "Michel",
+     "qualite": "Directeur général",
+     "annee_de_naissance": 1979,
+     "date_de_naissance": "1987-06"
+    }
+   ],
+   "finances": {
+    "2022": {
+     "ca": 17777186,
+     "resultat_net": 1842154
+    },
+    "2023": {
+     "ca": 18378425,
+     "resultat_net": 2080527
+    },
+    "2024": {
+     "ca": 19000000,
+     "resultat_net": 1957484
+    }
+   }
+  },
+  {
+   "siren": "999000127",
+   "nom_complet": "ESNAULT ÉLECTRICITÉ",
+   "nom_raison_sociale": "ESNAULT ÉLECTRICITÉ",
+   "nature_juridique": "5710",
+   "activite_principale": "43.21A",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "12",
+   "etat_administratif": "A",
+   "date_creation": "2020-09-15",
+   "siege": {
+    "siret": "99900012700011",
+    "code_postal": "91000",
+    "libelle_commune": "Évry",
+    "departement": "91",
+    "activite_principale": "43.21A"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "ESNAULT",
+     "prenoms": "Christian",
+     "qualite": "Président",
+     "annee_de_naissance": 1985,
+     "date_de_naissance": "1985-10"
+    }
+   ],
+   "finances": {
+    "2021": {
+     "ca": 21726259,
+     "resultat_net": 54860
+    },
+    "2022": {
+     "ca": 23066467,
+     "resultat_net": 57560
+    },
+    "2023": {
+     "ca": 24489347,
+     "resultat_net": 64471
+    },
+    "2024": {
+     "ca": 26000000,
+     "resultat_net": 67161
+    }
+   }
+  },
+  {
+   "siren": "999000134",
+   "nom_complet": "JACQUOT THERMIQUE & CLIMATISATION",
+   "nom_raison_sociale": "JACQUOT THERMIQUE & CLIMATISATION",
+   "nature_juridique": "5499",
+   "activite_principale": "43.22B",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "12",
+   "etat_administratif": "A",
+   "date_creation": "2019-06-15",
+   "siege": {
+    "siret": "99900013400011",
+    "code_postal": "77100",
+    "libelle_commune": "Meaux",
+    "departement": "77",
+    "activite_principale": "43.22B"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "JACQUOT",
+     "prenoms": "Daniel",
+     "qualite": "Président",
+     "annee_de_naissance": 1987,
+     "date_de_naissance": "1987-12"
+    }
+   ],
+   "finances": {}
+  },
+  {
+   "siren": "999000141",
+   "nom_complet": "IVANOFF THERMIQUE & CLIMATISATION",
+   "nom_raison_sociale": "IVANOFF THERMIQUE & CLIMATISATION",
+   "nature_juridique": "5499",
+   "activite_principale": "43.22B",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "12",
+   "etat_administratif": "A",
+   "date_creation": "1998-05-15",
+   "siege": {
+    "siret": "99900014100011",
+    "code_postal": "95000",
+    "libelle_commune": "Cergy",
+    "departement": "95",
+    "activite_principale": "43.22B"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "IVANOFF",
+     "prenoms": "Philippe",
+     "qualite": "Gérant",
+     "annee_de_naissance": 1956,
+     "date_de_naissance": "1956-09"
+    },
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "JOLIVET",
+     "prenoms": "Eric",
+     "qualite": "Directeur général",
+     "annee_de_naissance": 1983,
+     "date_de_naissance": "1984-06"
+    }
+   ],
+   "finances": {
+    "2023": {
+     "ca": 5096507,
+     "resultat_net": -157702
+    },
+    "2024": {
+     "ca": 4800000,
+     "resultat_net": -133955
+    }
+   }
+  },
+  {
+   "siren": "999000148",
+   "nom_complet": "BOUVIER INSTALLATIONS ÉLECTRIQUES",
+   "nom_raison_sociale": "BOUVIER INSTALLATIONS ÉLECTRIQUES",
+   "nature_juridique": "5710",
+   "activite_principale": "33.20D",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "21",
+   "etat_administratif": "A",
+   "date_creation": "2000-10-15",
+   "siege": {
+    "siret": "99900014800011",
+    "code_postal": "92000",
+    "libelle_commune": "Nanterre",
+    "departement": "92",
+    "activite_principale": "33.20D"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne morale",
+     "denomination": "GROUPE CARPENTIER HOLDING SAS",
+     "siren": "998000022",
+     "qualite": "Président"
+    }
+   ],
+   "finances": {
+    "2022": {
+     "ca": 7895564,
+     "resultat_net": -183073
+    },
+    "2023": {
+     "ca": 8192209,
+     "resultat_net": -158327
+    },
+    "2024": {
+     "ca": 8500000,
+     "resultat_net": -196453
+    }
+   }
+  },
+  {
+   "siren": "999000155",
+   "nom_complet": "NAVARRO SÉCURITÉ SYSTÈMES",
+   "nom_raison_sociale": "NAVARRO SÉCURITÉ SYSTÈMES",
+   "nature_juridique": "5710",
+   "activite_principale": "80.20Z",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "21",
+   "etat_administratif": "A",
+   "date_creation": "2001-01-15",
+   "siege": {
+    "siret": "99900015500011",
+    "code_postal": "94000",
+    "libelle_commune": "Créteil",
+    "departement": "94",
+    "activite_principale": "80.20Z"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "NAVARRO",
+     "prenoms": "Jacques",
+     "qualite": "Président",
+     "annee_de_naissance": 1962,
+     "date_de_naissance": "1962-09"
+    }
+   ],
+   "finances": {
+    "2021": {
+     "ca": 10051359,
+     "resultat_net": 196935
+    },
+    "2022": {
+     "ca": 10358115,
+     "resultat_net": 148382
+    },
+    "2023": {
+     "ca": 10674234,
+     "resultat_net": 213858
+    },
+    "2024": {
+     "ca": 11000000,
+     "resultat_net": 164834
+    }
+   }
+  },
+  {
+   "siren": "999000162",
+   "nom_complet": "PELLETIER ÉLECTRO-MAINTENANCE",
+   "nom_raison_sociale": "PELLETIER ÉLECTRO-MAINTENANCE",
+   "nature_juridique": "5599",
+   "activite_principale": "33.14Z",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "11",
+   "etat_administratif": "A",
+   "date_creation": "1998-12-15",
+   "siege": {
+    "siret": "99900016200011",
+    "code_postal": "78000",
+    "libelle_commune": "Versailles",
+    "departement": "78",
+    "activite_principale": "33.14Z"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "PELLETIER",
+     "prenoms": "Serge",
+     "qualite": "Président",
+     "annee_de_naissance": 1955,
+     "date_de_naissance": "1955-11"
+    },
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "DUPIN",
+     "prenoms": "Catherine",
+     "qualite": "Directeur général",
+     "annee_de_naissance": 1985,
+     "date_de_naissance": "1990-06"
+    }
+   ],
+   "finances": {
+    "2022": {
+     "ca": 10326679,
+     "resultat_net": 641336
+    },
+    "2023": {
+     "ca": 10658023,
+     "resultat_net": 787046
+    },
+    "2024": {
+     "ca": 11000000,
+     "resultat_net": 670474
+    }
+   }
+  },
+  {
+   "siren": "999000169",
+   "nom_complet": "PERRAULT MAINTENANCE INDUSTRIELLE",
+   "nom_raison_sociale": "PERRAULT MAINTENANCE INDUSTRIELLE",
+   "nature_juridique": "5599",
+   "activite_principale": "33.12Z",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "12",
+   "etat_administratif": "A",
+   "date_creation": "2002-07-15",
+   "siege": {
+    "siret": "99900016900011",
+    "code_postal": "95000",
+    "libelle_commune": "Cergy",
+    "departement": "95",
+    "activite_principale": "33.12Z"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "PERRAULT",
+     "prenoms": "Eric",
+     "qualite": "Président",
+     "annee_de_naissance": 1973
+    }
+   ],
+   "finances": {
+    "2022": {
+     "ca": 36670580,
+     "resultat_net": 2100098
+    },
+    "2023": {
+     "ca": 35310051,
+     "resultat_net": 1906278
+    },
+    "2024": {
+     "ca": 34000000,
+     "resultat_net": 2219910
+    }
+   }
+  },
+  {
+   "siren": "999000176",
+   "nom_complet": "CARPENTIER THERMIQUE & CLIMATISATION",
+   "nom_raison_sociale": "CARPENTIER THERMIQUE & CLIMATISATION",
+   "nature_juridique": "5499",
+   "activite_principale": "43.22B",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "21",
+   "etat_administratif": "A",
+   "date_creation": "2011-01-15",
+   "siege": {
+    "siret": "99900017600011",
+    "code_postal": "78000",
+    "libelle_commune": "Versailles",
+    "departement": "78",
+    "activite_principale": "43.22B"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "CARPENTIER",
+     "prenoms": "Thierry",
+     "qualite": "Président",
+     "annee_de_naissance": 1990,
+     "date_de_naissance": "1990-07"
+    },
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "GARNIER",
+     "prenoms": "Michel",
+     "qualite": "Directeur général",
+     "annee_de_naissance": 1986,
+     "date_de_naissance": "1990-06"
+    }
+   ],
+   "finances": {
+    "2023": {
+     "ca": 17904486,
+     "resultat_net": 802365
+    },
+    "2024": {
+     "ca": 19000000,
+     "resultat_net": 863700
+    }
+   }
+  },
+  {
+   "siren": "999000183",
+   "nom_complet": "AUBERTIN THERMIQUE & CLIMATISATION",
+   "nom_raison_sociale": "AUBERTIN THERMIQUE & CLIMATISATION",
+   "nature_juridique": "5599",
+   "activite_principale": "43.22B",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "21",
+   "etat_administratif": "A",
+   "date_creation": "1991-05-15",
+   "siege": {
+    "siret": "99900018300011",
+    "code_postal": "78000",
+    "libelle_commune": "Versailles",
+    "departement": "78",
+    "activite_principale": "43.22B"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "AUBERTIN",
+     "prenoms": "Eric",
+     "qualite": "Gérant",
+     "annee_de_naissance": 1967,
+     "date_de_naissance": "1967-10"
+    }
+   ],
+   "finances": {
+    "2024": {
+     "ca": null,
+     "resultat_net": null
+    }
+   }
+  },
+  {
+   "siren": "999000190",
+   "nom_complet": "RIVOIRE MONTAGE MÉCANIQUE",
+   "nom_raison_sociale": "RIVOIRE MONTAGE MÉCANIQUE",
+   "nature_juridique": "5599",
+   "activite_principale": "33.20B",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "22",
+   "etat_administratif": "A",
+   "date_creation": "2002-02-15",
+   "siege": {
+    "siret": "99900019000011",
+    "code_postal": "75011",
+    "libelle_commune": "Paris",
+    "departement": "75",
+    "activite_principale": "33.20B"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "RIVOIRE",
+     "prenoms": "Catherine",
+     "qualite": "Gérant",
+     "annee_de_naissance": 1970,
+     "date_de_naissance": "1970-06"
+    }
+   ],
+   "finances": {
+    "2021": {
+     "ca": 16003893,
+     "resultat_net": 1089274
+    },
+    "2022": {
+     "ca": 16946042,
+     "resultat_net": 1152210
+    },
+    "2023": {
+     "ca": 17943656,
+     "resultat_net": 882039
+    },
+    "2024": {
+     "ca": 19000000,
+     "resultat_net": 940786
+    }
+   }
+  },
+  {
+   "siren": "999000197",
+   "nom_complet": "PELLETIER TUYAUTERIE",
+   "nom_raison_sociale": "PELLETIER TUYAUTERIE",
+   "nature_juridique": "5499",
+   "activite_principale": "33.20A",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "12",
+   "etat_administratif": "A",
+   "date_creation": "1993-05-15",
+   "siege": {
+    "siret": "99900019700011",
+    "code_postal": "77100",
+    "libelle_commune": "Meaux",
+    "departement": "77",
+    "activite_principale": "33.20A"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne morale",
+     "denomination": "GROUPE BLANCHET HOLDING SAS",
+     "siren": "998000029",
+     "qualite": "Président"
+    }
+   ],
+   "finances": {
+    "2022": {
+     "ca": 7296867,
+     "resultat_net": 670904
+    },
+    "2023": {
+     "ca": 7875492,
+     "resultat_net": 673436
+    },
+    "2024": {
+     "ca": 8500000,
+     "resultat_net": 754109
+    }
+   }
+  },
+  {
+   "siren": "999000204",
+   "nom_complet": "GILBERT CONTRÔLE & INSPECTION",
+   "nom_raison_sociale": "GILBERT CONTRÔLE & INSPECTION",
+   "nature_juridique": "5599",
+   "activite_principale": "71.20B",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "12",
+   "etat_administratif": "A",
+   "date_creation": "2017-02-15",
+   "siege": {
+    "siret": "99900020400011",
+    "code_postal": "95000",
+    "libelle_commune": "Cergy",
+    "departement": "95",
+    "activite_principale": "71.20B"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "GILBERT",
+     "prenoms": "Michel",
+     "qualite": "Président",
+     "annee_de_naissance": 1977,
+     "date_de_naissance": "1977-08"
+    }
+   ],
+   "finances": {
+    "2022": {
+     "ca": 2445566,
+     "resultat_net": 208535
+    },
+    "2023": {
+     "ca": 2472633,
+     "resultat_net": 210512
+    },
+    "2024": {
+     "ca": 2500000,
+     "resultat_net": 223714
+    }
+   }
+  },
+  {
+   "siren": "999000211",
+   "nom_complet": "JOLIVET INSTALLATIONS ÉLECTRIQUES",
+   "nom_raison_sociale": "JOLIVET INSTALLATIONS ÉLECTRIQUES",
+   "nature_juridique": "5710",
+   "activite_principale": "33.20D",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "21",
+   "etat_administratif": "A",
+   "date_creation": "1995-04-15",
+   "siege": {
+    "siret": "99900021100011",
+    "code_postal": "75011",
+    "libelle_commune": "Paris",
+    "departement": "75",
+    "activite_principale": "33.20D"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "JOLIVET",
+     "prenoms": "Bernard",
+     "qualite": "Président",
+     "annee_de_naissance": 1955
+    }
+   ],
+   "finances": {
+    "2022": {
+     "ca": 15329379,
+     "resultat_net": 1688827
+    },
+    "2023": {
+     "ca": 17066288,
+     "resultat_net": 2201521
+    },
+    "2024": {
+     "ca": 19000000,
+     "resultat_net": 1767610
+    }
+   }
+  },
+  {
+   "siren": "999000218",
+   "nom_complet": "ROUSSEL ÉLECTRO-MAINTENANCE",
+   "nom_raison_sociale": "ROUSSEL ÉLECTRO-MAINTENANCE",
+   "nature_juridique": "5599",
+   "activite_principale": "33.14Z",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "12",
+   "etat_administratif": "A",
+   "date_creation": "2001-04-15",
+   "siege": {
+    "siret": "99900021800011",
+    "code_postal": "75011",
+    "libelle_commune": "Paris",
+    "departement": "75",
+    "activite_principale": "33.14Z"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "ROUSSEL",
+     "prenoms": "Martine",
+     "qualite": "Gérant",
+     "annee_de_naissance": 1960,
+     "date_de_naissance": "1960-10"
+    },
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "ZIMMER",
+     "prenoms": "Martine",
+     "qualite": "Directeur général",
+     "annee_de_naissance": 1979,
+     "date_de_naissance": "1976-06"
+    }
+   ],
+   "finances": {
+    "2023": {
+     "ca": 3257105,
+     "resultat_net": 13118
+    },
+    "2024": {
+     "ca": 3500000,
+     "resultat_net": 11086
+    }
+   }
+  },
+  {
+   "siren": "999000225",
+   "nom_complet": "HAMON TUYAUTERIE",
+   "nom_raison_sociale": "HAMON TUYAUTERIE",
+   "nature_juridique": "5499",
+   "activite_principale": "33.20A",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "21",
+   "etat_administratif": "A",
+   "date_creation": "2000-02-15",
+   "siege": {
+    "siret": "99900022500011",
+    "code_postal": "93200",
+    "libelle_commune": "Saint-Denis",
+    "departement": "93",
+    "activite_principale": "33.20A"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "HAMON",
+     "prenoms": "Serge",
+     "qualite": "Gérant",
+     "annee_de_naissance": 1966,
+     "date_de_naissance": "1966-09"
+    }
+   ],
+   "finances": {
+    "2023": {
+     "ca": 4544923,
+     "resultat_net": 23558
+    },
+    "2024": {
+     "ca": 4800000,
+     "resultat_net": 24738
+    }
+   }
+  },
+  {
+   "siren": "999000232",
+   "nom_complet": "JOLIVET TUYAUTERIE",
+   "nom_raison_sociale": "JOLIVET TUYAUTERIE",
+   "nature_juridique": "5710",
+   "activite_principale": "33.20A",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "31",
+   "etat_administratif": "A",
+   "date_creation": "2009-12-15",
+   "siege": {
+    "siret": "99900023200011",
+    "code_postal": "94000",
+    "libelle_commune": "Créteil",
+    "departement": "94",
+    "activite_principale": "33.20A"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "JOLIVET",
+     "prenoms": "Alain",
+     "qualite": "Gérant",
+     "annee_de_naissance": 1975,
+     "date_de_naissance": "1975-02"
+    }
+   ],
+   "finances": {
+    "2023": {
+     "ca": 1250200,
+     "resultat_net": 58454
+    },
+    "2024": {
+     "ca": 1200000,
+     "resultat_net": 63304
+    }
+   }
+  },
+  {
+   "siren": "999000239",
+   "nom_complet": "IVANOFF TUYAUTERIE",
+   "nom_raison_sociale": "IVANOFF TUYAUTERIE",
+   "nature_juridique": "5499",
+   "activite_principale": "33.20A",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "12",
+   "etat_administratif": "A",
+   "date_creation": "1986-10-15",
+   "siege": {
+    "siret": "99900023900011",
+    "code_postal": "95000",
+    "libelle_commune": "Cergy",
+    "departement": "95",
+    "activite_principale": "33.20A"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "IVANOFF",
+     "prenoms": "Brigitte",
+     "qualite": "Président",
+     "annee_de_naissance": 1965,
+     "date_de_naissance": "1965-06"
+    }
+   ],
+   "finances": {
+    "2021": {
+     "ca": 27445349,
+     "resultat_net": 243828
+    },
+    "2022": {
+     "ca": 26954852,
+     "resultat_net": 247323
+    },
+    "2023": {
+     "ca": 26473121,
+     "resultat_net": 297948
+    },
+    "2024": {
+     "ca": 26000000,
+     "resultat_net": 272387
+    }
+   }
+  },
+  {
+   "siren": "999000246",
+   "nom_complet": "RIVOIRE MAINTENANCE INDUSTRIELLE",
+   "nom_raison_sociale": "RIVOIRE MAINTENANCE INDUSTRIELLE",
+   "nature_juridique": "5499",
+   "activite_principale": "33.12Z",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "21",
+   "etat_administratif": "A",
+   "date_creation": "2006-09-15",
+   "siege": {
+    "siret": "99900024600011",
+    "code_postal": "77100",
+    "libelle_commune": "Meaux",
+    "departement": "77",
+    "activite_principale": "33.12Z"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "RIVOIRE",
+     "prenoms": "Jacques",
+     "qualite": "Gérant",
+     "annee_de_naissance": 1958,
+     "date_de_naissance": "1958-04"
+    },
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "QUENTIN",
+     "prenoms": "Philippe",
+     "qualite": "Directeur général",
+     "annee_de_naissance": 1980,
+     "date_de_naissance": "1987-06"
+    }
+   ],
+   "finances": {}
+  },
+  {
+   "siren": "999000253",
+   "nom_complet": "KERBRAT MONTAGE MÉCANIQUE",
+   "nom_raison_sociale": "KERBRAT MONTAGE MÉCANIQUE",
+   "nature_juridique": "5599",
+   "activite_principale": "33.20B",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "11",
+   "etat_administratif": "A",
+   "date_creation": "1996-04-15",
+   "siege": {
+    "siret": "99900025300011",
+    "code_postal": "93200",
+    "libelle_commune": "Saint-Denis",
+    "departement": "93",
+    "activite_principale": "33.20B"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "KERBRAT",
+     "prenoms": "Isabelle",
+     "qualite": "Gérant",
+     "annee_de_naissance": 1963,
+     "date_de_naissance": "1963-12"
+    }
+   ],
+   "finances": {
+    "2022": {
+     "ca": 19527484,
+     "resultat_net": 473644
+    },
+    "2023": {
+     "ca": 19261936,
+     "resultat_net": 577031
+    },
+    "2024": {
+     "ca": 19000000,
+     "resultat_net": 552340
+    }
+   }
+  },
+  {
+   "siren": "999000260",
+   "nom_complet": "QUENTIN ÉLECTRICITÉ",
+   "nom_raison_sociale": "QUENTIN ÉLECTRICITÉ",
+   "nature_juridique": "5710",
+   "activite_principale": "43.21A",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "21",
+   "etat_administratif": "A",
+   "date_creation": "2000-09-15",
+   "siege": {
+    "siret": "99900026000011",
+    "code_postal": "75011",
+    "libelle_commune": "Paris",
+    "departement": "75",
+    "activite_principale": "43.21A"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "QUENTIN",
+     "prenoms": "Pierre",
+     "qualite": "Gérant",
+     "annee_de_naissance": 1955,
+     "date_de_naissance": "1955-09"
+    },
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "CARPENTIER",
+     "prenoms": "Michel",
+     "qualite": "Directeur général",
+     "annee_de_naissance": 1986,
+     "date_de_naissance": "1990-06"
+    }
+   ],
+   "finances": {
+    "2022": {
+     "ca": 5388580,
+     "resultat_net": 28407
+    },
+    "2023": {
+     "ca": 5085782,
+     "resultat_net": 23690
+    },
+    "2024": {
+     "ca": 4800000,
+     "resultat_net": 20349
+    }
+   }
+  },
+  {
+   "siren": "999000267",
+   "nom_complet": "SAUVAGE FACILITY",
+   "nom_raison_sociale": "SAUVAGE FACILITY",
+   "nature_juridique": "5599",
+   "activite_principale": "81.10Z",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "22",
+   "etat_administratif": "A",
+   "date_creation": "1996-11-15",
+   "siege": {
+    "siret": "99900026700011",
+    "code_postal": "75011",
+    "libelle_commune": "Paris",
+    "departement": "75",
+    "activite_principale": "81.10Z"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne morale",
+     "denomination": "GROUPE PELLETIER HOLDING SAS",
+     "siren": "998000039",
+     "qualite": "Président"
+    }
+   ],
+   "finances": {
+    "2023": {
+     "ca": 27046776,
+     "resultat_net": 2003982
+    },
+    "2024": {
+     "ca": 26000000,
+     "resultat_net": 1472986
+    }
+   }
+  },
+  {
+   "siren": "999000274",
+   "nom_complet": "YVON SÉCURITÉ SYSTÈMES",
+   "nom_raison_sociale": "YVON SÉCURITÉ SYSTÈMES",
+   "nature_juridique": "5499",
+   "activite_principale": "80.20Z",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "21",
+   "etat_administratif": "A",
+   "date_creation": "2020-08-15",
+   "siege": {
+    "siret": "99900027400011",
+    "code_postal": "92000",
+    "libelle_commune": "Nanterre",
+    "departement": "92",
+    "activite_principale": "80.20Z"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "YVON",
+     "prenoms": "Daniel",
+     "qualite": "Président",
+     "annee_de_naissance": 1975,
+     "date_de_naissance": "1975-08"
+    }
+   ],
+   "finances": {
+    "2022": {
+     "ca": 30941843,
+     "resultat_net": -329065
+    },
+    "2023": {
+     "ca": 32434898,
+     "resultat_net": -424906
+    },
+    "2024": {
+     "ca": 34000000,
+     "resultat_net": -338451
+    }
+   }
+  },
+  {
+   "siren": "999000281",
+   "nom_complet": "KLEIN TUYAUTERIE",
+   "nom_raison_sociale": "KLEIN TUYAUTERIE",
+   "nature_juridique": "5599",
+   "activite_principale": "33.20A",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "11",
+   "etat_administratif": "A",
+   "date_creation": "1990-04-15",
+   "siege": {
+    "siret": "99900028100011",
+    "code_postal": "78000",
+    "libelle_commune": "Versailles",
+    "departement": "78",
+    "activite_principale": "33.20A"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "KLEIN",
+     "prenoms": "Dominique",
+     "qualite": "Président",
+     "annee_de_naissance": 1960
+    }
+   ],
+   "finances": {
+    "2023": {
+     "ca": 27518003,
+     "resultat_net": -484122
+    },
+    "2024": {
+     "ca": 26000000,
+     "resultat_net": -663205
+    }
+   }
+  },
+  {
+   "siren": "999000288",
+   "nom_complet": "DUPIN TUYAUTERIE",
+   "nom_raison_sociale": "DUPIN TUYAUTERIE",
+   "nature_juridique": "5710",
+   "activite_principale": "33.20A",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "31",
+   "etat_administratif": "A",
+   "date_creation": "2006-06-15",
+   "siege": {
+    "siret": "99900028800011",
+    "code_postal": "92000",
+    "libelle_commune": "Nanterre",
+    "departement": "92",
+    "activite_principale": "33.20A"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "DUPIN",
+     "prenoms": "Thierry",
+     "qualite": "Président",
+     "annee_de_naissance": 1982,
+     "date_de_naissance": "1982-02"
+    },
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "WAGNER",
+     "prenoms": "Hervé",
+     "qualite": "Directeur général",
+     "annee_de_naissance": 1987,
+     "date_de_naissance": "1989-06"
+    }
+   ],
+   "finances": {}
+  },
+  {
+   "siren": "999000295",
+   "nom_complet": "JACQUOT INSTALLATIONS ÉLECTRIQUES",
+   "nom_raison_sociale": "JACQUOT INSTALLATIONS ÉLECTRIQUES",
+   "nature_juridique": "5499",
+   "activite_principale": "33.20D",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "12",
+   "etat_administratif": "A",
+   "date_creation": "2001-11-15",
+   "siege": {
+    "siret": "99900029500011",
+    "code_postal": "77100",
+    "libelle_commune": "Meaux",
+    "departement": "77",
+    "activite_principale": "33.20D"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "JACQUOT",
+     "prenoms": "Bernard",
+     "qualite": "Gérant",
+     "annee_de_naissance": 1970,
+     "date_de_naissance": "1970-05"
+    }
+   ],
+   "finances": {
+    "2021": {
+     "ca": 13655169,
+     "resultat_net": -216051
+    },
+    "2022": {
+     "ca": 13769159,
+     "resultat_net": -192201
+    },
+    "2023": {
+     "ca": 13884099,
+     "resultat_net": -239449
+    },
+    "2024": {
+     "ca": 14000000,
+     "resultat_net": -230154
+    }
+   }
+  },
+  {
+   "siren": "999000302",
+   "nom_complet": "JOLIVET TUYAUTERIE",
+   "nom_raison_sociale": "JOLIVET TUYAUTERIE",
+   "nature_juridique": "5599",
+   "activite_principale": "33.20A",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "12",
+   "etat_administratif": "A",
+   "date_creation": "2008-06-15",
+   "siege": {
+    "siret": "99900030200011",
+    "code_postal": "94000",
+    "libelle_commune": "Créteil",
+    "departement": "94",
+    "activite_principale": "33.20A"
+   },
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "JOLIVET",
+     "prenoms": "Daniel",
+     "qualite": "Président",
+     "annee_de_naissance": 1977,
+     "date_de_naissance": "1977-02"
+    },
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "ORSINI",
+     "prenoms": "Daniel",
+     "qualite": "Directeur général",
+     "annee_de_naissance": 1988,
+     "date_de_naissance": "1981-06"
+    }
+   ],
+   "finances": {
+    "2022": {
+     "ca": 12487400,
+     "resultat_net": 1345660
+    },
+    "2023": {
+     "ca": 13222087,
+     "resultat_net": 1333733
+    },
+    "2024": {
+     "ca": 14000000,
+     "resultat_net": 1089620
+    }
+   }
+  },
+  {
+   "siren": "999000309",
+   "nom_complet": "THIBAULT FACILITY",
+   "nom_raison_sociale": "THIBAULT FACILITY",
+   "nature_juridique": "5710",
+   "activite_principale": "81.10Z",
+   "categorie_entreprise": "PME",
+   "tranche_effectif_salarie": "22",
+   "etat_administratif": "A",
+   "date_creation": "2012-06-15",
+   "siege": {
+    "siret": "99900030900011",
+    "code_postal": "91000",
+    "libelle_commune": "Évry",
+    "departement": "91",
+    "activite_principale": "81.10Z"
+   },
+   "dirigeants": [],
+   "finances": {
+    "2022": {
+     "ca": 12249732,
+     "resultat_net": 409536
+    },
+    "2023": {
+     "ca": 11608060,
+     "resultat_net": 322125
+    },
+    "2024": {
+     "ca": 11000000,
+     "resultat_net": 295265
+    }
+   }
+  }
+ ]
+}
