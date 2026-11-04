@@ -11,9 +11,11 @@ from dotenv import load_dotenv
 from . import enrich as enrich_mod
 from . import export as export_mod
 from . import funnel, outreach
+from . import onepager as onepager_mod
 from .config import DataPaths, load_yaml
 from .deliverability import render_report, run_checks
 from .llm.analysis import analyze_top, get_provider
+from .models import Stage
 from .scoring import score_all
 from .sources import bodacc
 from .sources._http import CachedClient, FixtureFetcher, JsonFetcher
@@ -135,6 +137,30 @@ def draft(
         companies, campaign_id or f"camp-{date.today():%Y%m%d}", paths.out / "campaign.csv"
     )
     typer.echo(f"{len(drafts)} brouillons à relire → {paths.out / 'drafts.csv'} (LLM : {llm})")
+
+
+@app.command()
+def onepager(
+    siren: str = typer.Option("", help="Une seule cible (défaut : toutes les qualifiées)."),
+    top_n: int = typer.Option(0, help="Limiter aux N meilleures (0 = toutes)."),
+    data_dir: str = DataDir,
+    thesis: str = ThesisOpt,
+) -> None:
+    """Fiche Markdown d'une page par cible qualifiée → data/out/onepagers/<SIREN>.md."""
+    paths = DataPaths(data_dir)
+    src = paths.analyzed if paths.analyzed.exists() else paths.scored
+    cfg = load_yaml(thesis)["valuation"]
+    companies = [
+        c
+        for c in read_companies(src)
+        if (c.siren == siren if siren else c.stage == Stage.QUALIFIED)
+    ]
+    companies = companies[:top_n] if top_n else companies
+    for c in companies:
+        paths.ensure(paths.out / "onepagers" / f"{c.siren}.md").write_text(
+            onepager_mod.render(c, cfg), encoding="utf-8"
+        )
+    typer.echo(f"{len(companies)} fiche(s) → {paths.out / 'onepagers'}")
 
 
 @app.command()

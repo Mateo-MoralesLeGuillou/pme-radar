@@ -28,3 +28,9 @@ departments: ["75", "77", "78", "91", "92", "93", "94", "95"]
 # Entreprises actives uniquement (A = active, C = cessée)
 administrative_status: "A"
 categories: ["PME"]
+
+# Fourchette de valorisation indicative des fiches `pme-radar onepager` : VE = EBE × multiple.
+# Ordres de grandeur usuels pour de petites PME de services (à ajuster à votre lecture du marché).
+valuation:
+  ebe_multiple_low: 4.0
+  ebe_multiple_high: 6.0
