@@ -63,3 +63,15 @@ def load_raw(path: Path) -> list[dict[str, Any]]:
     import json
 
     return [json.loads(p) for p in pd.read_parquet(path)["payload"]]
+
+
+def fetch_company_by_siren(fetcher: JsonFetcher, siren: str) -> dict[str, Any] | None:
+    """Fiche d'une société via `q=<SIREN>` (l'API accepte un SIREN comme terme de recherche).
+
+    Retourne None si la société n'est pas trouvée (ou si l'API renvoie un autre SIREN).
+    """
+    data = fetcher.get_json(BASE_URL, {"q": siren, "per_page": 1})
+    for item in data.get("results", []):
+        if item.get("siren") == siren:
+            return item
+    return None

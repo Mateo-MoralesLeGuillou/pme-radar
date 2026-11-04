@@ -46,16 +46,27 @@ Format : contexte → décision → conséquence.
 - Brut : Parquet (SIREN + payload JSON) pour rejouer l'enrichissement sans rappeler l'API.
   Étapes suivantes : JSONL de modèles pydantic (structures imbriquées, relisible, diffable).
 
-## ADR-009 — « Filiale de groupe » approchée par le dirigeant personne morale
-- L'API ne donne pas l'arbre capitalistique. Proxy : le dirigeant principal est une personne morale
-  → `is_owner_operator = False`, pénalité −10. **Limite** : une holding personnelle du fondateur est
-  aussi pénalisée à tort (faux positif connu, à raffiner avec les bénéficiaires effectifs).
+## ADR-009 — Holding personnelle de fondateur vs vrai groupe
+- **Contexte** : l'API ne donne pas l'arbre capitalistique. Pénaliser tout dirigeant personne morale
+  (version initiale) écartait à tort les holdings patrimoniales de fondateurs, cibles typiques.
+- **Décision** : si le dirigeant principal est une société, on interroge l'API Recherche d'entreprises
+  sur son SIREN (`q=<SIREN>`, une requête par société grâce au cache et à une mémoïsation). Si elle est
+  **NAF 64.20Z et dirigée par une personne physique** : holding personnelle → `is_owner_operator = True`,
+  `director_age` = âge de cette personne, `holding_owner`/`holding_name` renseignés, pas de
+  pénalité, et la personne devient l'interlocuteur du brouillon d'email. Sinon (autre NAF, holding
+  dirigée par une société, société introuvable, pas de SIREN) : « vrai groupe », `is_owner_operator = False`,
+  pénalité −10.
+- **Limites** : un seul niveau de remontée (pas de holding de holding) ; une holding 64.20Z dirigée
+  par une personne physique peut être un fonds ou une holding de groupe à gouvernance individuelle
+  (faux négatif) ; une holding de fondateur d'un autre NAF reste pénalisée ; `q=<SIREN>` est le
+  mode de recherche attendu de l'API mais **non vérifié en direct** (ADR-001). En cas d'échec de
+  la recherche, on retombe sur le comportement prudent (pénalité), jamais sur un « oui » inventé.
 
 ## ADR-010 — Âge avec date de naissance partielle
 - Mois connu : âge exact. Année seule : `année_réf − année_naissance` (± 1 an). Absent : `None`.
 
 ## ADR-011 — Seuil de qualification à 70
-- Calibré sur l'échantillon synthétique (≈ 45 % de qualifiées avec 70, 62 % avec 60 : trop large).
+- Calibré sur l'échantillon synthétique (≈ 50 % de qualifiées avec 70, 62 % avec 60 : encore large, l'échantillon est volontairement favorable).
   À recalibrer sur un vrai run : viser les 10-20 % supérieurs de la population sourcée.
 
 ## ADR-012 — Une requête par code NAF

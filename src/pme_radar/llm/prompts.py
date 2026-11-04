@@ -59,8 +59,8 @@ _FIELDS = (
 def company_facts(c: Company) -> dict:
     """Faits minimisés transmis au LLM (RGPD : nom du dirigeant seulement pour la salutation)."""
     facts = {k: getattr(c, k) for k in _FIELDS}
-    natural = [d for d in c.directors if d.is_natural_person and d.name]
-    facts["director_name"] = natural[0].name if natural else None
+    person = c.main_person()
+    facts["director_name"] = person.name if person else None
     facts["score_summary"] = c.score.summary if c.score else None
     return facts
 

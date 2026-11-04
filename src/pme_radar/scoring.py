@@ -46,7 +46,9 @@ def score_company(c: Company, cfg: dict[str, Any], tiers: dict[str, str]) -> Sco
         "owner_operator",
         "Dirigeant-exploitant (personne physique)",
         oo["max_points"] if c.is_owner_operator else 0,
-        {True: "oui", False: "non (personne morale)", None: "n.d."}[c.is_owner_operator],
+        "oui (via holding personnelle)"
+        if c.holding_owner
+        else {True: "oui", False: "non (groupe)", None: "n.d."}[c.is_owner_operator],
         oo,
     )
     ns = k["no_obvious_successor"]
@@ -117,7 +119,7 @@ def score_company(c: Company, cfg: dict[str, Any], tiers: dict[str, str]) -> Sco
                 label="Dirigeant personne morale",
                 points=pen["corporate_director"],
                 max_points=0,
-                detail="probable filiale ou holding",
+                detail="société dirigeante = probable groupe/filiale",
             )
         )
     if not c.accounts_available:

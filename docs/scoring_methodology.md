@@ -6,7 +6,7 @@ Score sur **100 points**, entièrement piloté par `config/scoring.yaml`. Chaque
 | Bloc | Critère | Pts | Logique |
 |---|---|---|---|
 | **Transmission (40)** | Âge du dirigeant | 25 | Paliers : ≥ 65 ans : 25 ; ≥ 60 : 22 ; ≥ 58 : 18 ; ≥ 55 : 10 ; ≥ 50 : 4 |
-| | Dirigeant-exploitant | 10 | Dirigeant principal = personne physique |
+| | Dirigeant-exploitant | 10 | Dirigeant principal = personne physique, ou holding personnelle d'une personne physique (ADR-009) |
 | | Pas de successeur évident | 5 | Un seul dirigeant personne physique identifié |
 | **Taille (25)** | Chiffre d'affaires | 15 | 5-20 M€ : 15 ; 3-30 M€ : 11 ; 1,5-40 M€ : 5 |
 | | Effectif | 10 | Tranches INSEE : 20-99 salariés = optimum |
@@ -14,7 +14,7 @@ Score sur **100 points**, entièrement piloté par `config/scoring.yaml`. Chaque
 | | CAGR du CA | 6 | Régularité : ≥ 5 % : 6 ; ≥ 0 : 4 ; ≥ −5 % : 2 |
 | | Ancienneté | 6 | ≥ 20 ans : 6 ; ≥ 10 : 4 ; ≥ 5 : 2 |
 | **Thèse (15)** | Secteur | 15 | NAF « cœur » : 15 ; « adjacent » : 8 |
-| **Pénalités** | Dirigeant personne morale | −10 | Probable filiale ou holding |
+| **Pénalités** | Dirigeant personne morale (vrai groupe) | −10 | Société dirigeante qui n'est pas une holding personnelle (ADR-009) |
 | | Comptes absents/confidentiels | −5 | Légère, jamais d'exclusion |
 | **Exclusion** | Procédure collective BODACC | — | Statut `excluded`, score 0 |
 

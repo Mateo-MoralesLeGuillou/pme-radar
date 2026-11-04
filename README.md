@@ -21,8 +21,8 @@
 | Étape | Nombre | Conversion vs étape précédente |
 |---|---:|---:|
 | Identifiées | 45 | — |
-| Qualifiées (score ≥ 70) | 20 | 44 % |
-| Contactées | 14 | 70 % |
+| Qualifiées (score ≥ 70) | 23 | 51 % |
+| Contactées | 14 | 61 % |
 | Ont répondu | 6 | 43 % |
 | RDV | 1 | 17 % |
 
@@ -88,7 +88,7 @@ sans pression ni prix. Voir [`docs/rgpd.md`](docs/rgpd.md) (pas un avis juridiqu
   confirmer au premier run (`docs/runbook.md`).
 - Codes NAF vérifiés de mémoire, pas contre le référentiel INSEE ; NAF 2025 à intégrer début 2027.
 - Provider Anthropic, Google Sheets et workflow n8n non exécutés en réel.
-- « Filiale de groupe » approchée par le dirigeant personne morale (faux positifs possibles).
+- « Groupe » détecté via la société dirigeante (holding personnelle = NAF 64.20Z dirigée par une personne physique, sinon pénalisée) : une holding de fondateur d'un autre NAF reste pénalisée (ADR-009).
 - Ratios INPI/BCE (EBE, dette) non branchés. Pondérations non apprises.
 
 ## Feuille de route

@@ -17,7 +17,12 @@ from .llm.analysis import analyze_top, get_provider
 from .scoring import score_all
 from .sources import bodacc
 from .sources._http import CachedClient, FixtureFetcher, JsonFetcher
-from .sources.recherche_entreprises import fetch_companies, load_raw, save_raw
+from .sources.recherche_entreprises import (
+    fetch_companies,
+    fetch_company_by_siren,
+    load_raw,
+    save_raw,
+)
 from .store import read_companies, write_companies
 
 app = typer.Typer(
@@ -79,7 +84,10 @@ def enrich(
         )
     )
     labels = {n["code"]: n["label"] for n in th["naf_codes"]}
-    companies = enrich_mod.enrich(raw, date.today(), labels, procs)
+    api = _fetcher(offline, paths, fixtures)
+    companies = enrich_mod.enrich(
+        raw, date.today(), labels, procs, lambda siren: fetch_company_by_siren(api, siren)
+    )
     write_companies(companies, paths.enriched)
     n_proc = sum(bool(c.has_collective_procedure) for c in companies)
     typer.echo(

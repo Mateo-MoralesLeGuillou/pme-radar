@@ -107,3 +107,26 @@ def test_fixture_fetcher_paginates():
     assert p1["total_pages"] == 2 and len(p1["results"]) == 25 and len(p2["results"]) == 20
     with pytest.raises(ValueError):
         f.get_json("https://unknown.test")
+
+
+def test_fetch_company_by_siren_exact_match(tmp_path):
+    from pme_radar.sources.recherche_entreprises import fetch_company_by_siren
+
+    def handler(req):
+        assert req.url.params["q"] == "998000001"
+        return httpx.Response(200, json={"results": [{"siren": "111111111"}, {"siren": "998000001"}]})
+
+    c = make_client(handler, tmp_path)
+    assert fetch_company_by_siren(c, "998000001") == {"siren": "998000001"}
+    only_other = make_client(lambda r: httpx.Response(200, json={"results": [{"siren": "1"}]}),
+                             tmp_path / "b")
+    assert fetch_company_by_siren(only_other, "998000001") is None
+
+
+def test_fixture_fetcher_siren_lookup():
+    from pme_radar.sources.recherche_entreprises import fetch_company_by_siren
+
+    f = FixtureFetcher("tests/fixtures")
+    h = fetch_company_by_siren(f, "998000004")  # holding personnelle synthétique (index 3)
+    assert h["activite_principale"] == "64.20Z"
+    assert fetch_company_by_siren(f, "998000039") is None  # groupe « introuvable »

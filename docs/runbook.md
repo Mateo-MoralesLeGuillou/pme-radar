@@ -5,7 +5,7 @@
 python -m venv .venv && . .venv/bin/activate && pip install -e ".[all]"
 pytest && pme-radar run --offline
 ```
-Doit finir par un tableau d'entonnoir (45 identifiées / 20 qualifiées sur les fixtures).
+Doit finir par un tableau d'entonnoir (45 identifiées / 23 qualifiées sur les fixtures).
 
 ## 5-10 min : comprendre
 `docs/architecture.md` (schéma) → `docs/walkthrough.md` (module par module). Les réglages sont dans

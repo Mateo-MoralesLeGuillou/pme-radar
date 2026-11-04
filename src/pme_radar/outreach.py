@@ -34,7 +34,8 @@ def drafts_frame(companies: list[Company]) -> pd.DataFrame:
     for c in companies:
         if c.analysis is None:
             continue
-        director = next((d.name for d in c.directors if d.is_natural_person), None)
+        person = c.main_person()
+        director = person.name if person else None
         rows.append(
             {
                 "siren": c.siren,

@@ -1,0 +1,96 @@
+{
+ "results": [
+  {
+   "siren": "998000004",
+   "etat_administratif": "A",
+   "categorie_entreprise": "PME",
+   "date_creation": "2005-06-01",
+   "finances": {},
+   "nom_complet": "URBAIN PARTICIPATIONS",
+   "activite_principale": "64.20Z",
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "URBAIN",
+     "prenoms": "Catherine",
+     "qualite": "Président",
+     "date_de_naissance": "1962-06",
+     "annee_de_naissance": 1962
+    }
+   ]
+  },
+  {
+   "siren": "998000010",
+   "etat_administratif": "A",
+   "categorie_entreprise": "PME",
+   "date_creation": "2005-06-01",
+   "finances": {},
+   "nom_complet": "ALTAIR GROUPE HOLDING",
+   "activite_principale": "64.20Z",
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne morale",
+     "denomination": "ALTAIR CAPITAL SAS",
+     "siren": "997000001",
+     "qualite": "Président"
+    }
+   ]
+  },
+  {
+   "siren": "998000015",
+   "etat_administratif": "A",
+   "categorie_entreprise": "PME",
+   "date_creation": "2005-06-01",
+   "finances": {},
+   "nom_complet": "GILBERT PARTICIPATIONS",
+   "activite_principale": "64.20Z",
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "GILBERT",
+     "prenoms": "Alain",
+     "qualite": "Président",
+     "date_de_naissance": "1963-04",
+     "annee_de_naissance": 1963
+    }
+   ]
+  },
+  {
+   "siren": "998000022",
+   "etat_administratif": "A",
+   "categorie_entreprise": "PME",
+   "date_creation": "2005-06-01",
+   "finances": {},
+   "nom_complet": "VEGA INDUSTRIES SIEGE",
+   "activite_principale": "70.10Z",
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "MARCHAND",
+     "prenoms": "Claire",
+     "qualite": "Directrice générale",
+     "annee_de_naissance": 1972
+    }
+   ]
+  },
+  {
+   "siren": "998000029",
+   "etat_administratif": "A",
+   "categorie_entreprise": "PME",
+   "date_creation": "2005-06-01",
+   "finances": {},
+   "nom_complet": "PELLETIER PARTICIPATIONS",
+   "activite_principale": "64.20Z",
+   "dirigeants": [
+    {
+     "type_dirigeant": "personne physique",
+     "nom": "PELLETIER",
+     "prenoms": "Isabelle",
+     "qualite": "Président",
+     "date_de_naissance": "1962-07",
+     "annee_de_naissance": 1962
+    }
+   ]
+  }
+ ]
+}

@@ -24,6 +24,7 @@ class Director(BaseModel):
     role: str | None = None
     birth_year: int | None = None
     birth_month: int | None = None  # None si seule l'année est connue
+    siren: str | None = None  # SIREN de la société, si dirigeant personne morale
 
 
 class FinancialYear(BaseModel):
@@ -82,7 +83,11 @@ class Company(BaseModel):
     company_age_years: int | None = None
     is_owner_operator: bool | None = None
     n_natural_directors: int = 0
-    has_corporate_director: bool = False
+    has_corporate_director: bool = False  # dirigeant société qui n'est PAS une holding personnelle
+    holding_name: str | None = (
+        None  # holding personnelle (NAF 64.20Z) dirigée par une personne physique
+    )
+    holding_owner: Director | None = None  # la personne physique derrière cette holding
     revenue_last: float | None = None
     net_income_last: float | None = None
     net_margin: float | None = None
@@ -94,3 +99,8 @@ class Company(BaseModel):
     stage: Stage = Stage.IDENTIFIED
     score: ScoreBreakdown | None = None
     analysis: TargetAnalysis | None = None
+
+    def main_person(self) -> Director | None:
+        """Personne physique à contacter : dirigeant direct, sinon propriétaire via holding."""
+        natural = next((d for d in self.directors if d.is_natural_person and d.name), None)
+        return natural or self.holding_owner

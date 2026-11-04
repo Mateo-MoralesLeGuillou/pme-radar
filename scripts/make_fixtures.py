@@ -114,6 +114,32 @@ DEPTS = {
 BANDS = ["11", "12", "12", "21", "21", "22", "31"]
 
 
+def _holding_record(i: int, surname: str, personal: set[int], groups: dict[int, str]):
+    """Fiche de la société dirigeante (sans toucher au générateur principal : sorties stables)."""
+    r = random.Random(1000 + i)
+    siren = f"{998000001 + i:09d}"
+    base = {"siren": siren, "etat_administratif": "A", "categorie_entreprise": "PME",
+            "date_creation": "2005-06-01", "finances": {}}
+    if i in personal:  # holding patrimoniale du fondateur
+        year = r.randint(1955, 1966)
+        return {**base, "nom_complet": f"{surname.upper()} PARTICIPATIONS", "activite_principale": "64.20Z",
+                "dirigeants": [{"type_dirigeant": "personne physique", "nom": surname.upper(),
+                                "prenoms": r.choice(FIRST), "qualite": "Président",
+                                "date_de_naissance": f"{year}-{r.randint(1, 12):02d}",
+                                "annee_de_naissance": year}]}
+    kind = groups[i]
+    if kind == "group_holding":  # holding animatrice d'un groupe : dirigée par une autre société
+        return {**base, "nom_complet": "ALTAIR GROUPE HOLDING", "activite_principale": "64.20Z",
+                "dirigeants": [{"type_dirigeant": "personne morale", "denomination": "ALTAIR CAPITAL SAS",
+                                "siren": "997000001", "qualite": "Président"}]}
+    if kind == "head_office":  # siège social d'un groupe industriel (NAF 70.10Z)
+        return {**base, "nom_complet": "VEGA INDUSTRIES SIEGE", "activite_principale": "70.10Z",
+                "dirigeants": [{"type_dirigeant": "personne physique", "nom": "MARCHAND",
+                                "prenoms": "Claire", "qualite": "Directrice générale",
+                                "annee_de_naissance": 1972}]}
+    return None  # société introuvable dans l'API
+
+
 def build() -> tuple[dict, dict]:
     rnd = random.Random(SEED)
     thesis = yaml.safe_load(Path("config/thesis.yaml").read_text(encoding="utf-8"))
@@ -121,7 +147,11 @@ def build() -> tuple[dict, dict]:
     core = [n["code"] for n in thesis["naf_codes"] if n["tier"] == "core"]
     results = []
     procedure = {5, 17, 33}  # procédures collectives (BODACC)
-    corporate = {3, 9, 14, 21, 28, 38}  # dirigeant personne morale
+    # dirigeant personne morale : 3 holdings personnelles (64.20Z + personne physique) et 3 vrais groupes
+    personal_holding = {3, 14, 28}
+    group_parent = {9: "group_holding", 21: "head_office", 38: "unknown"}
+    corporate = personal_holding | set(group_parent)
+    holdings = []
     no_accounts = {2, 11, 19, 26, 35, 41}  # comptes confidentiels / absents
     year_only = {1, 6, 13, 24, 30, 40}  # date de naissance partielle
     no_director = {44}
@@ -150,10 +180,11 @@ def build() -> tuple[dict, dict]:
             finances = {} if i % 2 else {"2024": {"ca": None, "resultat_net": None}}
         dirigeants = []
         if i in corporate:
+            holdings.append(_holding_record(i, surname, personal_holding, group_parent))
             dirigeants.append(
                 {
                     "type_dirigeant": "personne morale",
-                    "denomination": f"GROUPE {rnd.choice(SURNAMES).upper()} HOLDING SAS",
+                    "denomination": f"{rnd.choice(SURNAMES).upper()} HOLDING SAS",
                     "siren": f"{998000001 + i:09d}",
                     "qualite": "Président",
                 }
@@ -210,16 +241,20 @@ def build() -> tuple[dict, dict]:
         {"registre": [registre(sirens[i])], "typeavis": "annonce",
          "dateparution": f"2026-09-{10 + k}"}
         for k, i in enumerate(sorted(procedure))]}
-    return {"results": results}, bodacc
+    holdings = [h for h in holdings if h is not None]
+    return {"results": results}, bodacc, {"results": holdings}
 
 
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
-    search, bodacc = build()
+    search, bodacc, holdings = build()
     (OUT / "recherche_entreprises_search.json").write_text(
         json.dumps(search, ensure_ascii=False, indent=1), encoding="utf-8"
     )
     (OUT / "bodacc_records.json").write_text(
         json.dumps(bodacc, ensure_ascii=False, indent=1), encoding="utf-8"
+    )
+    (OUT / "recherche_entreprises_holdings.json").write_text(
+        json.dumps(holdings, ensure_ascii=False, indent=1), encoding="utf-8"
     )
     print(f"{len(search['results'])} entreprises synthétiques, {len(bodacc['results'])} procédures")

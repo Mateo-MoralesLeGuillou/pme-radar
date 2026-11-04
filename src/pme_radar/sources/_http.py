@@ -86,7 +86,8 @@ class CachedClient:
 class FixtureFetcher:
     """Mode `--offline` : sert les fixtures JSON de `tests/fixtures/` (aucun accès réseau).
 
-    Les filtres de requête sont ignorés ; seule la pagination (`page`/`offset`) est respectée.
+    Les filtres de requête sont ignorés ; seules la pagination et la recherche par SIREN
+    (`q=<9 chiffres>`) sont simulées.
     """
 
     def __init__(self, fixtures_dir: str | Path = "tests/fixtures") -> None:
@@ -98,6 +99,20 @@ class FixtureFetcher:
     def get_json(self, url: str, params: dict[str, Any] | None = None) -> dict[str, Any]:
         params = params or {}
         if "recherche-entreprises" in url:
+            q = str(params.get("q", ""))
+            if q.isdigit() and len(q) == 9:  # recherche d'une société par SIREN
+                pool = self._load("recherche_entreprises_search.json")["results"]
+                holdings = self.dir / "recherche_entreprises_holdings.json"
+                if holdings.exists():
+                    pool = pool + self._load(holdings.name)["results"]
+                hits = [r for r in pool if r["siren"] == q]
+                return {
+                    "results": hits,
+                    "total_results": len(hits),
+                    "page": 1,
+                    "per_page": 1,
+                    "total_pages": 1,
+                }
             data = self._load("recherche_entreprises_search.json")
             per_page = int(params.get("per_page", 25))
             page = int(params.get("page", 1))

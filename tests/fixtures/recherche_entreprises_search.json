@@ -141,7 +141,7 @@
    "dirigeants": [
     {
      "type_dirigeant": "personne morale",
-     "denomination": "GROUPE WAGNER HOLDING SAS",
+     "denomination": "WAGNER HOLDING SAS",
      "siren": "998000004",
      "qualite": "Président"
     }
@@ -398,7 +398,7 @@
    "dirigeants": [
     {
      "type_dirigeant": "personne morale",
-     "denomination": "GROUPE LEFRANC HOLDING SAS",
+     "denomination": "LEFRANC HOLDING SAS",
      "siren": "998000010",
      "qualite": "Président"
     }
@@ -612,7 +612,7 @@
    "dirigeants": [
     {
      "type_dirigeant": "personne morale",
-     "denomination": "GROUPE IMBERT HOLDING SAS",
+     "denomination": "IMBERT HOLDING SAS",
      "siren": "998000015",
      "qualite": "Président"
     }
@@ -919,7 +919,7 @@
    "dirigeants": [
     {
      "type_dirigeant": "personne morale",
-     "denomination": "GROUPE CARPENTIER HOLDING SAS",
+     "denomination": "CARPENTIER HOLDING SAS",
      "siren": "998000022",
      "qualite": "Président"
     }
@@ -1222,7 +1222,7 @@
    "dirigeants": [
     {
      "type_dirigeant": "personne morale",
-     "denomination": "GROUPE BLANCHET HOLDING SAS",
+     "denomination": "BLANCHET HOLDING SAS",
      "siren": "998000029",
      "qualite": "Président"
     }
@@ -1642,7 +1642,7 @@
    "dirigeants": [
     {
      "type_dirigeant": "personne morale",
-     "denomination": "GROUPE PELLETIER HOLDING SAS",
+     "denomination": "PELLETIER HOLDING SAS",
      "siren": "998000039",
      "qualite": "Président"
     }

@@ -56,8 +56,11 @@ def targets_frame(companies: list[Company]) -> pd.DataFrame:
 
 def build_tabs(targets: pd.DataFrame, campaign: pd.DataFrame) -> dict[str, pd.DataFrame]:
     """Un onglet par étape + « Funnel »."""
-    camp = campaign if campaign is not None else pd.DataFrame(
-        columns=["siren", "campaign_id", "status", "sent_date"])
+    camp = (
+        campaign
+        if campaign is not None
+        else pd.DataFrame(columns=["siren", "campaign_id", "status", "sent_date"])
+    )
     join = targets.merge(
         camp[["siren", "campaign_id", "status", "sent_date"]],
         on="siren",
