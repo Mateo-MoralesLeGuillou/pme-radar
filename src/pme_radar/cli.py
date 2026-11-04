@@ -7,6 +7,8 @@ from datetime import date
 import pandas as pd
 import typer
 from dotenv import load_dotenv
+from rich.console import Console
+from rich.table import Table
 
 from . import __version__, funnel, outreach
 from . import enrich as enrich_mod
@@ -63,6 +65,21 @@ def _fetcher(offline: bool, paths: DataPaths, fixtures: str, refresh: bool = Fal
     if offline:
         return FixtureFetcher(fixtures)
     return CachedClient(paths.cache, ttl_seconds=ttl_from_env(), refresh=refresh)
+
+
+STAGE_LABELS = {"qualified": "qualifiées", "identified": "identifiées", "excluded": "exclues"}
+
+
+def _print_funnel(funnel_df: pd.DataFrame) -> None:
+    """Entonnoir en tableau lisible (couleurs si terminal, texte simple sinon)."""
+    table = Table(title="Entonnoir d'origination", title_style="bold cyan", header_style="bold")
+    table.add_column("Étape")
+    table.add_column("Nombre", justify="right")
+    table.add_column("Conversion", justify="right", style="cyan")
+    for _, row in funnel_df.iterrows():
+        conv = row["conversion_vs_précédente"]
+        table.add_row(str(row["étape"]), str(row["nombre"]), "" if pd.isna(conv) else f"{conv:.0%}")
+    Console().print(table)
 
 
 def _fail(msg: str) -> None:
@@ -175,8 +192,9 @@ def score(data_dir: str = DataDir, thesis: str = ThesisOpt, scoring: str = Scori
     cfg, th = _scoring(scoring), _thesis(thesis)
     ranked = score_all(_read(paths.enriched, "enrich"), cfg, th)
     write_companies(ranked, paths.scored)
-    counts = pd.Series([c.stage.value for c in ranked]).value_counts().to_dict()
-    typer.echo(f"Scores calculés → {paths.scored} | {counts}")
+    counts = pd.Series([c.stage.value for c in ranked]).value_counts()
+    summary = " · ".join(f"{n} {STAGE_LABELS.get(str(k), str(k))}" for k, n in counts.items())
+    typer.echo(f"Scores calculés → {paths.scored} | {summary}")
 
 
 @app.command()
@@ -265,7 +283,7 @@ def export(
         typer.echo("Google Sheets mis à jour.")
     else:
         typer.echo("Google Sheets non configuré : export CSV uniquement.")
-    typer.echo(tabs["Funnel"].to_string(index=False))
+    _print_funnel(tabs["Funnel"])
 
 
 @app.command()
