@@ -16,6 +16,17 @@ from pme_radar.funnel import campaign_metrics, funnel_counts
 ROOT = Path(__file__).resolve().parent.parent
 
 st.set_page_config(page_title="pme-radar", page_icon="📡", layout="wide")
+st.markdown(
+    """<style>
+    [data-testid="stSidebar"] {background:#1a1a30; border-right:1px solid #2c2c4d;}
+    [data-testid="stSidebar"] h2 {font-size:1.1rem; letter-spacing:.08em; text-transform:uppercase;}
+    h1 {font-weight:600;} h3 {border-bottom:1px solid #2c2c4d; padding-bottom:.4rem;}
+    [data-testid="stDataFrame"], [data-testid="stPlotlyChart"], [data-testid="stMetric"] {
+        background:#1a1a30; border:1px solid #2c2c4d; border-radius:14px; padding:.6rem;}
+    [data-testid="stSelectbox"] > div > div {border:1px solid #25c2f5; border-radius:6px;}
+    </style>""",
+    unsafe_allow_html=True,
+)
 st.title("📡 pme-radar : tableau de bord d'origination")
 
 with st.sidebar:
@@ -38,7 +49,9 @@ thresholds = yaml.safe_load((ROOT / "config/campaign.yaml").read_text(encoding="
 st.subheader("Entonnoir")
 f = funnel_counts(targets, campaign)
 left, right = st.columns([3, 2])
-fig = go.Figure(go.Funnel(y=f["étape"], x=f["nombre"], textinfo="value+percent previous"))
+fig = go.Figure(go.Funnel(y=f["étape"], x=f["nombre"], textinfo="value+percent previous",
+                          marker={"color": ["#25c2f5", "#1fa3d1", "#1a85ad", "#146889", "#0f4a64"]}))
+fig.update_layout(template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
 fig.update_layout(margin=dict(l=0, r=0, t=10, b=0), height=340)
 left.plotly_chart(fig, width="stretch")
 view = f.assign(**{"conv. vs étape précédente": f["conversion_vs_précédente"].map(
@@ -51,7 +64,8 @@ right.caption(f"{excluded} entreprise(s) exclue(s) automatiquement (procédure c
 st.subheader("Distribution des scores")
 scored = targets[targets["stage"] != "excluded"]
 hist = px.histogram(scored, x="score", nbins=20, color="stage",
-                    color_discrete_map={"qualified": "#1f7a4d", "identified": "#9aa5b1"})
+                    color_discrete_map={"qualified": "#25c2f5", "identified": "#4b4f7a"})
+hist.update_layout(template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
 hist.update_layout(margin=dict(l=0, r=0, t=10, b=0), height=280, bargap=0.05)
 st.plotly_chart(hist, width="stretch")
 
