@@ -19,3 +19,13 @@ def test_dashboard_filters_and_empty_selection():
     assert not at.exception and int(at.metric[0].value) < total
     at.slider[0].set_value(100).run()
     assert not at.exception and "Aucune entreprise" in at.warning[0].value
+
+
+def test_dashboard_tabs_and_draft_preview():
+    at = AppTest.from_file(str(ROOT / "dashboard" / "app.py"), default_timeout=60).run()
+    assert not at.exception
+    assert [t.label for t in at.tabs] == ["Vue d'ensemble", "Cibles", "Campagne"]
+    html_blocks = " ".join(m.value for m in at.markdown)
+    assert "AUCUN ENVOI AUTOMATIQUE" in html_blocks  # brouillon affiché, jamais envoyé
+    assert "sources publiques" in html_blocks  # mention de conformité visible dans l'aperçu
+    assert "Échantillon synthétique" in html_blocks
