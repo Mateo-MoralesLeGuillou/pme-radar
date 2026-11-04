@@ -12,8 +12,9 @@ from pme_radar.sources.recherche_entreprises import (
 
 
 def make_client(handler, tmp_path):
-    return CachedClient(tmp_path, min_interval=0,
-                        client=httpx.Client(transport=httpx.MockTransport(handler)))
+    return CachedClient(
+        tmp_path, min_interval=0, client=httpx.Client(transport=httpx.MockTransport(handler))
+    )
 
 
 def test_cache_prevents_second_call(tmp_path):
@@ -79,11 +80,20 @@ def test_bodacc_detects_registered_sirens(tmp_path):
 
     def handler(req):
         seen["where"] = req.url.params["where"]
-        return httpx.Response(200, json={"results": [
-            {"registre": ["999 000 008"]}, {"registre": ["111 111 111"]}, {"registre": None}]})
+        return httpx.Response(
+            200,
+            json={
+                "results": [
+                    {"registre": ["999 000 008"]},
+                    {"registre": ["111 111 111"]},
+                    {"registre": None},
+                ]
+            },
+        )
 
-    found = bodacc.collective_procedure_sirens(make_client(handler, tmp_path),
-                                               ["999000008", "999000015"])
+    found = bodacc.collective_procedure_sirens(
+        make_client(handler, tmp_path), ["999000008", "999000015"]
+    )
     assert found == {"999000008"}
     assert 'familleavis="collective"' in seen["where"] and "999 000 008" in seen["where"]
 
@@ -95,8 +105,9 @@ def test_bodacc_batches(tmp_path):
         calls.append(1)
         return httpx.Response(200, json={"results": []})
 
-    bodacc.collective_procedure_sirens(make_client(handler, tmp_path),
-                                       [f"{i:09d}" for i in range(45)])
+    bodacc.collective_procedure_sirens(
+        make_client(handler, tmp_path), [f"{i:09d}" for i in range(45)]
+    )
     assert len(calls) == 3
 
 
@@ -114,12 +125,15 @@ def test_fetch_company_by_siren_exact_match(tmp_path):
 
     def handler(req):
         assert req.url.params["q"] == "998000001"
-        return httpx.Response(200, json={"results": [{"siren": "111111111"}, {"siren": "998000001"}]})
+        return httpx.Response(
+            200, json={"results": [{"siren": "111111111"}, {"siren": "998000001"}]}
+        )
 
     c = make_client(handler, tmp_path)
     assert fetch_company_by_siren(c, "998000001") == {"siren": "998000001"}
-    only_other = make_client(lambda r: httpx.Response(200, json={"results": [{"siren": "1"}]}),
-                             tmp_path / "b")
+    only_other = make_client(
+        lambda r: httpx.Response(200, json={"results": [{"siren": "1"}]}), tmp_path / "b"
+    )
     assert fetch_company_by_siren(only_other, "998000001") is None
 
 

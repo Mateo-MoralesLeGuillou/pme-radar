@@ -8,8 +8,16 @@ CFG = {"ebe_multiple_low": 4.0, "ebe_multiple_high": 6.0}
 
 
 def company(scoring_cfg, thesis, ebe):
-    ratios = [{"siren": "999000001", "date_cloture_exercice": "2024-12-31", "ebe": ebe,
-               "chiffre_d_affaires": 6e6, "resultat_net": 1, "confidentiality": "Public"}]
+    ratios = [
+        {
+            "siren": "999000001",
+            "date_cloture_exercice": "2024-12-31",
+            "ebe": ebe,
+            "chiffre_d_affaires": 6e6,
+            "resultat_net": 1,
+            "confidentiality": "Public",
+        }
+    ]
     c = normalize(raw_company(), AS_OF, ratios=ratios)
     c.score = score_company(c, scoring_cfg, {n["code"]: n["tier"] for n in thesis["naf_codes"]})
     return c

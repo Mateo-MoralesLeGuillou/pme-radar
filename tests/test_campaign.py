@@ -18,8 +18,12 @@ from pme_radar.llm.mock_provider import MockLLM
 
 from .conftest import AS_OF, ROOT, raw_company
 
-T = {"bounce_rate": {"warning": 0.02, "critical": 0.05}, "reply_rate": {"warning_below": 0.05},
-     "meeting_rate": {"warning_below": 0.01}, "min_sample": 20}
+T = {
+    "bounce_rate": {"warning": 0.02, "critical": 0.05},
+    "reply_rate": {"warning_below": 0.05},
+    "meeting_rate": {"warning_below": 0.01},
+    "min_sample": 20,
+}
 
 
 class FakeResolver:
@@ -39,17 +43,31 @@ def test_mx():
     assert check_mx(FakeResolver(), "a.fr").status == "fail"
 
 
-@pytest.mark.parametrize("rec,status", [
-    (["v=spf1 include:_spf.google.com -all"], "ok"), (["v=spf1 include:x ~all"], "warn"),
-    (["v=spf1 +all"], "fail"), (["v=spf1 -all", "v=spf1 ~all"], "fail"), ([], "fail"),
-    (["google-site-verification=abc"], "fail")])
+@pytest.mark.parametrize(
+    "rec,status",
+    [
+        (["v=spf1 include:_spf.google.com -all"], "ok"),
+        (["v=spf1 include:x ~all"], "warn"),
+        (["v=spf1 +all"], "fail"),
+        (["v=spf1 -all", "v=spf1 ~all"], "fail"),
+        ([], "fail"),
+        (["google-site-verification=abc"], "fail"),
+    ],
+)
 def test_spf(rec, status):
     assert check_spf(FakeResolver(txt={"a.fr": rec}), "a.fr").status == status
 
 
-@pytest.mark.parametrize("rec,status", [
-    (["v=DMARC1; p=reject; rua=mailto:d@a.fr"], "ok"), (["v=DMARC1; p=quarantine"], "warn"),
-    (["v=DMARC1; p=none; rua=mailto:d@a.fr"], "warn"), (["v=DMARC1"], "fail"), ([], "fail")])
+@pytest.mark.parametrize(
+    "rec,status",
+    [
+        (["v=DMARC1; p=reject; rua=mailto:d@a.fr"], "ok"),
+        (["v=DMARC1; p=quarantine"], "warn"),
+        (["v=DMARC1; p=none; rua=mailto:d@a.fr"], "warn"),
+        (["v=DMARC1"], "fail"),
+        ([], "fail"),
+    ],
+)
 def test_dmarc(rec, status):
     assert check_dmarc(FakeResolver(txt={"_dmarc.a.fr": rec}), "a.fr").status == status
 
@@ -62,20 +80,29 @@ def test_dkim():
 
 
 def test_report_verdict():
-    good = FakeResolver(txt={"a.fr": ["v=spf1 -all"], "_dmarc.a.fr": ["v=DMARC1; p=reject; rua=m"],
-                             "s._domainkey.a.fr": ["p=KEY"]}, mx={"a.fr": ["mx"]})
+    good = FakeResolver(
+        txt={
+            "a.fr": ["v=spf1 -all"],
+            "_dmarc.a.fr": ["v=DMARC1; p=reject; rua=m"],
+            "s._domainkey.a.fr": ["p=KEY"],
+        },
+        mx={"a.fr": ["mx"]},
+    )
     assert "Verdict : Prêt." in render_report("a.fr", run_checks("a.fr", "s", good))
     assert "NON PRÊT" in render_report("a.fr", run_checks("a.fr", None, FakeResolver()))
 
 
 # ---- campagne ----
 def camp(statuses, cid="c1"):
-    return pd.DataFrame({"siren": [str(i) for i in range(len(statuses))], "campaign_id": cid,
-                         "status": statuses})
+    return pd.DataFrame(
+        {"siren": [str(i) for i in range(len(statuses))], "campaign_id": cid, "status": statuses}
+    )
 
 
 def test_funnel_counts():
-    targets = pd.DataFrame({"siren": list("abcd"), "stage": ["qualified", "qualified", "identified", "excluded"]})
+    targets = pd.DataFrame(
+        {"siren": list("abcd"), "stage": ["qualified", "qualified", "identified", "excluded"]}
+    )
     f = funnel.funnel_counts(targets, camp(["contacted", "replied", "meeting", "draft"]))
     assert f["nombre"].tolist() == [4, 2, 3, 2, 1]
     assert f.loc[1, "conversion_vs_précédente"] == 0.5
@@ -116,7 +143,11 @@ def test_campaign_tracking(tmp_path, scoring_cfg, thesis):
     outreach.update_status(path, c.siren, "meeting", date(2026, 11, 20), note="visio")
     row = outreach.load_campaign(path).iloc[0]
     assert (row.status, row.sent_date, row.meeting_date, row.note) == (
-        "meeting", "2026-11-05", "2026-11-20", "visio")
+        "meeting",
+        "2026-11-05",
+        "2026-11-20",
+        "visio",
+    )
     with pytest.raises(ValueError):
         outreach.update_status(path, c.siren, "sent")
     with pytest.raises(KeyError):

@@ -69,7 +69,9 @@ class CachedClient:
         self._throttle()
         self.calls += 1
         resp = self._client.get(url, params=params)
-        if resp.status_code in (429, 302) or resp.status_code >= 500:  # 302 = page « sorry » (quota)
+        if (
+            resp.status_code in (429, 302) or resp.status_code >= 500
+        ):  # 302 = page « sorry » (quota)
             raise RetryableStatus(f"HTTP {resp.status_code} sur {url}")
         resp.raise_for_status()
         return resp.json()

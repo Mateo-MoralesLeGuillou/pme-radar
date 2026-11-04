@@ -9,13 +9,21 @@ PUBLIC = {"siren": "999000001", "confidentiality": "Public", "taux_d_endettement
 
 
 def row(year, ca, ebe, **over):
-    return {**PUBLIC, "date_cloture_exercice": f"{year}-12-31", "chiffre_d_affaires": ca,
-            "ebe": ebe, "resultat_net": 1, **over}
+    return {
+        **PUBLIC,
+        "date_cloture_exercice": f"{year}-12-31",
+        "chiffre_d_affaires": ca,
+        "ebe": ebe,
+        "resultat_net": 1,
+        **over,
+    }
 
 
 def test_fetch_ratios_offline_fixture():
     got = fetch_ratios(FixtureFetcher("tests/fixtures"), ["999000001", "999000008"])
-    assert got["999000001"][0]["date_cloture_exercice"] > got["999000001"][-1]["date_cloture_exercice"]
+    assert (
+        got["999000001"][0]["date_cloture_exercice"] > got["999000001"][-1]["date_cloture_exercice"]
+    )
 
 
 def test_ebe_taken_from_latest_public_row_with_revenue():
@@ -40,7 +48,9 @@ def test_score_uses_ebe_margin_then_falls_back_to_net_margin(scoring_cfg, thesis
     tiers = {n["code"]: n["tier"] for n in thesis["naf_codes"]}
 
     def prof(c):
-        return next(r for r in score_company(c, scoring_cfg, tiers).criteria if r.key == "profitability")
+        return next(
+            r for r in score_company(c, scoring_cfg, tiers).criteria if r.key == "profitability"
+        )
 
     with_ebe = prof(normalize(raw_company(), AS_OF, ratios=[row(2024, 6e6, 8e5)]))
     assert "EBE" in with_ebe.label and with_ebe.points == 8  # 13 % >= 12 %

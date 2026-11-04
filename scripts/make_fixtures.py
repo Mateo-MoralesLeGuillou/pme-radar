@@ -118,25 +118,60 @@ def _holding_record(i: int, surname: str, personal: set[int], groups: dict[int, 
     """Fiche de la société dirigeante (sans toucher au générateur principal : sorties stables)."""
     r = random.Random(1000 + i)
     siren = f"{998000001 + i:09d}"
-    base = {"siren": siren, "etat_administratif": "A", "categorie_entreprise": "PME",
-            "date_creation": "2005-06-01", "finances": {}}
+    base = {
+        "siren": siren,
+        "etat_administratif": "A",
+        "categorie_entreprise": "PME",
+        "date_creation": "2005-06-01",
+        "finances": {},
+    }
     if i in personal:  # holding patrimoniale du fondateur
         year = r.randint(1955, 1966)
-        return {**base, "nom_complet": f"{surname.upper()} PARTICIPATIONS", "activite_principale": "64.20Z",
-                "dirigeants": [{"type_dirigeant": "personne physique", "nom": surname.upper(),
-                                "prenoms": r.choice(FIRST), "qualite": "Président",
-                                "date_de_naissance": f"{year}-{r.randint(1, 12):02d}",
-                                "annee_de_naissance": year}]}
+        return {
+            **base,
+            "nom_complet": f"{surname.upper()} PARTICIPATIONS",
+            "activite_principale": "64.20Z",
+            "dirigeants": [
+                {
+                    "type_dirigeant": "personne physique",
+                    "nom": surname.upper(),
+                    "prenoms": r.choice(FIRST),
+                    "qualite": "Président",
+                    "date_de_naissance": f"{year}-{r.randint(1, 12):02d}",
+                    "annee_de_naissance": year,
+                }
+            ],
+        }
     kind = groups[i]
     if kind == "group_holding":  # holding animatrice d'un groupe : dirigée par une autre société
-        return {**base, "nom_complet": "ALTAIR GROUPE HOLDING", "activite_principale": "64.20Z",
-                "dirigeants": [{"type_dirigeant": "personne morale", "denomination": "ALTAIR CAPITAL SAS",
-                                "siren": "997000001", "qualite": "Président"}]}
+        return {
+            **base,
+            "nom_complet": "ALTAIR GROUPE HOLDING",
+            "activite_principale": "64.20Z",
+            "dirigeants": [
+                {
+                    "type_dirigeant": "personne morale",
+                    "denomination": "ALTAIR CAPITAL SAS",
+                    "siren": "997000001",
+                    "qualite": "Président",
+                }
+            ],
+        }
     if kind == "head_office":  # siège social d'un groupe industriel (NAF 70.10Z)
-        return {**base, "nom_complet": "VEGA INDUSTRIES SIEGE", "activite_principale": "70.10Z",
-                "dirigeants": [{"type_dirigeant": "personne physique", "nom": "MARCHAND",
-                                "prenoms": "Claire", "qualite": "Directrice générale",
-                                "annee_de_naissance": 1972}]}
+        return {
+            **base,
+            "nom_complet": "VEGA INDUSTRIES SIEGE",
+            "activite_principale": "70.10Z",
+            "dirigeants": [
+                {
+                    "type_dirigeant": "personne physique",
+                    "nom": "MARCHAND",
+                    "prenoms": "Claire",
+                    "qualite": "Directrice générale",
+                    "annee_de_naissance": 1972,
+                }
+            ],
+        }
     return None  # société introuvable dans l'API
 
 
@@ -234,13 +269,21 @@ def build() -> tuple[dict, dict]:
             }
         )
     sirens = [r["siren"] for r in results]
+
     def registre(s: str) -> str:
         return f"{s[:3]} {s[3:6]} {s[6:]}"
 
-    bodacc = {"total_count": len(procedure), "results": [
-        {"registre": [registre(sirens[i])], "typeavis": "annonce",
-         "dateparution": f"2026-09-{10 + k}"}
-        for k, i in enumerate(sorted(procedure))]}
+    bodacc = {
+        "total_count": len(procedure),
+        "results": [
+            {
+                "registre": [registre(sirens[i])],
+                "typeavis": "annonce",
+                "dateparution": f"2026-09-{10 + k}",
+            }
+            for k, i in enumerate(sorted(procedure))
+        ],
+    }
     holdings = [h for h in holdings if h is not None]
     return {"results": results}, bodacc, {"results": holdings}
 
@@ -259,15 +302,17 @@ def build_ratios(results: list[dict]) -> dict:
         for k, y in enumerate(years):
             ca = int(base * (1.03 ** (k - 4)))
             partial = i % 7 == 3 and y == 2024  # dernier bilan partiellement confidentiel
-            rows.append({
-                "siren": c["siren"],
-                "date_cloture_exercice": f"{y}-12-31",
-                "chiffre_d_affaires": 0 if partial else ca,
-                "ebe": 0 if partial else int(ca * ebe_m * r.uniform(0.85, 1.15)),
-                "resultat_net": int(ca * ebe_m * 0.45),
-                "taux_d_endettement": round(r.uniform(5, 140), 3),
-                "confidentiality": "Partiellement confidentiel" if partial else "Public",
-            })
+            rows.append(
+                {
+                    "siren": c["siren"],
+                    "date_cloture_exercice": f"{y}-12-31",
+                    "chiffre_d_affaires": 0 if partial else ca,
+                    "ebe": 0 if partial else int(ca * ebe_m * r.uniform(0.85, 1.15)),
+                    "resultat_net": int(ca * ebe_m * 0.45),
+                    "taux_d_endettement": round(r.uniform(5, 140), 3),
+                    "confidentiality": "Partiellement confidentiel" if partial else "Public",
+                }
+            )
     return {"total_count": len(rows), "results": rows}
 
 

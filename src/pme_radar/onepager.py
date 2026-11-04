@@ -19,7 +19,13 @@ def _eur(v: float | None) -> str:
 
 
 def _pct(v: float | None, signed: bool = False) -> str:
-    return "n.d." if v is None else f"{v:+.1%}".replace(".", ",") if signed else f"{v:.1%}".replace(".", ",")
+    return (
+        "n.d."
+        if v is None
+        else f"{v:+.1%}".replace(".", ",")
+        if signed
+        else f"{v:.1%}".replace(".", ",")
+    )
 
 
 def valuation_range(c: Company, cfg: dict[str, Any]) -> tuple[float, float] | None:
@@ -32,7 +38,12 @@ def valuation_range(c: Company, cfg: dict[str, Any]) -> tuple[float, float] | No
 def render(c: Company, valuation_cfg: dict[str, Any]) -> str:
     person = c.main_person()
     s, a = c.score, c.analysis
-    L = [f"# {c.name}", "", f"**SIREN {c.siren}** · score **{s.total:.0f}/100** · statut `{c.stage.value}`", ""]
+    L = [
+        f"# {c.name}",
+        "",
+        f"**SIREN {c.siren}** · score **{s.total:.0f}/100** · statut `{c.stage.value}`",
+        "",
+    ]
     L += ["## Identité", "", "| | |", "|---|---|"]
     L += [
         f"| Activité | {c.naf_code or 'n.d.'} — {c.naf_label or 'n.d.'} |",
@@ -50,7 +61,9 @@ def render(c: Company, valuation_cfg: dict[str, Any]) -> str:
         "| | |",
         "|---|---|",
         f"| Chiffre d'affaires | {_eur(c.revenue_last)} |",
-        f"| CAGR du CA | {_pct(c.revenue_cagr, True)}/an |" if c.revenue_cagr is not None else "| CAGR du CA | n.d. |",
+        f"| CAGR du CA | {_pct(c.revenue_cagr, True)}/an |"
+        if c.revenue_cagr is not None
+        else "| CAGR du CA | n.d. |",
         f"| EBE | {_eur(c.ebe)}" + (f" ({c.ebe_year})" if c.ebe_year else "") + " |",
         f"| Marge d'EBE | {_pct(c.ebe_margin)} |",
         f"| Résultat net | {_eur(c.net_income_last)} |",
@@ -72,7 +85,9 @@ def render(c: Company, valuation_cfg: dict[str, Any]) -> str:
     v = valuation_range(c, valuation_cfg)
     lo, hi = valuation_cfg["ebe_multiple_low"], valuation_cfg["ebe_multiple_high"]
     if v:
-        L.append(f"EBE {_eur(c.ebe)} × {lo:g} à {hi:g} = **{_eur(v[0])} à {_eur(v[1])}** de valeur d'entreprise.")
+        L.append(
+            f"EBE {_eur(c.ebe)} × {lo:g} à {hi:g} = **{_eur(v[0])} à {_eur(v[1])}** de valeur d'entreprise."
+        )
     else:
         L.append("Non calculable : EBE indisponible ou négatif.")
     L += ["", DISCLAIMER, ""]

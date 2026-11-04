@@ -35,8 +35,14 @@ class FakeSheet:
 
 def test_company_row_and_tabs():
     t = export.targets_frame([normalize(raw_company(), AS_OF)])
-    camp = pd.DataFrame({"siren": ["999000001"], "campaign_id": ["c"], "status": ["meeting"],
-                         "sent_date": ["2026-11-01"]})
+    camp = pd.DataFrame(
+        {
+            "siren": ["999000001"],
+            "campaign_id": ["c"],
+            "status": ["meeting"],
+            "sent_date": ["2026-11-01"],
+        }
+    )
     tabs = export.build_tabs(t, camp)
     assert list(tabs) == ["Identified", "Qualified", "Contacted", "Meeting", "Funnel"]
     assert len(tabs["Meeting"]) == 1 and len(tabs["Contacted"]) == 1

@@ -13,9 +13,7 @@ from typing import Any
 
 from ._http import JsonFetcher
 
-URL = (
-    "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/ratios_inpi_bce/records"
-)
+URL = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/ratios_inpi_bce/records"
 BATCH = 10  # SIREN par requête
 LIMIT = 100  # maximum Opendatasoft par page
 FIELDS = (

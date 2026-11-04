@@ -41,8 +41,12 @@ def test_missing_accounts_flagged(scoring_cfg, thesis):
 
 
 def _payload(**over):
-    base = {"mini_thesis": ["a", "b", "c"], "red_flags": [], "email_subject": "s",
-            "email_body": "Bonjour, un message respectueux."}
+    base = {
+        "mini_thesis": ["a", "b", "c"],
+        "red_flags": [],
+        "email_subject": "s",
+        "email_body": "Bonjour, un message respectueux.",
+    }
     base.update(over)
     return json.dumps(base)
 
@@ -51,11 +55,17 @@ def test_parse_accepts_json_with_surrounding_text():
     assert parse_analysis("Voici :\n" + _payload() + "\nFin", "x").email_subject == "s"
 
 
-@pytest.mark.parametrize("raw", [
-    "pas de json", "{not json}", _payload(mini_thesis=["a", "b"]),
-    _payload(email_body="Offre garantie, répondez c'est urgent"), _payload(email_body="mot " * 250),
-    json.dumps({"mini_thesis": ["a", "b", "c"]}),
-])
+@pytest.mark.parametrize(
+    "raw",
+    [
+        "pas de json",
+        "{not json}",
+        _payload(mini_thesis=["a", "b"]),
+        _payload(email_body="Offre garantie, répondez c'est urgent"),
+        _payload(email_body="mot " * 250),
+        json.dumps({"mini_thesis": ["a", "b", "c"]}),
+    ],
+)
 def test_parse_rejects_invalid(raw):
     with pytest.raises(ValueError):
         parse_analysis(raw, "x")

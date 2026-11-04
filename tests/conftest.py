@@ -21,13 +21,26 @@ def scoring_cfg():
 
 def raw_company(**over):
     base = {
-        "siren": "999000001", "nom_complet": "TEST MAINTENANCE", "activite_principale": "33.12Z",
-        "categorie_entreprise": "PME", "tranche_effectif_salarie": "12", "date_creation": "1995-03-15",
+        "siren": "999000001",
+        "nom_complet": "TEST MAINTENANCE",
+        "activite_principale": "33.12Z",
+        "categorie_entreprise": "PME",
+        "tranche_effectif_salarie": "12",
+        "date_creation": "1995-03-15",
         "siege": {"code_postal": "92000", "libelle_commune": "Nanterre", "departement": "92"},
-        "dirigeants": [{"type_dirigeant": "personne physique", "nom": "DUPONT", "prenoms": "Alain",
-                        "qualite": "Président", "date_de_naissance": "1960-05"}],
-        "finances": {"2022": {"ca": 5_000_000, "resultat_net": 300_000},
-                     "2024": {"ca": 6_000_000, "resultat_net": 480_000}},
+        "dirigeants": [
+            {
+                "type_dirigeant": "personne physique",
+                "nom": "DUPONT",
+                "prenoms": "Alain",
+                "qualite": "Président",
+                "date_de_naissance": "1960-05",
+            }
+        ],
+        "finances": {
+            "2022": {"ca": 5_000_000, "resultat_net": 300_000},
+            "2024": {"ca": 6_000_000, "resultat_net": 480_000},
+        },
     }
     base.update(over)
     return base
